@@ -22,7 +22,7 @@ spring-boot-loader/*
 
 ### IntelliJ IDEA ###
 .idea
-.idea/*
+.idea/
 *.iws
 *.iml
 *.ipr
