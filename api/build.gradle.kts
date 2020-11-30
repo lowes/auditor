@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 apply(from = "../gradle/integration-test.gradle.kts")
 apply(from = "../gradle/functional-test.gradle.kts")
@@ -33,13 +32,12 @@ object Versions {
 }
 
 plugins {
-    val kotlin = "1.4.20"
     val springboot = "2.4.0"
     val ktlint = "9.4.1"
     val detekt = "1.14.2"
 
-    kotlin("jvm") version kotlin
-    kotlin("plugin.spring") version kotlin
+    kotlin("jvm")
+    kotlin("plugin.spring")
     id("org.springframework.boot") version springboot
     id("org.jlleitschuh.gradle.ktlint") version ktlint
     id("io.gitlab.arturbosch.detekt") version detekt
@@ -53,18 +51,13 @@ version = "0.0.1-SNAPSHOT"
 
 // gralde application plugin
 application {
-    mainClassName = "com.lowes.pmdm.productcatalog.ApplicationKt"
+    mainClass.set("ApplicationKt")
     applicationDefaultJvmArgs = listOf("-Xmx2048m")
 }
 
 // spring boot jar build config
 springBoot {
     buildInfo()
-}
-
-tasks.getByName<BootJar>("bootJar") {
-    mainClassName = "com.lowes.pmdm.productcatalog.ApplicationKt"
-    layered()
 }
 
 // repositories
