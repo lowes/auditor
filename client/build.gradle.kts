@@ -72,6 +72,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:${Versions.springboot}")
     implementation("org.springframework.boot:spring-boot-starter-log4j2:${Versions.springboot}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
@@ -183,6 +184,10 @@ val openApiSystemProperties = mapOf(
     "modelTests" to "false"
 )
 
+val openApiTypeMappings = mapOf(
+    "array" to "kotlin.collections.List"
+)
+
 tasks.create("openApiGenerateEventDTO", GenerateTask::class) {
     generatorName.set("kotlin")
     inputSpec.set("$rootDir/specs/auditor-v1-event-DTO.yaml")
@@ -191,6 +196,7 @@ tasks.create("openApiGenerateEventDTO", GenerateTask::class) {
     modelPackage.set("com.lowes.auditor.client.infrastructure.event.model")
     configOptions.set(openApiConfigMap)
     systemProperties.set(openApiSystemProperties)
+    typeMappings.set(openApiTypeMappings)
 }
 
 tasks.create("openApiGenerateEntities", GenerateTask::class) {
@@ -201,6 +207,7 @@ tasks.create("openApiGenerateEntities", GenerateTask::class) {
     modelPackage.set("com.lowes.auditor.client.entities.domain")
     configOptions.set(openApiConfigMap)
     systemProperties.set(openApiSystemProperties)
+    typeMappings.set(openApiTypeMappings)
 }
 
 sourceSets {

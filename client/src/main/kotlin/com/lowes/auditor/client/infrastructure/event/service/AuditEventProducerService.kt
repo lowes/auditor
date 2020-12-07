@@ -6,13 +6,13 @@ import reactor.kafka.sender.KafkaSender
 import javax.inject.Named
 
 /**
- * Intake Producer
+ * Audit event producer service
  *
  * @constructor Create Empty Intake Producer
  */
 @Named
 internal class AuditEventProducerService constructor(
     producerConfig: AuditEventProducerConfig,
-    intakeSender: KafkaSender<String, String>,
+    auditEventSender: KafkaSender<String, String>,
     objectMapper: ObjectMapper
-) : EventProducerService(producerConfig, intakeSender, objectMapper)
+) : EventProducerService(producerConfig, auditEventSender, objectMapper)
