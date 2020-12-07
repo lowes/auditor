@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 apply(from = "../gradle/integration-test.gradle.kts")
 apply(from = "../gradle/functional-test.gradle.kts")
@@ -16,11 +17,8 @@ object Versions {
     const val reactor = "3.4.0"
     const val reactorKotlinExtension = "1.1.0"
     const val reactorKafka = "1.3.0"
-    const val caffeine = "2.8.6"
-    const val lmax = "3.4.2"
-    const val micrometer = "1.6.1"
-    // database
-    const val couchbaseClient = "3.0.10"
+    const val javaxInject = "1"
+    const val javers = "5.14.0"
     // test
     const val kotest = "4.3.1"
     const val mockk = "1.10.2"
@@ -72,23 +70,16 @@ repositories {
 dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools:${Versions.springboot}")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:${Versions.swaggerdoc}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
-    implementation("org.springframework.boot:spring-boot-starter-actuator:${Versions.springboot}")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:${Versions.springboot}")
     implementation("org.springframework.boot:spring-boot-starter-log4j2:${Versions.springboot}")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
+    implementation("io.projectreactor:reactor-core:${Versions.reactor}")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${Versions.reactorKotlinExtension}")
-    implementation("com.couchbase.client:java-client:${Versions.couchbaseClient}")
     implementation("io.projectreactor.kafka:reactor-kafka:${Versions.reactorKafka}")
-    implementation("com.github.ben-manes.caffeine:caffeine:${Versions.caffeine}")
-    implementation("com.lmax:disruptor:${Versions.lmax}")
-    implementation("io.micrometer:micrometer-registry-prometheus:${Versions.micrometer}")
-    implementation("de.danielbechler:java-object-diff:0.95")
-    implementation("org.javers:javers-core:5.14.0")
+    implementation("org.javers:javers-core:${Versions.javers}")
+    implementation("javax.inject:javax.inject:${Versions.javaxInject}")
     testImplementation("org.springframework.boot:spring-boot-test:${Versions.springboot}")
     testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:${Versions.springboot}")
     testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
@@ -98,9 +89,7 @@ dependencies {
     testImplementation("io.kotest:kotest-extensions-spring:${Versions.kotest}")
     testImplementation("io.kotest:kotest-property:${Versions.kotest}")
     testImplementation("io.kotest:kotest-extensions-testcontainers:${Versions.kotest}")
-    testImplementation("org.testcontainers:couchbase:${Versions.testContainers}")
     testImplementation("org.testcontainers:kafka:${Versions.testContainers}")
-    testImplementation("com.tngtech.archunit:archunit:${Versions.archunit}")
 }
 
 configurations {
@@ -134,6 +123,10 @@ tasks.withType<Test> {
 
 // ktlint
 ktlint {
+    filter {
+        exclude { element -> element.file.path.contains("generated/") }
+        include("**/kotlin/**")
+    }
     verbose.set(true)
     outputToConsole.set(true)
     coloredOutput.set(true)
@@ -141,9 +134,6 @@ ktlint {
         reporter(JSON)
         reporter(CHECKSTYLE)
         reporter(HTML)
-    }
-    filter {
-        exclude("**/style-violations.kt")
     }
 }
 
@@ -179,35 +169,46 @@ tasks.jacocoTestReport {
     }
 }
 
-openApiGenerate {
+val openApiConfigMap = mapOf(
+    "dateLibrary" to "java8",
+    "enumPropertyNaming" to "original",
+    "serializationLibrary" to "jackson"
+)
+
+val openApiSystemProperties = mapOf(
+    "apis" to "false",
+    "models" to "",
+    "apiTests" to "false",
+    "modelDocs" to "false",
+    "modelTests" to "false"
+)
+
+tasks.create("openApiGenerateEventDTO", GenerateTask::class) {
     generatorName.set("kotlin")
     inputSpec.set("$rootDir/specs/auditor-v1-event-DTO.yaml")
-    outputDir.set("$buildDir/model")
+    outputDir.set("$buildDir/generated")
     skipOverwrite.set(true)
     modelPackage.set("com.lowes.auditor.client.infrastructure.event.model")
-    configOptions.set(
-        mapOf(
-            "dateLibrary" to "java8",
-            "enumPropertyNaming" to "original",
-            "serializationLibrary" to "jackson"
-        )
-    )
-    systemProperties.set(
-        mapOf(
-            "apis" to "false",
-            "models" to "",
-            "apiTests" to "false",
-            "modelDocs" to "false",
-            "modelTests" to "false"
-        )
-    )
+    configOptions.set(openApiConfigMap)
+    systemProperties.set(openApiSystemProperties)
+}
+
+tasks.create("openApiGenerateEntities", GenerateTask::class) {
+    generatorName.set("kotlin")
+    inputSpec.set("$rootDir/specs/auditor-v1-entities.yaml")
+    outputDir.set("$buildDir/generated")
+    skipOverwrite.set(true)
+    modelPackage.set("com.lowes.auditor.client.entities.domain")
+    configOptions.set(openApiConfigMap)
+    systemProperties.set(openApiSystemProperties)
 }
 
 sourceSets {
     val main by getting
-    main.java.srcDirs("$buildDir/model/src/main/kotlin")
+    main.java.srcDirs("$buildDir/generated/src/main/kotlin")
 }
 
 tasks.withType<KotlinCompile> {
-    dependsOn("openApiGenerate")
+    dependsOn("openApiGenerateEntities")
+    dependsOn("openApiGenerateEventDTO")
 }
