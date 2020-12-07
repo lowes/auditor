@@ -14,3 +14,5 @@ complexity:
     thresholdInInterfaces: 20
   LongParameterList:
     constructorThreshold: 8
+  LongMethod:
+    threshold: 200

@@ -41,6 +41,7 @@ plugins {
     id("org.springframework.boot") version springboot
     id("org.jlleitschuh.gradle.ktlint") version ktlint
     id("io.gitlab.arturbosch.detekt") version detekt
+    id("org.openapi.generator")
     jacoco
     application
 }
@@ -149,7 +150,7 @@ ktlint {
 // detekt
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
-    config = files("$projectDir/gradle/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+    config = files("$rootDir/gradle/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
     reports {
         html.enabled = true // observe findings in your browser with structure and code snippets
         txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
@@ -176,4 +177,37 @@ tasks.jacocoTestReport {
         csv.isEnabled = true
         html.destination = file("$buildDir/jacocoHtml")
     }
+}
+
+openApiGenerate {
+    generatorName.set("kotlin")
+    inputSpec.set("$rootDir/specs/auditor-v1-event-DTO.yaml")
+    outputDir.set("$buildDir/model")
+    skipOverwrite.set(true)
+    modelPackage.set("com.lowes.auditor.client.infrastructure.event.model")
+    configOptions.set(
+        mapOf(
+            "dateLibrary" to "java8",
+            "enumPropertyNaming" to "original",
+            "serializationLibrary" to "jackson"
+        )
+    )
+    systemProperties.set(
+        mapOf(
+            "apis" to "false",
+            "models" to "",
+            "apiTests" to "false",
+            "modelDocs" to "false",
+            "modelTests" to "false"
+        )
+    )
+}
+
+sourceSets {
+    val main by getting
+    main.java.srcDirs("$buildDir/model/src/main/kotlin")
+}
+
+tasks.withType<KotlinCompile> {
+    dependsOn("openApiGenerate")
 }

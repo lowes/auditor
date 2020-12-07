@@ -147,7 +147,7 @@ ktlint {
 // detekt
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
-    config = files("$projectDir/gradle/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+    config = files("$rootDir/gradle/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
     reports {
         html.enabled = true // observe findings in your browser with structure and code snippets
         txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
