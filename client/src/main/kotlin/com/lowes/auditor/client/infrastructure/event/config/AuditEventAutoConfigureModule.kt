@@ -1,5 +1,9 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
+import com.lowes.auditor.client.entities.util.JsonObject
+import com.lowes.auditor.client.infrastructure.event.service.AuditEventProducerService
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,12 +13,25 @@ import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(AuditEventProducerConfig::class)
-internal class AuditEventModule constructor(
-    private val producerConfig: AuditEventProducerConfig?
+internal class AuditEventAutoConfigureModule(
+    private val producerConfig: AuditEventProducerConfig
 ) {
+    @Bean
+    fun auditorObjectMapper(): ObjectMapper {
+        return JsonObject.objectMapper
+    }
+
     @Bean
     fun auditEventSender(): KafkaSender<String, String> {
         return KafkaSender.create(SenderOptions.create(configs(producerConfig)))
+    }
+
+    @Bean
+    fun auditEventProducerService(
+        auditEventSender: KafkaSender<String, String>,
+        auditorObjectMapper: ObjectMapper
+    ): EventPublisher {
+        return AuditEventProducerService(producerConfig, auditEventSender, auditorObjectMapper)
     }
 
     fun configs(producerConfig: AuditEventProducerConfig?): Map<String, String?> {
