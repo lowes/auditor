@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = "auditor.producer")
-internal data class AuditEventProducerConfig constructor(
+internal data class AuditEventProducerConfig(
     var enabled: Boolean? = false,
     var bootstrapServers: String? = null,
     var topic: String? = null,
