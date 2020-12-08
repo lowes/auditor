@@ -17,47 +17,31 @@ object Versions {
     const val reactor = "3.4.0"
     const val reactorKotlinExtension = "1.1.0"
     const val reactorKafka = "1.3.0"
-    const val javaxInject = "1"
     const val javers = "5.14.0"
     // test
     const val kotest = "4.3.1"
     const val mockk = "1.10.2"
     const val testContainers = "1.15.0"
-    const val archunit = "0.14.1"
     // codequality
     const val jacoco = "0.8.6"
-    const val swaggerdoc = "1.5.0"
 }
 
 plugins {
-    val springboot = "2.4.0"
     val ktlint = "9.4.1"
     val detekt = "1.14.2"
 
     kotlin("jvm")
     kotlin("plugin.spring")
-    id("org.springframework.boot") version springboot
     id("org.jlleitschuh.gradle.ktlint") version ktlint
     id("io.gitlab.arturbosch.detekt") version detekt
     id("org.openapi.generator")
     jacoco
-    application
+    maven
 }
 
 // manifest version
-group = "com.lowes.pmdm"
+group = "com.lowes.auditor"
 version = "0.0.1-SNAPSHOT"
-
-// gralde application plugin
-application {
-    mainClass.set("ApplicationKt")
-    applicationDefaultJvmArgs = listOf("-Xmx2048m")
-}
-
-// spring boot jar build config
-springBoot {
-    buildInfo()
-}
 
 // repositories
 repositories {
@@ -68,7 +52,6 @@ repositories {
 
 // dependencies
 dependencies {
-    developmentOnly("org.springframework.boot:spring-boot-devtools:${Versions.springboot}")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
@@ -79,7 +62,6 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${Versions.reactorKotlinExtension}")
     implementation("io.projectreactor.kafka:reactor-kafka:${Versions.reactorKafka}")
     implementation("org.javers:javers-core:${Versions.javers}")
-    implementation("javax.inject:javax.inject:${Versions.javaxInject}")
     testImplementation("org.springframework.boot:spring-boot-test:${Versions.springboot}")
     testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:${Versions.springboot}")
     testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
