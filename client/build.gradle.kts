@@ -72,8 +72,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:${Versions.springboot}")
-    implementation("org.springframework.boot:spring-boot-starter-log4j2:${Versions.springboot}")
+    implementation("org.springframework.boot:spring-boot-starter:${Versions.springboot}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
     implementation("io.projectreactor:reactor-core:${Versions.reactor}")
@@ -91,12 +90,6 @@ dependencies {
     testImplementation("io.kotest:kotest-property:${Versions.kotest}")
     testImplementation("io.kotest:kotest-extensions-testcontainers:${Versions.kotest}")
     testImplementation("org.testcontainers:kafka:${Versions.testContainers}")
-}
-
-configurations {
-    all {
-        exclude("org.springframework.boot", "spring-boot-starter-logging")
-    }
 }
 
 // compile
