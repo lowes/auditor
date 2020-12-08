@@ -1,5 +1,6 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import reactor.kafka.sender.KafkaSender
@@ -7,6 +8,7 @@ import reactor.kafka.sender.SenderOptions
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG as PRODUCER_BOOTSTRAP
 
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(AuditEventProducerConfig::class)
 internal class AuditEventModule constructor(
     private val producerConfig: AuditEventProducerConfig?
 ) {
