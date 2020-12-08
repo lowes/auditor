@@ -9,11 +9,8 @@ import reactor.core.publisher.Flux
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.UUID
-import javax.inject.Inject
-import javax.inject.Named
 
-@Named
-internal class ElementAggregatorUseCase @Inject constructor(
+internal class ElementAggregatorUseCase(
     private val objectDiffChecker: ObjectDiffChecker
 ) {
     fun aggregate(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {
@@ -21,7 +18,7 @@ internal class ElementAggregatorUseCase @Inject constructor(
             .groupBy {
                 when (it.updatedValue) {
                     null -> EventType.DELETED
-                    else -> if (it.previousValue == null) EventType.CREATED else EventType.UPDATED
+                    else -> if (it.previousValue.isNullOrBlank()) EventType.CREATED else EventType.UPDATED
                 }
             }.flatMap { grouped ->
                 grouped.collectList().map {

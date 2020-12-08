@@ -4,5 +4,7 @@ import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 
 interface Auditor {
 
-    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig)
+    fun audit(oldObject: Any?, newObject: Any?)
+
+    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?)
 }

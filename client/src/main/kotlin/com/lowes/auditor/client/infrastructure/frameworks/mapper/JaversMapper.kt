@@ -2,22 +2,43 @@ package com.lowes.auditor.client.infrastructure.frameworks.mapper
 
 import com.lowes.auditor.client.entities.domain.Element
 import com.lowes.auditor.client.entities.domain.ElementMetadata
+import org.javers.core.diff.changetype.PropertyChange
 import org.javers.core.diff.changetype.ValueChange
+import org.javers.core.diff.changetype.container.ContainerChange
+import org.javers.core.diff.changetype.map.MapChange
 
 internal object JaversMapper {
 
-    fun toElement(valueChange: ValueChange): Element {
+    fun toElement(change: PropertyChange): Element {
         return Element(
-            name = valueChange.propertyName,
-            previousValue = valueChange.left.toString(),
-            updatedValue = valueChange.right.toString(),
-            metadata = toElementMetadata(valueChange)
+            name = change.propertyName,
+            previousValue = getPreviousValue(change),
+            updatedValue = getUpdatedValue(change),
+            metadata = toElementMetadata(change)
         )
     }
 
-    private fun toElementMetadata(valueChange: ValueChange): ElementMetadata {
+    private fun toElementMetadata(change: PropertyChange): ElementMetadata {
         return ElementMetadata(
-            fqdn = valueChange.affectedGlobalId.masterObjectId().typeName.plus(valueChange.propertyNameWithPath)
+            fqdn = change.affectedGlobalId.masterObjectId().typeName.plus(".").plus(change.propertyNameWithPath)
         )
+    }
+
+    private fun getPreviousValue(change: PropertyChange): String? {
+        return when (change) {
+            is ValueChange -> change.left.toString()
+            is MapChange -> change.entryRemovedChanges.joinToString { "${it.key}:${it.value}" }
+            is ContainerChange -> change.removedValues.joinToString()
+            else -> null
+        }
+    }
+
+    private fun getUpdatedValue(change: PropertyChange): String? {
+        return when (change) {
+            is ValueChange -> change.right.toString()
+            is MapChange -> change.entryAddedChanges.joinToString { "${it.key}:${it.value}" }
+            is ContainerChange -> change.valueAddedChanges.joinToString()
+            else -> null
+        }
     }
 }

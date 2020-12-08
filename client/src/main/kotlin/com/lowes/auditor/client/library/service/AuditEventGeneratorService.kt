@@ -6,17 +6,14 @@ import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPu
 import com.lowes.auditor.client.library.config.AuditorConfig
 import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
 import reactor.core.publisher.Flux
-import javax.inject.Inject
-import javax.inject.Named
 
-@Named
-internal class AuditEventGeneratorService @Inject constructor(
+internal class AuditEventGeneratorService(
     private val elementAggregatorUseCase: ElementAggregatorUseCase,
     private val auditorConfig: AuditorConfig,
     private val eventPublisher: EventPublisher,
 ) {
-    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {
-        val config = auditorEventConfig.copyIfNull(auditorConfig.config)
+    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?): Flux<AuditEvent> {
+        val config = auditorEventConfig?.copyIfNull(auditorConfig.toAuditEventConfig()) ?: auditorConfig.toAuditEventConfig()
         val events = elementAggregatorUseCase
             .aggregate(oldObject, newObject, config)
         return eventPublisher

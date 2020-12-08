@@ -20,7 +20,7 @@ import java.util.UUID
  * @property objectMapper
  * @constructor Create empty Event producer service
  */
-internal abstract class EventProducerService constructor(
+internal abstract class EventProducerService(
     private val producerConfig: AuditEventProducerConfig?,
     private val kafkaSender: KafkaSender<String, String>,
     private val objectMapper: ObjectMapper
