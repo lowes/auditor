@@ -1,6 +1,28 @@
 auditor:
   config:
     applicationName: "client-example"
+    eventSource:
+      type: USER
+      metadata:
+        id: "Junk"
+    metadata:
+      itemId: ${itemNumber}-AND-MODEL-${model}
+      noId: NoFetchingHere!
+    filters:
+      event:
+        enabled: false
+        type:
+          - UPDATED
+      element:
+        enabled: true
+        types:
+          - InclusionFilter
+          - ExclusionFilter
+        options:
+          excludes:
+            - description
+      logging:
+        enabled: true
   producer:
     enabled: true
     bootstrapServers: "localhost:9092"
