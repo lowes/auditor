@@ -1,9 +1,6 @@
 package foo
 
 import com.lowes.auditor.client.api.Auditor
-import com.lowes.auditor.client.entities.domain.AuditorEventConfig
-import com.lowes.auditor.client.entities.domain.EventSource
-import com.lowes.auditor.client.entities.domain.EventSourceMetadata
 import foo.model.Item
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -30,16 +27,9 @@ class Application(
             metadata = mapOf("new_item_id" to "98767")
         )
         println("Running auditor! for newItemNumber $newItemNumber")
-        auditor.audit(
-            oldItem,
-            newItem,
-            AuditorEventConfig(
-                eventSource = EventSource.USER,
-                eventSourceMetadata = EventSourceMetadata(
-                    id = "User-Id-${UUID.randomUUID()}"
-                )
-            )
-        )
+        for (i in 1..1) {
+            auditor.audit(oldItem, newItem)
+        }
         println("Done")
     }
 }
