@@ -2,9 +2,10 @@ package com.lowes.auditor.client.usecase
 
 import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
-import com.lowes.auditor.client.entities.domain.EventSource
+import com.lowes.auditor.client.entities.domain.EventSourceConfig
 import com.lowes.auditor.client.entities.domain.EventType
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.ObjectDiffChecker
+import com.lowes.auditor.client.entities.util.orDefault
 import reactor.core.publisher.Flux
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -27,10 +28,9 @@ internal class ElementAggregatorUseCase(
                         applicationName = auditorEventConfig.applicationName.orEmpty(),
                         timestamp = OffsetDateTime.now(ZoneId.of("UTC")),
                         type = grouped.key(),
-                        source = auditorEventConfig.eventSource ?: EventSource.SYSTEM,
+                        source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
                         elements = it,
                         subType = auditorEventConfig.eventSubType,
-                        sourceMetadata = auditorEventConfig.eventSourceMetadata,
                         metadata = auditorEventConfig.metadata
                     )
                 }
