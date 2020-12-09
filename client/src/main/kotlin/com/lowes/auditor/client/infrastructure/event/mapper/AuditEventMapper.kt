@@ -9,6 +9,7 @@ import com.lowes.auditor.client.infrastructure.event.model.ElementDTO
 import com.lowes.auditor.client.infrastructure.event.model.ElementMetadataDTO
 import com.lowes.auditor.client.infrastructure.event.model.EventSourceDTO
 import com.lowes.auditor.client.infrastructure.event.model.EventSourceMetadataDTO
+import com.lowes.auditor.client.infrastructure.event.model.EventSourceTypeDTO
 import com.lowes.auditor.client.infrastructure.event.model.EventTypeDTO
 
 internal object AuditEventMapper {
@@ -19,15 +20,17 @@ internal object AuditEventMapper {
             applicationName = auditEvent.applicationName,
             timestamp = auditEvent.timestamp,
             type = EventTypeDTO.valueOf(auditEvent.type.value),
-            source = EventSourceDTO.valueOf(auditEvent.source.value),
+            source = EventSourceDTO(
+                type = auditEvent.source.type.value.let { EventSourceTypeDTO.valueOf(it) },
+                metadata = toSourceMetadataDTO(auditEvent.source.metadata)
+            ),
             elements = toElementDTO(auditEvent.elements),
             subType = auditEvent.subType,
-            sourceMetadata = toSourceMetadataDTO(auditEvent.sourceMetadata),
             metadata = auditEvent.metadata
         )
     }
 
-    fun toElementDTO(elements: List<Element>): List<ElementDTO> {
+    private fun toElementDTO(elements: List<Element>): List<ElementDTO> {
         return elements.map {
             ElementDTO(
                 name = it.name,
@@ -38,14 +41,14 @@ internal object AuditEventMapper {
         }
     }
 
-    fun toElementMetadataDTO(elementMetadata: ElementMetadata?): ElementMetadataDTO {
+    private fun toElementMetadataDTO(elementMetadata: ElementMetadata?): ElementMetadataDTO {
         return ElementMetadataDTO(
             fqdn = elementMetadata?.fqdn,
             identifiers = elementMetadata?.identifiers
         )
     }
 
-    fun toSourceMetadataDTO(sourceMetadata: EventSourceMetadata?): EventSourceMetadataDTO {
+    private fun toSourceMetadataDTO(sourceMetadata: EventSourceMetadata?): EventSourceMetadataDTO {
         return EventSourceMetadataDTO(
             id = sourceMetadata?.id,
             email = sourceMetadata?.email,
