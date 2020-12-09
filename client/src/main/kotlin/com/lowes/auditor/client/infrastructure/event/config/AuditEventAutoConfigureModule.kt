@@ -1,6 +1,7 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectWriter
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.entities.util.JsonObject
 import com.lowes.auditor.client.infrastructure.event.service.AuditEventProducerService
@@ -17,6 +18,11 @@ internal class AuditEventAutoConfigureModule(
     private val producerConfig: AuditEventProducerConfig
 ) {
     @Bean
+    fun auditorObjectWriter(): ObjectWriter {
+        return JsonObject.objectWriter
+    }
+
+    @Bean
     fun auditorObjectMapper(): ObjectMapper {
         return JsonObject.objectMapper
     }
@@ -29,9 +35,9 @@ internal class AuditEventAutoConfigureModule(
     @Bean
     fun auditEventProducerService(
         auditEventSender: KafkaSender<String, String>,
-        auditorObjectMapper: ObjectMapper
+        auditorObjectWriter: ObjectWriter
     ): EventPublisher {
-        return AuditEventProducerService(producerConfig, auditEventSender, auditorObjectMapper)
+        return AuditEventProducerService(producerConfig, auditEventSender, auditorObjectWriter)
     }
 
     fun configs(producerConfig: AuditEventProducerConfig?): Map<String, String?> {
