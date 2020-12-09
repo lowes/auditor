@@ -1,6 +1,6 @@
 package com.lowes.auditor.client.infrastructure.event.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectWriter
 import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
@@ -23,7 +23,7 @@ import java.util.UUID
 internal abstract class EventProducerService(
     private val producerConfig: AuditEventProducerConfig?,
     private val kafkaSender: KafkaSender<String, String>,
-    private val objectMapper: ObjectMapper
+    private val auditorObjectWriter: ObjectWriter
 ) : EventPublisher {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -36,20 +36,26 @@ internal abstract class EventProducerService(
     override fun publishEvents(event: Flux<AuditEvent>): Flux<UUID> {
         return if (producerConfig?.enabled == true) {
             kafkaSender.send<UUID>(
-                event.doOnNext { logger.info("Payload --> $it") }
+                event.doOnNext { logger.debug("Payload: {}", it) }
                     .map {
                         SenderRecord.create(
                             ProducerRecord(
                                 producerConfig.topic,
                                 it.id.toString(),
-                                objectMapper.writeValueAsString(AuditEventMapper.toAuditEventDTO(it))
+                                auditorObjectWriter.writeValueAsString(AuditEventMapper.toAuditEventDTO(it))
                             ),
                             it.id
                         )
                     }
             )
                 .doOnError { logger.error(it.localizedMessage) }
-                .doOnNext { r -> logger.info("Success ${r.correlationMetadata()} ${r.recordMetadata().serializedValueSize()}") }
+                .doOnNext { r ->
+                    logger.info(
+                        "Success, correlationMetadata:{}, serializedValueSize:{}",
+                        r.correlationMetadata(),
+                        r.recordMetadata().serializedValueSize()
+                    )
+                }
                 .map { it.correlationMetadata() }
         } else {
             Flux.empty()
