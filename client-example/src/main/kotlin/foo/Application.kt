@@ -1,6 +1,9 @@
 package foo
 
 import com.lowes.auditor.client.api.Auditor
+import com.lowes.auditor.client.entities.domain.AuditorEventConfig
+import com.lowes.auditor.client.entities.domain.EventSourceConfig
+import com.lowes.auditor.client.entities.domain.EventSourceMetadataConfig
 import foo.model.Item
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -28,7 +31,18 @@ class Application(
         )
         println("Running auditor! for newItemNumber $newItemNumber")
         for (i in 1..1) {
-            auditor.audit(oldItem, newItem)
+
+            auditor.audit(
+                oldItem,
+                newItem,
+                auditorEventConfig = AuditorEventConfig(
+                    eventSource = EventSourceConfig(
+                        metadata = EventSourceMetadataConfig(
+                            name = "USERNAME"
+                        )
+                    )
+                )
+            )
         }
         println("Done")
     }

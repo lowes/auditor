@@ -4,7 +4,7 @@ auditor:
     eventSource:
       type: USER
       metadata:
-        id: "Junk"
+        id: "userId"
     metadata:
       itemId: ${itemNumber}-AND-MODEL-${model}
       noId: NoFetchingHere!
@@ -21,6 +21,8 @@ auditor:
         options:
           excludes:
             - description
+          includes:
+            - model
       logging:
         enabled: true
   producer:
