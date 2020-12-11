@@ -6,7 +6,6 @@ import com.lowes.auditor.client.infrastructure.frameworks.mapper.JaversMapper
 import org.javers.core.Javers
 import org.javers.core.diff.changetype.PropertyChange
 import reactor.core.publisher.Flux
-import reactor.kotlin.core.publisher.toFlux
 
 internal class JaversWrapperService(
     private val javers: Javers
@@ -14,8 +13,8 @@ internal class JaversWrapperService(
 
     override fun diff(objectOne: Any?, objectTwo: Any?): Flux<Element> {
         val diff = javers.compare(objectOne, objectTwo)
-        return diff.getChangesByType(PropertyChange::class.java)
-            .toFlux().map {
+        return Flux.fromIterable(diff.getChangesByType(PropertyChange::class.java))
+            .map {
                 JaversMapper.toElement(it)
             }
     }

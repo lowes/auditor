@@ -1,11 +1,6 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
-
-@Configuration(proxyBeanMethods = false)
-@ConfigurationProperties(prefix = "auditor.producer")
-internal data class AuditEventProducerConfig(
+data class AuditEventProducerConfig(
     var enabled: Boolean? = false,
     var bootstrapServers: String? = null,
     var topic: String? = null,
