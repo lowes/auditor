@@ -8,7 +8,7 @@ import java.util.UUID
  * Event Publisher
  * Contract to publish events
  */
-internal interface EventPublisher {
+interface EventPublisher {
     /**
      * publishMessage
      * @param event - Flux<Event>
