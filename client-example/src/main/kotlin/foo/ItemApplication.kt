@@ -11,7 +11,7 @@ import org.springframework.boot.runApplication
 import java.util.UUID
 
 @SpringBootApplication
-class Application(
+class ItemApplication(
     val auditor: Auditor
 ) : CommandLineRunner {
     override fun run(vararg args: String?) {
@@ -49,5 +49,5 @@ class Application(
 }
 
 fun main(args: Array<String>) {
-    runApplication<Application>(*args)
+    runApplication<ItemApplication>(*args)
 }
