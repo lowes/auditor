@@ -12,10 +12,8 @@ apply(from = "../gradle/functional-test.gradle.kts")
 object Versions {
     // langauage and frameworks
     const val kotlin = "1.4.20"
-    const val springboot = "2.4.0"
     const val jackson = "2.11.2"
     const val reactor = "3.4.0"
-    const val reactorKotlinExtension = "1.1.0"
     const val reactorKafka = "1.3.0"
     const val javers = "5.14.0"
     // test
@@ -31,10 +29,10 @@ plugins {
     val detekt = "1.14.2"
 
     kotlin("jvm")
-    kotlin("plugin.spring")
     id("org.jlleitschuh.gradle.ktlint") version ktlint
     id("io.gitlab.arturbosch.detekt") version detekt
     id("org.openapi.generator")
+    `java-library`
     jacoco
     maven
 }
@@ -52,18 +50,13 @@ repositories {
 
 // dependencies
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
-    implementation("org.springframework.boot:spring-boot-starter:${Versions.springboot}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
     implementation("io.projectreactor:reactor-core:${Versions.reactor}")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${Versions.reactorKotlinExtension}")
     implementation("io.projectreactor.kafka:reactor-kafka:${Versions.reactorKafka}")
     implementation("org.javers:javers-core:${Versions.javers}")
-    testImplementation("org.springframework.boot:spring-boot-test:${Versions.springboot}")
-    testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:${Versions.springboot}")
     testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.kotest}")
