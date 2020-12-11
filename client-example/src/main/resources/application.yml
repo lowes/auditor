@@ -23,6 +23,7 @@ auditor:
             - description
           includes:
             - model
+            - price
       logging:
         enabled: true
   producer:
