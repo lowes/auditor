@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.lowes.auditor.client.infrastructure.frameworks.config.JaversAutoconfigureModule,\
-  com.lowes.auditor.client.infrastructure.event.config.AuditEventAutoConfigureModule,\
-  com.lowes.auditor.client.api.AuditorAutoConfigureModule
