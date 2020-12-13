@@ -14,7 +14,7 @@ auditor:
         type:
           - UPDATED
       element:
-        enabled: true
+        enabled: false
         types:
           - InclusionFilter
           - ExclusionFilter
