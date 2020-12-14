@@ -1,17 +1,18 @@
-package com.lowes.auditor.client.entities.util
+package com.lowes.auditor.core.entities.util
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.ObjectWriter
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
-internal object JsonObject {
+object JsonObject {
     val objectMapper: ObjectMapper by lazy {
         jacksonObjectMapper()
-            .registerModules(AfterburnerModule())
+            .registerModules(AfterburnerModule(), JavaTimeModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
