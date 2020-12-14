@@ -1,8 +1,8 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
-import com.lowes.auditor.client.entities.util.JsonObject
 import com.lowes.auditor.client.infrastructure.event.service.AuditEventProducerService
+import com.lowes.auditor.core.entities.util.JsonObject
 import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderOptions
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG as PRODUCER_BOOTSTRAP

@@ -2,8 +2,8 @@ package com.lowes.auditor.client.springboot
 
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.domain.EventSourceConfig
-import com.lowes.auditor.client.entities.domain.EventSourceType
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
+import com.lowes.auditor.core.entities.domain.EventSourceType
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 

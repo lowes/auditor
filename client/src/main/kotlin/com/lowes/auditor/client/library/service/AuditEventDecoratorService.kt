@@ -2,10 +2,10 @@ package com.lowes.auditor.client.library.service
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.domain.EventSourceConfig
 import com.lowes.auditor.client.entities.util.orDefault
+import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 import java.lang.StringBuilder
 import java.util.regex.Matcher

@@ -1,10 +1,10 @@
 package com.lowes.auditor.client.library.service
 
-import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.entities.util.merge
 import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
+import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 
 internal class AuditEventGeneratorService(

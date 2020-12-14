@@ -1,9 +1,9 @@
 package com.lowes.auditor.client.library.service
 
-import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventFilter
+import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 
 internal class AuditEventFilterService(

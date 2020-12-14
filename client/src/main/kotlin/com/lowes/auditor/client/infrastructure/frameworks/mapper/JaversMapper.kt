@@ -1,7 +1,7 @@
 package com.lowes.auditor.client.infrastructure.frameworks.mapper
 
-import com.lowes.auditor.client.entities.domain.Element
-import com.lowes.auditor.client.entities.domain.ElementMetadata
+import com.lowes.auditor.core.entities.domain.Element
+import com.lowes.auditor.core.entities.domain.ElementMetadata
 import org.javers.core.diff.changetype.PropertyChange
 import org.javers.core.diff.changetype.ValueChange
 import org.javers.core.diff.changetype.container.ContainerChange

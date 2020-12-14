@@ -1,6 +1,6 @@
 package com.lowes.auditor.client.entities.interfaces.infrastructure.event
 
-import com.lowes.auditor.client.entities.domain.AuditEvent
+import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 import java.util.UUID
 

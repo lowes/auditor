@@ -2,13 +2,13 @@ package com.lowes.auditor.client.api
 
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.domain.EventSourceConfig
-import com.lowes.auditor.client.entities.domain.EventSourceType
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventModule
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
 import com.lowes.auditor.client.library.config.AuditorModule
 import com.lowes.auditor.client.usecase.ExclusionFilter
 import com.lowes.auditor.client.usecase.InclusionFilter
+import com.lowes.auditor.core.entities.domain.EventSourceType
 
 interface Auditor {
 

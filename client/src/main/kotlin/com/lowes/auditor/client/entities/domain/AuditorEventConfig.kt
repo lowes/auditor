@@ -1,5 +1,10 @@
 package com.lowes.auditor.client.entities.domain
 
+import com.lowes.auditor.core.entities.domain.EventSource
+import com.lowes.auditor.core.entities.domain.EventSourceMetadata
+import com.lowes.auditor.core.entities.domain.EventSourceType
+import com.lowes.auditor.core.entities.domain.EventType
+
 data class AuditorEventConfig(
     var applicationName: String? = null,
     var eventSource: EventSourceConfig? = null,

@@ -1,11 +1,11 @@
 package com.lowes.auditor.client.usecase
 
-import com.lowes.auditor.client.entities.domain.AuditEvent
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.domain.EventSourceConfig
-import com.lowes.auditor.client.entities.domain.EventType
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.ObjectDiffChecker
 import com.lowes.auditor.client.entities.util.orDefault
+import com.lowes.auditor.core.entities.domain.AuditEvent
+import com.lowes.auditor.core.entities.domain.EventType
 import reactor.core.publisher.Flux
 import java.time.OffsetDateTime
 import java.time.ZoneId

@@ -1,10 +1,10 @@
 package com.lowes.auditor.client.usecase
 
-import com.lowes.auditor.client.entities.domain.Element
 import com.lowes.auditor.client.entities.domain.ElementFilter
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
 import com.lowes.auditor.client.entities.util.getOrNull
 import com.lowes.auditor.client.entities.util.orDefault
+import com.lowes.auditor.core.entities.domain.Element
 import java.util.stream.Collectors
 import kotlin.streams.toList
 

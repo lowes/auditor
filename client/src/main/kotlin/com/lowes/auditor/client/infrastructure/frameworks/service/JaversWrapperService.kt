@@ -1,8 +1,8 @@
 package com.lowes.auditor.client.infrastructure.frameworks.service
 
-import com.lowes.auditor.client.entities.domain.Element
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.ObjectDiffChecker
 import com.lowes.auditor.client.infrastructure.frameworks.mapper.JaversMapper
+import com.lowes.auditor.core.entities.domain.Element
 import org.javers.core.Javers
 import org.javers.core.diff.changetype.PropertyChange
 import reactor.core.publisher.Flux
