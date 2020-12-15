@@ -2,9 +2,12 @@ package com.lowes.auditor.client.springboot
 
 import com.lowes.auditor.client.api.Auditor
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import reactor.core.scheduler.Scheduler
+import reactor.core.scheduler.Schedulers
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(AuditorAutoConfig::class)
@@ -13,11 +16,18 @@ internal class AuditorAutoConfigureModule(
 ) {
 
     @Bean
-    fun auditor(elementFilters: List<AuditEventElementFilter>): Auditor {
+    @ConditionalOnMissingBean
+    fun auditorServiceScheduler(): Scheduler {
+        return Schedulers.newParallel("auditorServiceScheduler")
+    }
+
+    @Bean
+    fun auditor(elementFilters: List<AuditEventElementFilter>, auditorServiceScheduler: Scheduler): Auditor {
         return Auditor.getInstance(
-            auditorAutoConfig.producer,
-            auditorAutoConfig.config,
-            elementFilters
+            producerConfig = auditorAutoConfig.producer,
+            auditorEventConfig = auditorAutoConfig.config,
+            elementFilters = elementFilters,
+            auditorServiceScheduler = auditorServiceScheduler
         )
     }
 }

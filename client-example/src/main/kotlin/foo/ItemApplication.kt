@@ -30,7 +30,7 @@ class ItemApplication(
             metadata = mapOf("new_item_id" to "98767")
         )
         println("Running auditor! for newItemNumber $newItemNumber")
-        for (i in 1..1) {
+        for (i in 1..2) {
 
             auditor.audit(
                 oldItem,

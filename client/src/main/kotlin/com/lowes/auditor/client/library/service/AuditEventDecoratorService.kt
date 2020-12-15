@@ -21,7 +21,7 @@ internal class AuditEventDecoratorService(
         return events.map {
             val rootNode = auditorObjectMapper.valueToTree<JsonNode>(newObject)
             it.copy(
-                applicationName = auditorEventConfig.applicationName.orEmpty(),
+                applicationName = auditorEventConfig.applicationName.orDefault("NOT_CONFIGURED"),
                 source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
                 subType = fetchNodeValue(rootNode, auditorEventConfig.eventSubType),
                 metadata = fetchMetadata(rootNode, auditorEventConfig)
