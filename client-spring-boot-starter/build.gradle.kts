@@ -1,16 +1,11 @@
 object Versions {
     // language and frameworks
     const val springboot = "2.4.0"
-    const val auditorClient = "0.0.1-SNAPSHOT"
 }
 
 plugins {
     kotlin("plugin.spring")
     `java-library`
-}
-
-tasks.jar {
-    archiveBaseName.set("auditor-client-spring-boot-starter")
 }
 
 // dependencies
