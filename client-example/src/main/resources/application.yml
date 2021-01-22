@@ -6,7 +6,7 @@ auditor:
       metadata:
         id: "userId"
     metadata:
-      itemId: ${itemNumber}-AND-MODEL-${model}
+      itemIdAnything: ${itemNumber}-AND-MODEL-${model}
       noId: NoFetchingHere!
     filters:
       event:
@@ -40,4 +40,26 @@ auditor:
       max.in.flight.requests.per.connection: 1
       retries: 0
       value.serializer: org.apache.kafka.common.serialization.StringSerializer
+
+lowesiss:
+  springboot:
+    kafka:
+      clusters:
+        auditor-cluster:
+          bootstrapServers: "localhost:9092"
+          defaultConsumerConfigs:
+            auto.offset.reset: latest
+            client.id: product-catalog-initiateDataConsumer-client
+            enable.auto.commit: false
+            group.id: product-catalog-intakeConsumer-group
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      consumers:
+        auditor-consumer:
+          enabled: true
+          topic: testTopic
+          clusterId: "auditor-cluster"
+
+
+
 

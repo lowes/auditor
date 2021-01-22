@@ -4,16 +4,18 @@ object Versions {
 }
 
 plugins {
-    kotlin("plugin.spring")
     `java-library`
 }
 
 // dependencies
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${Versions.springboot}")
     api(project(":core"))
     api(project(":client"))
     implementation("org.springframework.boot:spring-boot-starter:${Versions.springboot}")
     testImplementation("org.springframework.boot:spring-boot-test:${Versions.springboot}")
     testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:${Versions.springboot}")
+}
+
+frameworkModule {
+    springboot.enabled.set(false)
 }

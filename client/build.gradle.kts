@@ -14,3 +14,8 @@ dependencies {
     implementation("io.projectreactor.kafka:reactor-kafka:${Versions.reactorKafka}")
     implementation("org.javers:javers-core:${Versions.javers}")
 }
+
+frameworkModule {
+    application.enabled.set(false)
+    springboot.enabled.set(false)
+}

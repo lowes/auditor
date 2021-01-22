@@ -4,15 +4,19 @@ import com.lowes.auditor.client.api.Auditor
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.domain.EventSourceConfig
 import com.lowes.auditor.client.entities.domain.EventSourceMetadataConfig
+import com.lowes.iss.springboot.kafkamodule.entities.interfaces.api.KafkaProducer
 import foo.model.Item
 import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.util.UUID
 
+@EnableAutoConfiguration
 @SpringBootApplication
 class ItemApplication(
-    val auditor: Auditor
+    val auditor: Auditor,
+    val producer: KafkaProducer
 ) : CommandLineRunner {
     override fun run(vararg args: String?) {
         val oldItem = Item(
@@ -40,7 +44,7 @@ class ItemApplication(
                         metadata = EventSourceMetadataConfig(
                             name = "USERNAME"
                         )
-                    )
+                    ),
                 )
             )
         }
