@@ -3,9 +3,9 @@ package com.lowes.auditor.client.library.service
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
-import com.lowes.auditor.client.entities.domain.EventSourceConfig
-import com.lowes.auditor.client.entities.util.orDefault
 import com.lowes.auditor.core.entities.domain.AuditEvent
+import com.lowes.auditor.core.entities.domain.EventSource
+import com.lowes.auditor.core.entities.domain.EventSourceMetadata
 import reactor.core.publisher.Flux
 import java.lang.StringBuilder
 import java.util.regex.Matcher
@@ -20,17 +20,29 @@ internal class AuditEventDecoratorService(
     fun decorate(events: Flux<AuditEvent>, auditorEventConfig: AuditorEventConfig, newObject: Any?): Flux<AuditEvent> {
         return events.map {
             val rootNode = auditorObjectMapper.valueToTree<JsonNode>(newObject)
+            val source = it.source
+            val subtype = it.subType
+            val metadata = it.metadata
             it.copy(
-                applicationName = auditorEventConfig.applicationName.orDefault("NOT_CONFIGURED"),
-                source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
-                subType = fetchNodeValue(rootNode, auditorEventConfig.eventSubType),
-                metadata = fetchMetadata(rootNode, auditorEventConfig)
+                source = fetchSource(rootNode, source),
+                subType = fetchNodeValue(rootNode, subtype),
+                metadata = fetchMetadata(rootNode, metadata)
             )
         }
     }
 
-    private fun fetchMetadata(rootNode: JsonNode, auditorEventConfig: AuditorEventConfig): Map<String, String>? {
-        return auditorEventConfig.metadata?.map { metadata ->
+    private fun fetchSource(rootNode: JsonNode, source: EventSource): EventSource {
+        return source.copy(
+            metadata = EventSourceMetadata(
+                id = fetchNodeValue(rootNode, source.metadata?.id),
+                email = fetchNodeValue(rootNode, source.metadata?.email),
+                name = fetchNodeValue(rootNode, source.metadata?.name)
+            )
+        )
+    }
+
+    private fun fetchMetadata(rootNode: JsonNode, metadata: Map<String, String>?): Map<String, String>? {
+        return metadata?.map { metadata ->
             val key = metadata.key
             val value = metadata.value
             key to fetchNodeValue(rootNode, value).orEmpty()

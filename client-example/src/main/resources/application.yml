@@ -4,7 +4,7 @@ auditor:
     eventSource:
       type: USER
       metadata:
-        id: "userId"
+        id: ${rand.id}
     metadata:
       itemIdAnything: ${itemNumber}-AND-MODEL-${model}
       noId: NoFetchingHere!
@@ -41,24 +41,24 @@ auditor:
       retries: 0
       value.serializer: org.apache.kafka.common.serialization.StringSerializer
 
-lowesiss:
-  springboot:
-    kafka:
-      clusters:
-        auditor-cluster:
-          bootstrapServers: "localhost:9092"
-          defaultConsumerConfigs:
-            auto.offset.reset: latest
-            client.id: product-catalog-initiateDataConsumer-client
-            enable.auto.commit: false
-            group.id: product-catalog-intakeConsumer-group
-            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      consumers:
-        auditor-consumer:
-          enabled: true
-          topic: testTopic
-          clusterId: "auditor-cluster"
+#lowesiss:
+#  springboot:
+#    kafka:
+#      clusters:
+#        auditor-cluster:
+#          bootstrapServers: "localhost:9092"
+#          defaultConsumerConfigs:
+#            auto.offset.reset: latest
+#            client.id: product-catalog-initiateDataConsumer-client
+#            enable.auto.commit: false
+#            group.id: product-catalog-intakeConsumer-group
+#            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      consumers:
+#        auditor-consumer:
+#          enabled: true
+#          topic: testTopic
+#          clusterId: "auditor-cluster"
 
 
 

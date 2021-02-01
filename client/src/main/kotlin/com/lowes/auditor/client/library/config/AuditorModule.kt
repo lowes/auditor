@@ -4,7 +4,7 @@ import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventFilter
-import com.lowes.auditor.client.infrastructure.frameworks.config.JaversModule
+import com.lowes.auditor.client.infrastructure.frameworks.config.ObjectDiffModule
 import com.lowes.auditor.client.library.service.AuditEventDecoratorService
 import com.lowes.auditor.client.library.service.AuditEventFilterService
 import com.lowes.auditor.client.library.service.AuditEventGeneratorService
@@ -21,7 +21,7 @@ internal class AuditorModule(
 ) {
 
     private val elementAggregatorUseCase: ElementAggregatorUseCase by lazy {
-        ElementAggregatorUseCase(JaversModule.objectDiffChecker)
+        ElementAggregatorUseCase(ObjectDiffModule.objectDiffChecker)
     }
 
     private val elementFilterUseCase: AuditEventElementFilter by lazy {

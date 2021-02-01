@@ -1,11 +1,8 @@
 package foo
 
 import com.lowes.auditor.client.api.Auditor
-import com.lowes.auditor.client.entities.domain.AuditorEventConfig
-import com.lowes.auditor.client.entities.domain.EventSourceConfig
-import com.lowes.auditor.client.entities.domain.EventSourceMetadataConfig
-import com.lowes.iss.springboot.kafkamodule.entities.interfaces.api.KafkaProducer
 import foo.model.Item
+import foo.model.Rand
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,14 +13,15 @@ import java.util.UUID
 @SpringBootApplication
 class ItemApplication(
     val auditor: Auditor,
-    val producer: KafkaProducer
 ) : CommandLineRunner {
     override fun run(vararg args: String?) {
         val oldItem = Item(
             itemNumber = UUID.randomUUID(),
             model = 1234,
             description = "old_item",
-            metadata = null
+            metadata = null,
+            rand = null,
+            rand2 = null
         )
 
         val newItemNumber = UUID.randomUUID()
@@ -31,23 +29,30 @@ class ItemApplication(
             itemNumber = newItemNumber,
             model = 9876,
             description = "new_item",
-            metadata = mapOf("new_item_id" to "98767")
+            metadata = mapOf("new_item_id" to "98767", "new_2" to "213"),
+            rand = Rand("randID"),
+            rand2 = null,
+            listItem = mutableListOf(Rand("21321"), Rand("12easx"), Rand("asdnjj")),
+            metadataRand = mapOf("new_item_id" to Rand("98767"))
         )
         println("Running auditor! for newItemNumber $newItemNumber")
-        for (i in 1..2) {
+//        for (i in 1..2) {
 
-            auditor.audit(
-                oldItem,
-                newItem,
-                auditorEventConfig = AuditorEventConfig(
-                    eventSource = EventSourceConfig(
-                        metadata = EventSourceMetadataConfig(
-                            name = "USERNAME"
-                        )
-                    ),
-                )
-            )
-        }
+        auditor.audit(
+            null,
+            newItem
+        )
+
+        auditor.audit(
+            newItem,
+            null
+        )
+
+        auditor.audit(
+            oldItem,
+            newItem
+        )
+//        }
         println("Done")
     }
 }

@@ -25,7 +25,7 @@ internal class ElementAggregatorUseCase(
                 grouped.collectList().map {
                     AuditEvent(
                         id = UUID.randomUUID(),
-                        applicationName = auditorEventConfig.applicationName.orEmpty(),
+                        applicationName = auditorEventConfig.applicationName.orDefault("NOT_CONFIGURED"),
                         timestamp = OffsetDateTime.now(ZoneId.of("UTC")),
                         type = grouped.key(),
                         source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
