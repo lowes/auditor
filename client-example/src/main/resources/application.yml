@@ -31,15 +31,7 @@ auditor:
     bootstrapServers: "localhost:9092"
     topic: testTopic
     configs:
-      acks: 0
-      batch.size: 1
-      buffer.memory: 33554432
       client.id: client-example
-      key.serializer: org.apache.kafka.common.serialization.StringSerializer
-      max.block.ms: 1000
-      max.in.flight.requests.per.connection: 1
-      retries: 0
-      value.serializer: org.apache.kafka.common.serialization.StringSerializer
 
 #lowesiss:
 #  springboot:

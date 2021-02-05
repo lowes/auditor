@@ -36,8 +36,6 @@ class ItemApplication(
             metadataRand = mapOf("new_item_id" to Rand("98767"))
         )
         println("Running auditor! for newItemNumber $newItemNumber")
-//        for (i in 1..2) {
-
         auditor.audit(
             null,
             newItem
@@ -52,7 +50,6 @@ class ItemApplication(
             oldItem,
             newItem
         )
-//        }
         println("Done")
     }
 }

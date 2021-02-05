@@ -19,8 +19,8 @@ internal class AuditEventModule(
         AuditEventProducerService(producerConfig, auditEventSender, JsonObject.objectWriter)
     }
 
-    private fun configs(producerConfig: AuditEventProducerConfig?): Map<String, String?> {
-        return mapOf(PRODUCER_BOOTSTRAP to producerConfig?.bootstrapServers)
-            .plus(producerConfig?.configs ?: mapOf())
+    private fun configs(producerConfig: AuditEventProducerConfig?): Map<String, String> {
+        return mapOf(PRODUCER_BOOTSTRAP to producerConfig?.bootstrapServers.orEmpty())
+            .plus(producerConfig?.getMergedConfig().orEmpty())
     }
 }
