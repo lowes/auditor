@@ -3,8 +3,8 @@ package com.lowes.auditor.client.infrastructure.event.service
 import com.fasterxml.jackson.databind.ObjectWriter
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
-import com.lowes.auditor.client.infrastructure.event.mapper.AuditEventMapper
 import com.lowes.auditor.core.entities.domain.AuditEvent
+import com.lowes.auditor.core.entities.util.AuditEventDTOMapper
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
@@ -42,7 +42,7 @@ internal abstract class EventProducerService(
                             ProducerRecord(
                                 producerConfig.topic,
                                 it.id.toString(),
-                                auditorObjectWriter.writeValueAsString(AuditEventMapper.toAuditEventDTO(it))
+                                auditorObjectWriter.writeValueAsString(AuditEventDTOMapper.toAuditEventDTO(it))
                             ),
                             it.id
                         )
