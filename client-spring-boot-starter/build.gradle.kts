@@ -1,6 +1,6 @@
 object Versions {
     // language and frameworks
-    const val springboot = "2.4.0"
+    const val springboot = "2.4.3"
 }
 
 plugins {
