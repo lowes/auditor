@@ -11,7 +11,7 @@ import reactor.core.scheduler.Schedulers
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(AuditorAutoConfig::class)
-internal class AuditorAutoConfigureModule(
+class AuditorAutoConfigureModule(
     private val auditorAutoConfig: AuditorAutoConfig
 ) {
 
