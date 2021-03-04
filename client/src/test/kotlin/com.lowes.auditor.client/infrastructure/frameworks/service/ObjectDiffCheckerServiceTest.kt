@@ -15,8 +15,8 @@ internal class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("two objects are passed to diff checker module") {
             val diff = diffChecker.diff(oldObject, newObject).collectList().block()
             val endTime = System.currentTimeMillis()
-            Then("diff time taken should be less than 60 ms") {
-                endTime - startTime shouldBeLessThan 60
+            Then("diff time taken should be less than 90 ms") {
+                endTime - startTime shouldBeLessThan 90
             }
             Then("diff list should not be empty") {
                 diff.isNullOrEmpty() shouldBe false
