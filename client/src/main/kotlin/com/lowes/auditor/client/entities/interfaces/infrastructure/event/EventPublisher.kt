@@ -2,7 +2,6 @@ package com.lowes.auditor.client.entities.interfaces.infrastructure.event
 
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
-import java.util.UUID
 
 /**
  * Event Publisher
@@ -16,5 +15,5 @@ interface EventPublisher {
      * @return
      * publish message contract method
      */
-    fun publishEvents(event: Flux<AuditEvent>): Flux<UUID>
+    fun publishEvents(event: Flux<AuditEvent>): Flux<String>
 }

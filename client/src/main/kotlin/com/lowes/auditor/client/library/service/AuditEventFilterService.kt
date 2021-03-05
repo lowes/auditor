@@ -13,15 +13,15 @@ internal class AuditEventFilterService(
 ) {
 
     fun filter(events: Flux<AuditEvent>, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {
-        return events.filter {
-            eventFilterUseCase.filter(it, auditorEventConfig.filters)
-        }
+        return Flux.deferContextual { context -> events.map { context to it } }
+            .filter { eventFilterUseCase.filter(it.first, it.second, auditorEventConfig.filters) }
             .map {
-                it.copy(elements = elementFilterUseCase.filter(it.elements, auditorEventConfig.filters?.element))
+                val event = it.second
+                it.first to
+                    event.copy(elements = elementFilterUseCase.filter(event.elements, auditorEventConfig.filters?.element))
             }
-            .filter { it.elements.isNotEmpty() }
-            .filter {
-                loggingFilterUseCase.filter(it, auditorEventConfig.filters)
-            }
+            .filter { it.second.elements.isNotEmpty() }
+            .filter { loggingFilterUseCase.filter(it.first, it.second, auditorEventConfig.filters) }
+            .map { it.second }
     }
 }

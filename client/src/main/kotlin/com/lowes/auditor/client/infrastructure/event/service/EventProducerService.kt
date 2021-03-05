@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
 import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderRecord
-import java.util.UUID
 
 /**
  * Event producer service
@@ -25,7 +24,7 @@ internal abstract class EventProducerService(
     private val kafkaSender: KafkaSender<String, String>,
     private val auditorObjectWriter: ObjectWriter
 ) : EventPublisher {
-    private val logger = LoggerFactory.getLogger(this::class.java)
+    private val logger = LoggerFactory.getLogger(EventProducerService::class.java)
 
     /**
      * Publish Message
@@ -33,9 +32,9 @@ internal abstract class EventProducerService(
      *
      * @return
      */
-    override fun publishEvents(event: Flux<AuditEvent>): Flux<UUID> {
+    override fun publishEvents(event: Flux<AuditEvent>): Flux<String> {
         return if (producerConfig?.enabled == true) {
-            kafkaSender.send<UUID>(
+            kafkaSender.send<String>(
                 event.doOnNext { logger.debug("Payload: {}", it) }
                     .map {
                         SenderRecord.create(
@@ -44,7 +43,7 @@ internal abstract class EventProducerService(
                                 it.id.toString(),
                                 auditorObjectWriter.writeValueAsString(AuditEventDTOMapper.toAuditEventDTO(it))
                             ),
-                            it.id
+                            it.id.toString()
                         )
                     }
             )
