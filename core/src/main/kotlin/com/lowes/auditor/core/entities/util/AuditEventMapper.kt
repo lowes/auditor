@@ -17,7 +17,7 @@ object AuditEventMapper {
     fun toAuditEvent(auditEventDTO: AuditEventDTO): AuditEvent {
         return AuditEvent(
             id = auditEventDTO.id,
-            applicationName = auditEventDTO.applicationName,
+            applicationName = auditEventDTO.applicationName.toLowerCase(),
             timestamp = auditEventDTO.timestamp,
             type = EventType.valueOf(auditEventDTO.type.value),
             source = EventSource(
