@@ -19,7 +19,7 @@ import reactor.kafka.sender.SenderRecord
  * @property objectMapper
  * @constructor Create empty Event producer service
  */
-internal abstract class EventProducerService(
+abstract class EventProducerService(
     private val producerConfig: AuditEventProducerConfig?,
     private val kafkaSender: KafkaSender<String, String>,
     private val auditorObjectWriter: ObjectWriter

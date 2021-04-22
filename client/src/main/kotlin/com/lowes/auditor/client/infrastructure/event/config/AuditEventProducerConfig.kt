@@ -5,7 +5,7 @@ data class AuditEventProducerConfig(
     var bootstrapServers: String? = null,
     var topic: String? = null,
     var configs: Map<String, String>? = null,
-    internal val preConfiguredProducerConfig: Map<String, String> = mapOf(
+    val preConfiguredProducerConfig: Map<String, String> = mapOf(
         "retries" to "2147483647",
         "delivery.timeout.ms" to "240000",
         "enable.idempotence" to "true",

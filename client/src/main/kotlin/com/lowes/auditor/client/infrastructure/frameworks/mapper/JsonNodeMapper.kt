@@ -7,7 +7,7 @@ import com.lowes.auditor.core.entities.domain.ElementMetadata
 import com.lowes.auditor.core.entities.domain.EventType
 import reactor.core.publisher.Flux
 
-internal object JsonNodeMapper {
+object JsonNodeMapper {
 
     fun toElement(node: JsonNode, eventType: EventType, fqcn: String): Flux<Element> {
         val hasFields = node.fields().hasNext()

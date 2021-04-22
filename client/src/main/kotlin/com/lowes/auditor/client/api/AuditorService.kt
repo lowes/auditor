@@ -7,7 +7,7 @@ import reactor.core.scheduler.Scheduler
 import reactor.util.context.Context
 import reactor.util.context.ContextView
 
-internal class AuditorService(
+class AuditorService(
     private val auditEventGeneratorService: AuditEventGeneratorService,
     private val auditorServiceScheduler: Scheduler,
 ) : Auditor {

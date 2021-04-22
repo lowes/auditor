@@ -11,7 +11,7 @@ import java.lang.StringBuilder
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-internal class AuditEventDecoratorService(
+class AuditEventDecoratorService(
     private val auditorObjectMapper: ObjectMapper,
     // supports pattern of form - ${JsonNodeHere}
     private val compiledPattern: Pattern = Pattern.compile("(\\\$\\{[\\w.]+\\})+")

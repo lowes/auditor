@@ -5,7 +5,7 @@ import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventFilter
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.util.context.ContextView
 
-internal class EventFilterUseCase : AuditEventFilter {
+class EventFilterUseCase : AuditEventFilter {
     override fun filter(context: ContextView, event: AuditEvent, filters: Filters?): Boolean {
         val eventFilter = filters?.event
         return if (eventFilter?.enabled == true) {

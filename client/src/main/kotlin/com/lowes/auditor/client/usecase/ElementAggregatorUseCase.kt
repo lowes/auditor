@@ -11,7 +11,7 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.UUID
 
-internal class ElementAggregatorUseCase(
+class ElementAggregatorUseCase(
     private val objectDiffChecker: ObjectDiffChecker
 ) {
     fun aggregate(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {

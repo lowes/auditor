@@ -7,7 +7,7 @@ import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderOptions
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG as PRODUCER_BOOTSTRAP
 
-internal class AuditEventModule(
+class AuditEventModule(
     producerConfig: AuditEventProducerConfig
 ) {
 

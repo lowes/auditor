@@ -7,7 +7,7 @@ import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 
-internal class AuditEventGeneratorService(
+class AuditEventGeneratorService(
     private val elementAggregatorUseCase: ElementAggregatorUseCase,
     private val initialConfig: AuditorEventConfig,
     private val eventPublisher: EventPublisher,

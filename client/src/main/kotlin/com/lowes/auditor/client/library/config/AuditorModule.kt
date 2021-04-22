@@ -15,7 +15,7 @@ import com.lowes.auditor.client.usecase.EventFilterUseCase
 import com.lowes.auditor.client.usecase.LoggingFilterUseCase
 import com.lowes.auditor.core.entities.util.JsonObject
 
-internal class AuditorModule(
+class AuditorModule(
     private val auditorEventConfig: AuditorEventConfig,
     private val elementFilters: List<AuditEventElementFilter>,
     private val eventPublisher: EventPublisher,

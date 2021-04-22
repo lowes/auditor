@@ -6,7 +6,7 @@ import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventFilter
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.core.publisher.Flux
 
-internal class AuditEventFilterService(
+class AuditEventFilterService(
     private val eventFilterUseCase: AuditEventFilter,
     private val elementFilterUseCase: AuditEventElementFilter,
     private val loggingFilterUseCase: AuditEventFilter,

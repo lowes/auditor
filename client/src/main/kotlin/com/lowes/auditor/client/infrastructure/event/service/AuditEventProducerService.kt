@@ -9,7 +9,7 @@ import reactor.kafka.sender.KafkaSender
  *
  * @constructor Create Empty Intake Producer
  */
-internal class AuditEventProducerService(
+class AuditEventProducerService(
     producerConfig: AuditEventProducerConfig,
     auditEventSender: KafkaSender<String, String>,
     auditorObjectWriter: ObjectWriter

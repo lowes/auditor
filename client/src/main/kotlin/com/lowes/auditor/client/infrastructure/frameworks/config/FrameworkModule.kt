@@ -5,7 +5,7 @@ import com.lowes.auditor.client.infrastructure.frameworks.service.DefaultLogProv
 import com.lowes.auditor.client.infrastructure.frameworks.service.ObjectDiffCheckerService
 import com.lowes.auditor.core.entities.util.JsonObject
 
-internal object FrameworkModule {
+object FrameworkModule {
 
     val objectDiffChecker: ObjectDiffChecker by lazy {
         ObjectDiffCheckerService(JsonObject.objectMapper)

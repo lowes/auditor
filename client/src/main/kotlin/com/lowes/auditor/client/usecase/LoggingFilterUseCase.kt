@@ -7,7 +7,7 @@ import com.lowes.auditor.core.entities.domain.AuditEvent
 import org.slf4j.LoggerFactory
 import reactor.util.context.ContextView
 
-internal class LoggingFilterUseCase(
+class LoggingFilterUseCase(
     private val logProvider: LogProvider
 ) : AuditEventFilter {
     private val logger = LoggerFactory.getLogger(LoggingFilterUseCase::class.java)

@@ -1,6 +1,6 @@
 package com.lowes.auditor.client.infrastructure.frameworks.model
 
-internal enum class NodeType {
+enum class NodeType {
     TEXT,
     ITERABLES,
 }

@@ -8,7 +8,7 @@ import com.lowes.auditor.core.entities.domain.Element
 import java.util.stream.Collectors
 import kotlin.streams.toList
 
-internal class ElementFilterUseCase(
+class ElementFilterUseCase(
     private val elementFilters: List<AuditEventElementFilter>
 ) : AuditEventElementFilter {
 
@@ -34,7 +34,7 @@ internal class ElementFilterUseCase(
     }
 }
 
-internal class InclusionFilter : AuditEventElementFilter {
+class InclusionFilter : AuditEventElementFilter {
 
     override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
         return elements
@@ -52,7 +52,7 @@ internal class InclusionFilter : AuditEventElementFilter {
     }
 }
 
-internal class ExclusionFilter : AuditEventElementFilter {
+class ExclusionFilter : AuditEventElementFilter {
 
     override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
         return elements

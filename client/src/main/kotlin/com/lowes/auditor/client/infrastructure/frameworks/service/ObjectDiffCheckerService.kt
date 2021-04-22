@@ -10,7 +10,7 @@ import com.lowes.auditor.core.entities.domain.EventType.CREATED
 import com.lowes.auditor.core.entities.domain.EventType.DELETED
 import reactor.core.publisher.Flux
 
-internal class ObjectDiffCheckerService(
+class ObjectDiffCheckerService(
     private val objectMapper: ObjectMapper
 ) : ObjectDiffChecker {
 

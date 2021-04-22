@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.longs.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 
-internal class ObjectDiffCheckerServiceTest : BehaviorSpec({
+class ObjectDiffCheckerServiceTest : BehaviorSpec({
     Given("A objectDiffCheckerInstance and two objects are present") {
         val diffChecker = FrameworkModule.objectDiffChecker
         val oldObject = DummyClass("123")
