@@ -28,6 +28,7 @@ interface Auditor {
 
     companion object {
 
+        @JvmStatic
         fun getInstance(
             producerConfig: AuditEventProducerConfig,
             auditorEventConfig: AuditorEventConfig,
@@ -39,6 +40,7 @@ interface Auditor {
             )
         }
 
+        @JvmStatic
         fun getInstance(
             producerConfig: AuditEventProducerConfig,
             auditorEventConfig: AuditorEventConfig,
@@ -52,6 +54,7 @@ interface Auditor {
             )
         }
 
+        @JvmStatic
         fun getInstance(
             producerConfig: AuditEventProducerConfig,
             auditorEventConfig: AuditorEventConfig,
@@ -67,6 +70,7 @@ interface Auditor {
             )
         }
 
+        @JvmStatic
         fun getInstance(
             eventPublisher: EventPublisher,
             auditorEventConfig: AuditorEventConfig,

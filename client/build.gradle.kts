@@ -6,7 +6,7 @@ object Versions {
 
 // dependencies
 dependencies {
-    implementation(project(":core"))
+    api(project(":core"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jackson}")
