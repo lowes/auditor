@@ -1,0 +1,29 @@
+[
+  {
+    "name": "stringList",
+    "updatedValue": "String",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.stringList.0",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "updatedValue": "auditor",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.subList.0.value",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": "cm",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.subList.0.uom",
+      "identifiers": null
+    }
+  }
+]

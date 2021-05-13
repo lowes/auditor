@@ -1,0 +1,29 @@
+[
+  {
+    "name": "id",
+    "updatedValue": "123",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadata.id",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "updatedValue": "100",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.subMap.one.value",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": "ft",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.subMap.one.uom",
+      "identifiers": null
+    }
+  }
+]

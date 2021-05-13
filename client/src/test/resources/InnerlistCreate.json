@@ -1,0 +1,56 @@
+[
+  {
+    "name": "id",
+    "updatedValue": "rand0",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.id",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "name",
+    "updatedValue": "rand0Name",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.name",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "updatedValue": "value1",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.value",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": "Ft",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.uom",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "listString",
+    "updatedValue": "test",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.listString.0",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "listString",
+    "updatedValue": "test1",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.listString.1",
+      "identifiers": null
+    }
+  }
+]

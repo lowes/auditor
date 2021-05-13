@@ -1,0 +1,38 @@
+[
+  {
+    "name": "itemNumber",
+    "updatedValue": null,
+    "previousValue": "1234",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.itemNumber",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "model",
+    "updatedValue": null,
+    "previousValue": "1234",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.model",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "description",
+    "updatedValue": null,
+    "previousValue": "new_item",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.description",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "price",
+    "updatedValue": null,
+    "previousValue": "5.67",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.price",
+      "identifiers": null
+    }
+  }
+]

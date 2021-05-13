@@ -14,5 +14,6 @@ data class Item(
 )
 
 data class Rand(
-    val id: String
+    val id: String,
+    val name: String
 )
