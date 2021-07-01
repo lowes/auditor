@@ -31,4 +31,24 @@ class AuditorService(
             .then()
             .subscribe()
     }
+
+    override fun log(entity: Any) {
+        log(entity, null, null)
+    }
+
+    override fun log(entity: Any, context: ContextView?) {
+        log(entity, null, context)
+    }
+
+    override fun log(entity: Any, auditorEventConfig: AuditorEventConfig?) {
+        log(entity, auditorEventConfig, null)
+    }
+
+    override fun log(entity: Any, auditorEventConfig: AuditorEventConfig?, context: ContextView?) {
+        auditEventGeneratorService.log(entity, auditorEventConfig)
+            .contextWrite { it.putAll(context.orDefault(Context.empty())) }
+            .subscribeOn(auditorServiceScheduler)
+            .then()
+            .subscribe()
+    }
 }

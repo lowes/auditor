@@ -26,6 +26,14 @@ interface Auditor {
 
     fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?, context: ContextView?)
 
+    fun log(entity: Any)
+
+    fun log(entity: Any, context: ContextView?)
+
+    fun log(entity: Any, auditorEventConfig: AuditorEventConfig?)
+
+    fun log(entity: Any, auditorEventConfig: AuditorEventConfig?, context: ContextView?)
+
     companion object {
 
         @JvmStatic
