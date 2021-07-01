@@ -12,6 +12,7 @@ import com.lowes.auditor.client.library.service.AuditEventGeneratorService
 import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
 import com.lowes.auditor.client.usecase.ElementFilterUseCase
 import com.lowes.auditor.client.usecase.EventFilterUseCase
+import com.lowes.auditor.client.usecase.EventLogUseCase
 import com.lowes.auditor.client.usecase.LoggingFilterUseCase
 import com.lowes.auditor.core.entities.util.JsonObject
 
@@ -46,13 +47,18 @@ class AuditorModule(
         AuditEventDecoratorService(JsonObject.objectMapper)
     }
 
+    private val eventLogUseCase: EventLogUseCase by lazy {
+        EventLogUseCase(FrameworkModule.objectLogGenerator)
+    }
+
     val auditEventGeneratorService: AuditEventGeneratorService by lazy {
         AuditEventGeneratorService(
             elementAggregatorUseCase,
             auditorEventConfig,
             eventPublisher,
             auditEventFilterService,
-            auditEventDecoratorService
+            auditEventDecoratorService,
+            eventLogUseCase
         )
     }
 }
