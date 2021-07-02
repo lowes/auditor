@@ -29,7 +29,7 @@ auditor:
   producer:
     enabled: true
     bootstrapServers: "localhost:9092"
-    topic: testTopic
+    topic: auditTopic
     configs:
       client.id: client-example
 
