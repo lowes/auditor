@@ -23,7 +23,7 @@ class EventLogUseCase(
                     timestamp = OffsetDateTime.now(ZoneId.of("UTC")),
                     type = EventType.CREATED,
                     source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
-                    elements = emptyList(),
+                    elements = null,
                     subType = auditorEventConfig.eventSubType,
                     metadata = auditorEventConfig.metadata,
                     log = it

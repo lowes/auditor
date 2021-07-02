@@ -2,7 +2,6 @@ package com.lowes.auditor.client.library.service
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import com.lowes.auditor.core.entities.domain.EventSource
 import com.lowes.auditor.core.entities.domain.EventSourceMetadata
@@ -17,7 +16,7 @@ class AuditEventDecoratorService(
     private val compiledPattern: Pattern = Pattern.compile("(\\\$\\{[\\w.]+\\})+")
 ) {
 
-    fun decorate(events: Flux<AuditEvent>, auditorEventConfig: AuditorEventConfig, newObject: Any?): Flux<AuditEvent> {
+    fun decorate(events: Flux<AuditEvent>, newObject: Any?): Flux<AuditEvent> {
         return events.map {
             val rootNode = auditorObjectMapper.valueToTree<JsonNode>(newObject)
             val source = it.source
@@ -41,8 +40,8 @@ class AuditEventDecoratorService(
         )
     }
 
-    private fun fetchMetadata(rootNode: JsonNode, metadata: Map<String, String>?): Map<String, String>? {
-        return metadata?.map { metadata ->
+    private fun fetchMetadata(rootNode: JsonNode, metadataParam: Map<String, String>?): Map<String, String>? {
+        return metadataParam?.map { metadata ->
             val key = metadata.key
             val value = metadata.value
             key to fetchNodeValue(rootNode, value).orEmpty()

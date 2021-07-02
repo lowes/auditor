@@ -23,7 +23,7 @@ class AuditEventGeneratorService(
     fun audit(oldObject: Any?, newObject: Any?, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = elementAggregatorUseCase.aggregate(oldObject, newObject, config)
-        val decoratedEvents = auditEventDecoratorService.decorate(events, config, newObject)
+        val decoratedEvents = auditEventDecoratorService.decorate(events, newObject)
         val filteredEvents = auditEventFilterService.filter(decoratedEvents, config)
         return eventPublisher.publishEvents(filteredEvents)
             .flatMap { events }
@@ -33,7 +33,7 @@ class AuditEventGeneratorService(
     fun log(entity: Any, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = Flux.from(eventLogUseCase.logEvent(entity, config))
-        val decoratedEvents = auditEventDecoratorService.decorate(events, config, entity)
+        val decoratedEvents = auditEventDecoratorService.decorate(events, entity)
         val filteredEvents = auditEventFilterService.filter(decoratedEvents, config)
         return eventPublisher.publishEvents(filteredEvents)
             .flatMap { events }

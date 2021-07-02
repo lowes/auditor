@@ -12,9 +12,9 @@ class ElementFilterUseCase(
     private val elementFilters: List<AuditEventElementFilter>
 ) : AuditEventElementFilter {
 
-    override fun filter(elements: List<Element>, elementFilterConfig: ElementFilter?): List<Element> {
-        return if (elementFilterConfig?.enabled == true) {
-            elementFilterConfig
+    override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
+        return if (elementFilter?.enabled == true) {
+            elementFilter
                 .types
                 ?.stream()
                 ?.map { typeName ->
@@ -24,7 +24,7 @@ class ElementFilterUseCase(
                         .findFirst()
                         .getOrNull()
                 }
-                ?.map { it?.filter(elements, elementFilterConfig) }
+                ?.map { it?.filter(elements, elementFilter) }
                 ?.reduce { acc, list ->
                     acc?.stream()?.filter { list?.contains(it) == true }?.collect(Collectors.toList())
                 }?.get().orEmpty()

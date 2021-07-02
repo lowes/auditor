@@ -18,9 +18,9 @@ class AuditEventFilterService(
             .map {
                 val event = it.second
                 it.first to
-                    event.copy(elements = elementFilterUseCase.filter(event.elements, auditorEventConfig.filters?.element))
+                    event.copy(elements = elementFilterUseCase.filter(event.elements.orEmpty(), auditorEventConfig.filters?.element))
             }
-            .filter { it.second.elements.isNotEmpty() }
+            .filter { if (it.second.log.isNullOrEmpty()) !it.second.elements.isNullOrEmpty() else true }
             .filter { loggingFilterUseCase.filter(it.first, it.second, auditorEventConfig.filters) }
             .map { it.second }
     }
