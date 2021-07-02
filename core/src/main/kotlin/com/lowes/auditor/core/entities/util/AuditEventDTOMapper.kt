@@ -26,7 +26,8 @@ object AuditEventDTOMapper {
             ),
             elements = toElementDTO(auditEvent.elements),
             subType = auditEvent.subType,
-            metadata = auditEvent.metadata
+            metadata = auditEvent.metadata,
+            log = auditEvent.log
         )
     }
 
