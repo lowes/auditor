@@ -31,8 +31,8 @@ object AuditEventMapper {
         )
     }
 
-    private fun toElement(elementsDTO: List<ElementDTO>): List<Element> {
-        return elementsDTO.map {
+    private fun toElement(elementsDTO: List<ElementDTO>?): List<Element>? {
+        return elementsDTO?.map {
             Element(
                 name = it.name,
                 previousValue = it.previousValue,
