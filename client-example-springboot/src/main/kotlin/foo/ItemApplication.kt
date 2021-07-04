@@ -52,6 +52,9 @@ class ItemApplication(
             oldItem,
             newItem
         )
+
+        auditor.log(newItem.copy(description = "logging description"))
+
         println("Done")
     }
 }

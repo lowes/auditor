@@ -9,6 +9,11 @@ class ObjectLogGeneratorService(
 ) : ObjectLogGenerator {
 
     override fun generate(entity: Any): Mono<String> {
-        return Mono.fromCallable { objectMapper.writeValueAsString(entity) }
+        return Mono.fromCallable {
+            when (entity) {
+                is String -> entity
+                else -> objectMapper.writeValueAsString(entity)
+            }
+        }
     }
 }
