@@ -34,7 +34,7 @@ public class PriceApplication implements CommandLineRunner {
         System.out.println("Running auditor! for newItemNumber $newItemNumber");
         auditor.audit(oldPrice, newPrice);
 
-        auditor.log(new Price(UUID.randomUUID(), null, "logging description",new HashMap<>()));
+        auditor.log(new Price(UUID.randomUUID(), null, "logging description", new HashMap<>()));
 
         System.out.println("Done");
     }
