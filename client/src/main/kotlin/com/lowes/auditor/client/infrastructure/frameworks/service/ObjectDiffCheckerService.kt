@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.ObjectDiffChecker
+import com.lowes.auditor.client.entities.util.ONE_THOUSAND
+import com.lowes.auditor.client.entities.util.TWO
 import com.lowes.auditor.client.entities.util.orDefault
 import com.lowes.auditor.client.infrastructure.frameworks.mapper.JsonNodeMapper
 import com.lowes.auditor.core.entities.domain.Element
@@ -30,7 +32,7 @@ class ObjectDiffCheckerService(
         val objectOneElements = getElementsWhenSingleObjectExists(objectOne, DELETED)
         val objectTwoElements = getElementsWhenSingleObjectExists(objectTwo, CREATED)
         return Flux.merge(objectOneElements, objectTwoElements)
-            .groupBy({ it.metadata?.fqdn }, auditorEventConfig.maxElements?.times(2).orDefault(1000))
+            .groupBy({ it.metadata?.fqdn }, auditorEventConfig.maxElements?.times(TWO).orDefault(ONE_THOUSAND))
             .flatMap {
                 it.reduce { left, right ->
                     when {
