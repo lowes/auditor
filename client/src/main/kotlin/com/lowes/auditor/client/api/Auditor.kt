@@ -100,7 +100,8 @@ interface Auditor {
             logProvider: LogProvider,
             auditorEventConfig: AuditorEventConfig = AuditorEventConfig(
                 applicationName = "NOT_CONFIGURED",
-                eventSource = EventSourceConfig(type = EventSourceType.SYSTEM)
+                eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
+                maxElements = 500
             ),
             elementFilters: List<AuditEventElementFilter> = emptyList(),
             auditorServiceScheduler: Scheduler = Schedulers.newParallel("auditorServiceScheduler")

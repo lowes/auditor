@@ -11,6 +11,7 @@ data class AuditorEventConfig(
     var eventSubType: String? = null,
     var metadata: Map<String, String>? = null,
     var filters: Filters? = null,
+    var maxElements: Int? = null
 )
 
 data class Filters(

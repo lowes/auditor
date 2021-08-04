@@ -1,6 +1,7 @@
 package com.lowes.auditor.client.issspringboot.infrastructure.frameworks.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
 import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.DummyClass
 import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item
@@ -13,7 +14,7 @@ import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
 
 class ObjectDiffCheckerServiceTest : BehaviorSpec({
-    val diffChecker = FrameworkModule.objectDiffChecker
+    val diffChecker = FrameworkModule.getObjectDiffChecker(AuditorEventConfig())
     val obj = ObjectMapper()
 
     Given("A objectDiffCheckerInstance and two objects are present") {

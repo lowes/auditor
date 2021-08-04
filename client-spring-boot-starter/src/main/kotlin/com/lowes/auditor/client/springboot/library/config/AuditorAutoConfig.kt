@@ -16,7 +16,8 @@ class AuditorAutoConfig {
         applicationName = NOT_CONFIGURED,
         eventSource = EventSourceConfig(
             type = EventSourceType.SYSTEM
-        )
+        ),
+        maxElements = 500
     )
     var producer: AuditEventProducerConfig = AuditEventProducerConfig()
 }

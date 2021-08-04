@@ -24,7 +24,7 @@ class AuditorModule(
 ) {
 
     private val elementAggregatorUseCase: ElementAggregatorUseCase by lazy {
-        ElementAggregatorUseCase(FrameworkModule.objectDiffChecker)
+        ElementAggregatorUseCase(FrameworkModule.getObjectDiffChecker(auditorEventConfig))
     }
 
     private val elementFilterUseCase: AuditEventElementFilter by lazy {
