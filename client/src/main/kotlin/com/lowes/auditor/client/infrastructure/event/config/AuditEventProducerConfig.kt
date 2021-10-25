@@ -7,7 +7,8 @@ data class AuditEventProducerConfig(
     var configs: Map<String, String>? = null,
     val preConfiguredProducerConfig: Map<String, String> = mapOf(
         "retries" to "2147483647",
-        "delivery.timeout.ms" to "240000",
+        "request.timeout.ms" to "300000",
+        "delivery.timeout.ms" to "600000",
         "enable.idempotence" to "true",
         "acks" to "all",
         "linger.ms" to "100",
