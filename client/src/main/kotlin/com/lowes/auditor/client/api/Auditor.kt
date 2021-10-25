@@ -1,7 +1,6 @@
 package com.lowes.auditor.client.api
 
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
-import com.lowes.auditor.client.entities.domain.EventSourceConfig
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.LogProvider
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
@@ -11,7 +10,6 @@ import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
 import com.lowes.auditor.client.library.config.AuditorModule
 import com.lowes.auditor.client.usecase.ExclusionFilter
 import com.lowes.auditor.client.usecase.InclusionFilter
-import com.lowes.auditor.core.entities.domain.EventSourceType
 import reactor.core.scheduler.Scheduler
 import reactor.core.scheduler.Schedulers
 import reactor.util.context.ContextView
@@ -98,11 +96,7 @@ interface Auditor {
         private fun getDefaultInstance(
             eventPublisher: EventPublisher,
             logProvider: LogProvider,
-            auditorEventConfig: AuditorEventConfig = AuditorEventConfig(
-                applicationName = "NOT_CONFIGURED",
-                eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
-                maxElements = 500
-            ),
+            auditorEventConfig: AuditorEventConfig = AuditorEventConfig.getDefaultInstance(),
             elementFilters: List<AuditEventElementFilter> = emptyList(),
             auditorServiceScheduler: Scheduler = Schedulers.newParallel("auditorServiceScheduler")
         ): Auditor {

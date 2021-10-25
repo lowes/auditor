@@ -1,9 +1,14 @@
 package com.lowes.auditor.client.entities.domain
 
+import com.lowes.auditor.client.entities.util.FIVE_HUNDRED
+import com.lowes.auditor.client.entities.util.TEN
+import com.lowes.auditor.client.entities.util.THIRTY
+import com.lowes.auditor.core.entities.constants.NOT_CONFIGURED
 import com.lowes.auditor.core.entities.domain.EventSource
 import com.lowes.auditor.core.entities.domain.EventSourceMetadata
 import com.lowes.auditor.core.entities.domain.EventSourceType
 import com.lowes.auditor.core.entities.domain.EventType
+import java.time.Duration
 
 data class AuditorEventConfig(
     var applicationName: String? = null,
@@ -11,8 +16,23 @@ data class AuditorEventConfig(
     var eventSubType: String? = null,
     var metadata: Map<String, String>? = null,
     var filters: Filters? = null,
-    var maxElements: Int? = null
-)
+    var maxElements: Int? = null,
+    var retry: RetryPublisher? = null,
+) {
+    companion object {
+        fun getDefaultInstance(): AuditorEventConfig {
+            return AuditorEventConfig(
+                applicationName = NOT_CONFIGURED,
+                eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
+                maxElements = FIVE_HUNDRED,
+                retry = RetryPublisher(
+                    count = TEN.toLong(),
+                    delay = Duration.ofSeconds(THIRTY.toLong())
+                )
+            )
+        }
+    }
+}
 
 data class Filters(
     var event: EventFilter? = null,
@@ -66,3 +86,8 @@ data class EventSourceMetadataConfig(
         )
     }
 }
+
+data class RetryPublisher(
+    var count: Long? = null,
+    var delay: Duration? = null
+)
