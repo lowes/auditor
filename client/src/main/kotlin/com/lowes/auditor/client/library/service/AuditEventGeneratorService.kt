@@ -8,7 +8,6 @@ import com.lowes.auditor.client.entities.util.merge
 import com.lowes.auditor.client.entities.util.orDefault
 import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
 import com.lowes.auditor.client.usecase.EventLogUseCase
-import com.lowes.auditor.client.usecase.LoggingFilterUseCase
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
@@ -24,7 +23,7 @@ class AuditEventGeneratorService(
     private val auditEventDecoratorService: AuditEventDecoratorService,
     private val eventLogUseCase: EventLogUseCase,
 ) {
-    private val logger = LoggerFactory.getLogger(LoggingFilterUseCase::class.java)
+    private val logger = LoggerFactory.getLogger(AuditEventGeneratorService::class.java)
 
     fun audit(oldObject: Any?, newObject: Any?, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
@@ -57,7 +56,8 @@ class AuditEventGeneratorService(
         )
             .doBeforeRetry {
                 logger.info(
-                    "$message, hence retrying. exception:{}, retryCount:{}",
+                    "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
+                    message,
                     it.failure(),
                     it.totalRetries()
                 )
