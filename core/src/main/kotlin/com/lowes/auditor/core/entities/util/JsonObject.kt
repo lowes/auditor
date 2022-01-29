@@ -9,7 +9,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
+/**
+ * Provides a default instance of JsonObject and its properties to be used across modules
+ */
 object JsonObject {
+    /**
+     * Returns a lazily initialized [ObjectMapper] singleton instance
+     */
     val objectMapper: ObjectMapper by lazy {
         jacksonObjectMapper()
             .registerModules(AfterburnerModule(), JavaTimeModule())
@@ -20,6 +26,9 @@ object JsonObject {
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
     }
 
+    /**
+     * Returns a lazily initialized [objectWriter] singleton instance
+     */
     val objectWriter: ObjectWriter by lazy {
         objectMapper.writer()
     }

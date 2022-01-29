@@ -12,8 +12,16 @@ import com.lowes.auditor.core.infrastructure.event.model.ElementDTO
 import com.lowes.auditor.core.infrastructure.event.model.ElementMetadataDTO
 import com.lowes.auditor.core.infrastructure.event.model.EventSourceMetadataDTO
 
+/**
+ * Mapper class responsible for converting to [AuditEvent] entity
+ */
 object AuditEventMapper {
 
+    /**
+     * converts [AuditEventDTO] to [AuditEvent]
+     * @param auditEventDTO An [AuditEventDTO] entity
+     * @return converted [AuditEvent] entity
+     */
     fun toAuditEvent(auditEventDTO: AuditEventDTO): AuditEvent {
         return AuditEvent(
             id = auditEventDTO.id,
@@ -31,6 +39,9 @@ object AuditEventMapper {
         )
     }
 
+    /**
+     * Converts list of [ElementDTO] to list of [Element]
+     */
     private fun toElement(elementsDTO: List<ElementDTO>?): List<Element>? {
         return elementsDTO?.map {
             Element(
@@ -42,6 +53,9 @@ object AuditEventMapper {
         }
     }
 
+    /**
+     * Converts [ElementMetadataDTO] to [ElementMetadata]
+     */
     private fun toElementMetadata(elementMetadataDTO: ElementMetadataDTO?): ElementMetadata {
         return ElementMetadata(
             fqdn = elementMetadataDTO?.fqdn,
@@ -49,6 +63,9 @@ object AuditEventMapper {
         )
     }
 
+    /**
+     * Converts [EventSourceMetadataDTO] to [EventSourceMetadata]
+     */
     private fun toSourceMetadata(sourceMetadataDTO: EventSourceMetadataDTO?): EventSourceMetadata {
         return EventSourceMetadata(
             id = sourceMetadataDTO?.id,
