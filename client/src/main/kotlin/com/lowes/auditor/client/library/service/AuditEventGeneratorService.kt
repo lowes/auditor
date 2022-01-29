@@ -4,6 +4,7 @@ import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPublisher
 import com.lowes.auditor.client.entities.util.TEN
 import com.lowes.auditor.client.entities.util.THIRTY
+import com.lowes.auditor.client.entities.util.ZERO
 import com.lowes.auditor.client.entities.util.merge
 import com.lowes.auditor.client.entities.util.orDefault
 import com.lowes.auditor.client.usecase.ElementAggregatorUseCase
@@ -11,7 +12,7 @@ import com.lowes.auditor.client.usecase.EventLogUseCase
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
-import reactor.util.retry.RetryBackoffSpec
+import reactor.util.retry.Retry
 import reactor.util.retry.RetrySpec
 import java.time.Duration
 
@@ -49,18 +50,22 @@ class AuditEventGeneratorService(
             .flatMap { events }
     }
 
-    private fun doRetry(config: AuditorEventConfig, message: String): RetryBackoffSpec {
-        return RetrySpec.fixedDelay(
-            config.retry?.count.orDefault(TEN.toLong()),
-            config.retry?.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
-        )
-            .doBeforeRetry {
-                logger.info(
-                    "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
-                    message,
-                    it.failure(),
-                    it.totalRetries()
-                )
-            }
+    private fun doRetry(config: AuditorEventConfig, message: String): Retry {
+        return if (config.retry?.enabled == true) {
+             RetrySpec.fixedDelay(
+                    config.retry.count.orDefault(TEN.toLong()),
+                    config.retry.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
+            )
+                    .doBeforeRetry {
+                        logger.info(
+                                "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
+                                message,
+                                it.failure(),
+                                it.totalRetries()
+                        )
+                    }
+        } else {
+            RetrySpec.max(ZERO.toLong())
+        }
     }
 }
