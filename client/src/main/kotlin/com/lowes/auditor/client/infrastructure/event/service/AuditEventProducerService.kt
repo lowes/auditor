@@ -5,12 +5,14 @@ import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerCo
 import reactor.kafka.sender.KafkaSender
 
 /**
- * Audit event producer service
- *
- * @constructor Create Empty Intake Producer
+ * Audit Event producer service responsible for sending events to kafka
+ * @property producerConfig instance of [AuditEventProducerConfig] containing producer configs for kafka
+ * @property auditEventSender instance of [KafkaSender] used for sending message to kafka
+ * @property auditorObjectWriter instance of [ObjectWriter] used for serializing message to kafka
+ * @see [EventProducerService]
  */
 class AuditEventProducerService(
-    producerConfig: AuditEventProducerConfig,
-    auditEventSender: KafkaSender<String, String>,
-    auditorObjectWriter: ObjectWriter
+        private val producerConfig: AuditEventProducerConfig,
+        private val auditEventSender: KafkaSender<String, String>,
+        private val auditorObjectWriter: ObjectWriter
 ) : EventProducerService(producerConfig, auditEventSender, auditorObjectWriter)

@@ -12,12 +12,11 @@ import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderRecord
 
 /**
- * Event producer service
- *
- * @property producerConfig
- * @property kafkaSender
- * @property objectMapper
- * @constructor Create empty Event producer service
+ * Event producer service responsible for sending events to kafka
+ * @property producerConfig instance of [AuditEventProducerConfig] containing producer configs for kafka
+ * @property kafkaSender instance of [KafkaSender] used for sending message to kafka
+ * @property auditorObjectWriter instance of [ObjectWriter] used for serializing message to kafka
+ * @see [EventPublisher]
  */
 abstract class EventProducerService(
     private val producerConfig: AuditEventProducerConfig?,
@@ -27,10 +26,8 @@ abstract class EventProducerService(
     private val logger = LoggerFactory.getLogger(EventProducerService::class.java)
 
     /**
-     * Publish Message
-     * @param event
-     *
-     * @return
+     * Publish events to underlying kafka stream
+     * @see [EventPublisher.publishEvents]
      */
     override fun publishEvents(event: Flux<AuditEvent>): Flux<String> {
         return if (producerConfig?.enabled == true) {
