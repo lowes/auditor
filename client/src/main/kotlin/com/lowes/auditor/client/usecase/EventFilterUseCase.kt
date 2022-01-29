@@ -12,7 +12,7 @@ class EventFilterUseCase : AuditEventFilter {
             if (eventFilter.type.isNullOrEmpty()) {
                 true
             } else {
-                eventFilter.type?.contains(event.type) == true
+                eventFilter.type.contains(event.type)
             }
         } else {
             true

@@ -10,22 +10,37 @@ import com.lowes.auditor.core.entities.domain.EventSourceType
 import com.lowes.auditor.core.entities.domain.EventType
 import java.time.Duration
 
-data class AuditorEventConfig(
-    var applicationName: String? = null,
-    var eventSource: EventSourceConfig? = null,
-    var eventSubType: String? = null,
-    var metadata: Map<String, String>? = null,
-    var filters: Filters? = null,
-    var maxElements: Int? = null,
-    var retry: RetryPublisher? = null,
+/**
+ * Data class containing configurations for auditor
+ * @property applicationName name of the application that will be sent as part of audit
+ * @property eventSource instance of [EventSourceConfig]
+ * @property eventSubType subtype of the audit event that will be sent as part of audit
+ * @property metadata additional metadata to be associated to each audit
+ * @property filters instance of [Filters] that provides different filters to run during the audit generation
+ * @property maxElements maximum number of elements to be audited.
+ * @property retry instance of [RetryPublisherConfig] controlling number of retries in case of errors.
+ */
+data class AuditorEventConfig (
+        val applicationName: String? = null,
+        val eventSource: EventSourceConfig? = null,
+        val eventSubType: String? = null,
+        val metadata: Map<String, String>? = null,
+        val filters: Filters? = null,
+        val maxElements: Int? = null,
+        val retry: RetryPublisherConfig? = null,
 ) {
     companion object {
+        /**
+         * Creates instance of [AuditorEventConfig] with appropriate defaults
+         * @return instance of [AuditorEventConfig]
+         */
         fun getDefaultInstance(): AuditorEventConfig {
             return AuditorEventConfig(
                 applicationName = NOT_CONFIGURED,
                 eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
                 maxElements = FIVE_HUNDRED,
-                retry = RetryPublisher(
+                retry = RetryPublisherConfig(
+                        enabled = true,
                     count = TEN.toLong(),
                     delay = Duration.ofSeconds(THIRTY.toLong())
                 )
@@ -34,36 +49,69 @@ data class AuditorEventConfig(
     }
 }
 
+/**
+ * Data class containing filter details. These filters are used during audit generation process to include/exclude/log
+ * audit elements.
+ * @property event instance of [EventFilter] which filters elements based on event type
+ * @property element instance of [ElementFilter] which filters elements based on Element type
+ * @property logging instance of [LoggingFilter] which logs audit events
+ */
 data class Filters(
-    var event: EventFilter? = null,
-    var element: ElementFilter? = null,
-    var logging: LoggingFilter? = null,
+    val event: EventFilter? = null,
+    val element: ElementFilter? = null,
+    val logging: LoggingFilter? = null,
 )
 
+/**
+ * Data class containing event filters details. These filters events based on [EventType]
+ * @property enabled [Boolean] flag to enable/disable the feature
+ * @property type list of [EventType]
+ */
 data class EventFilter(
-    var enabled: Boolean = false,
-    var type: List<EventType>? = null,
+    val enabled: Boolean? = null,
+    val type: List<EventType>? = null,
 )
 
+/**
+ * Data class containing element filters details. These filters elements based on [EventType]
+ * @property enabled [Boolean] flag to enable/disable the feature
+ * @property types list of element filters like "InclusionFilter" or "ExclusionFilter"
+ * @property options instance of [ElementFilterOptions]
+ */
 data class ElementFilter(
-    var enabled: Boolean = false,
-    var types: List<String>? = null,
-    var options: ElementFilterOptions? = null,
+    val enabled: Boolean? = null,
+    val types: List<String>? = null,
+    val options: ElementFilterOptions? = null,
 )
 
+/**
+ * Data class containing logging filter details
+ * @property enabled [Boolean] flag to enable/disable the logging feature
+ */
 data class LoggingFilter(
-    var enabled: Boolean = false,
+    val enabled: Boolean? = null,
 )
 
+/**
+ * Data class containing configurations for Element filters.
+ * @property includes list of element which will be used when an "InclusionFilter" is used
+ * @property excludes list of element which will be used when an "ExclusionFilter" is used
+ * @property metaData additional metadata that can be used to decorate audited elements
+ */
 data class ElementFilterOptions(
-    var includes: List<String>? = null,
-    var excludes: List<String>? = null,
-    var metaData: Map<String, String>? = null
+    val includes: List<String>? = null,
+    val excludes: List<String>? = null,
+    val metaData: Map<String, String>? = null
 )
 
+/**
+ * Data class containing configurations for event source
+ * @property type instance of [EventSourceType]
+ * @property metadata instance of [EventSourceMetadataConfig]
+ */
 data class EventSourceConfig(
-    var type: EventSourceType? = null,
-    var metadata: EventSourceMetadataConfig? = null,
+    val type: EventSourceType? = null,
+    val metadata: EventSourceMetadataConfig? = null,
 ) {
     fun toEventSource(): EventSource {
         return EventSource(
@@ -73,10 +121,16 @@ data class EventSourceConfig(
     }
 }
 
+/**
+ * Data class containing metadata configurations for an event source
+ * @property id identifier for the event source
+ * @property email email for the event source
+ * @property name name for the event source
+ */
 data class EventSourceMetadataConfig(
-    var id: String? = null,
-    var email: String? = null,
-    var name: String? = null,
+    val id: String? = null,
+    val email: String? = null,
+    val name: String? = null,
 ) {
     fun toEventSourceMetadata(): EventSourceMetadata {
         return EventSourceMetadata(
@@ -87,7 +141,14 @@ data class EventSourceMetadataConfig(
     }
 }
 
-data class RetryPublisher(
-    var count: Long? = null,
-    var delay: Duration? = null
+/**
+ * Data class configurations for retry publisher
+ * @property enabled [Boolean] flag to enable/disable the logging feature
+ * @property count number of times a retry will be attempted for failed event publish
+ * @property delay instance of [Duration] signifying delay between consecutive retry attempts.
+ */
+data class RetryPublisherConfig(
+        val enabled: Boolean? = null,
+        val count: Long? = null,
+        val delay: Duration? = null
 )
