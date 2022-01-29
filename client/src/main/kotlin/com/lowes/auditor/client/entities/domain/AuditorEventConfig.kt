@@ -20,14 +20,14 @@ import java.time.Duration
  * @property maxElements maximum number of elements to be audited.
  * @property retry instance of [RetryPublisherConfig] controlling number of retries in case of errors.
  */
-data class AuditorEventConfig (
-        val applicationName: String? = null,
-        val eventSource: EventSourceConfig? = null,
-        val eventSubType: String? = null,
-        val metadata: Map<String, String>? = null,
-        val filters: Filters? = null,
-        val maxElements: Int? = null,
-        val retry: RetryPublisherConfig? = null,
+data class AuditorEventConfig(
+    val applicationName: String? = null,
+    val eventSource: EventSourceConfig? = null,
+    val eventSubType: String? = null,
+    val metadata: Map<String, String>? = null,
+    val filters: Filters? = null,
+    val maxElements: Int? = null,
+    val retry: RetryPublisherConfig? = null,
 ) {
     companion object {
         /**
@@ -40,7 +40,7 @@ data class AuditorEventConfig (
                 eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
                 maxElements = FIVE_HUNDRED,
                 retry = RetryPublisherConfig(
-                        enabled = true,
+                    enabled = true,
                     count = TEN.toLong(),
                     delay = Duration.ofSeconds(THIRTY.toLong())
                 )
@@ -148,7 +148,7 @@ data class EventSourceMetadataConfig(
  * @property delay instance of [Duration] signifying delay between consecutive retry attempts.
  */
 data class RetryPublisherConfig(
-        val enabled: Boolean? = null,
-        val count: Long? = null,
-        val delay: Duration? = null
+    val enabled: Boolean? = null,
+    val count: Long? = null,
+    val delay: Duration? = null
 )

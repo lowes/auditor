@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = AUDITOR)
-data class AuditorAutoConfig (
+data class AuditorAutoConfig(
     val config: AuditorEventConfig = AuditorEventConfig.getDefaultInstance(),
     val producer: AuditEventProducerConfig = AuditEventProducerConfig()
 )

@@ -52,18 +52,18 @@ class AuditEventGeneratorService(
 
     private fun doRetry(config: AuditorEventConfig, message: String): Retry {
         return if (config.retry?.enabled == true) {
-             RetrySpec.fixedDelay(
-                    config.retry.count.orDefault(TEN.toLong()),
-                    config.retry.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
+            RetrySpec.fixedDelay(
+                config.retry.count.orDefault(TEN.toLong()),
+                config.retry.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
             )
-                    .doBeforeRetry {
-                        logger.info(
-                                "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
-                                message,
-                                it.failure(),
-                                it.totalRetries()
-                        )
-                    }
+                .doBeforeRetry {
+                    logger.info(
+                        "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
+                        message,
+                        it.failure(),
+                        it.totalRetries()
+                    )
+                }
         } else {
             RetrySpec.max(ZERO.toLong())
         }
