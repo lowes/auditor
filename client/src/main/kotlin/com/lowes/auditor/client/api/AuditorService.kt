@@ -7,6 +7,9 @@ import reactor.core.scheduler.Scheduler
 import reactor.util.context.Context
 import reactor.util.context.ContextView
 
+/**
+ * Default implementation class for [Auditor] interface.
+ */
 class AuditorService(
     private val auditEventGeneratorService: AuditEventGeneratorService,
     private val auditorServiceScheduler: Scheduler,
