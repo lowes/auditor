@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PriceApplication implements CommandLineRunner {
-    private Auditor auditor;
+    private final Auditor auditor;
 
     public PriceApplication(Auditor auditor) {
         this.auditor = auditor;
