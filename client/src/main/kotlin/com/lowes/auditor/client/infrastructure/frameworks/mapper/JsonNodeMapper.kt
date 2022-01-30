@@ -8,8 +8,19 @@ import com.lowes.auditor.core.entities.domain.ElementMetadata
 import com.lowes.auditor.core.entities.domain.EventType
 import reactor.core.publisher.Flux
 
+/**
+ * Provides functionality to parse a [JsonNode] and map it to equivalent flux of [Element]
+ */
 object JsonNodeMapper {
 
+    /**
+     * Converts [JsonNode] to flux of [Element]. It recursively iterates through all object properties
+     * and used [EventType] to determine the type of [Element] to generate
+     * @param node instance of type [JsonNode]
+     * @param eventType instance of type [EventType]
+     * @param fqcn fully qualified class name
+     * @return flux of [Element]
+     */
     fun toElement(node: JsonNode, eventType: EventType, fqcn: String): Flux<Element> {
         val hasFields = node.fields().hasNext()
         return Flux.fromIterable(getIterables(hasFields, node))
@@ -69,6 +80,9 @@ object JsonNodeMapper {
             }
     }
 
+    /**
+     * Derives the fully qualified class name for a given element.
+     */
     private fun getFqcnValue(
         hasFields: Boolean,
         index: Long,
@@ -82,6 +96,9 @@ object JsonNodeMapper {
         }
     }
 
+    /**
+     * Converts a node to iterables if it's type was collection.
+     */
     private fun getIterables(hasFields: Boolean, node: JsonNode): List<MutableMap.MutableEntry<String, JsonNode>> {
         return if (hasFields) {
             node.fields().asSequence().toList()
@@ -90,6 +107,9 @@ object JsonNodeMapper {
         }
     }
 
+    /**
+     * Gets the value of the leaf node
+     */
     private fun getValue(nodeType: NodeType, node: JsonNode): String? {
         return when (nodeType) {
             NodeType.TEXT -> node.asText()
@@ -97,6 +117,9 @@ object JsonNodeMapper {
         }
     }
 
+    /**
+     * Determines the type of the [JsonNode] and returns and equivalent [NodeType]
+     */
     private fun findType(node: JsonNode): NodeType? {
         return when {
             node.isValueNode -> NodeType.TEXT
