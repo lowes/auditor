@@ -7,7 +7,6 @@ import com.lowes.auditor.client.infrastructure.frameworks.service.DefaultLogProv
 import com.lowes.auditor.client.infrastructure.frameworks.service.ObjectDiffCheckerService
 import com.lowes.auditor.client.infrastructure.frameworks.service.ObjectLogGeneratorService
 import com.lowes.auditor.core.entities.util.JsonObject
-import reactor.kafka.sender.KafkaSender
 
 /**
  * Initializes and configures underlying frameworks used during audit even generation and proecessing
