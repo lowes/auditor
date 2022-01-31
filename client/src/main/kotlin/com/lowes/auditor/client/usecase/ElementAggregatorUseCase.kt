@@ -14,7 +14,7 @@ import java.util.UUID
 
 /**
  * Compares old and new objects to generates [AuditEvent]
- * @property objectDiffChecker instanc of [ObjectDiffChecker] that performs the actual diff between two objects
+ * @property objectDiffChecker instance of [ObjectDiffChecker] that performs the actual diff between two objects
  */
 class ElementAggregatorUseCase(
     private val objectDiffChecker: ObjectDiffChecker

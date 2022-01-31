@@ -8,10 +8,19 @@ import com.lowes.auditor.core.entities.domain.Element
 import java.util.stream.Collectors
 import kotlin.streams.toList
 
+/**
+ * Provides implementation of [AuditEventElementFilter] for including/excluding elements from audit events
+ * @property elementFilters list of [AuditEventElementFilter]
+ * @see AuditEventElementFilter
+ */
 class ElementFilterUseCase(
     private val elementFilters: List<AuditEventElementFilter>
 ) : AuditEventElementFilter {
 
+    /**
+     * Filters individual [elements] based on [elementFilter]
+     * @see AuditEventElementFilter.filter
+     */
     override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
         return if (elementFilter?.enabled == true) {
             elementFilter
@@ -34,8 +43,16 @@ class ElementFilterUseCase(
     }
 }
 
+/**
+ * Provides an implementation of [AuditEventElementFilter] for including elements from [Element] list based on configurations in [ElementFilter]
+ * @see AuditEventElementFilter
+ */
 class InclusionFilter : AuditEventElementFilter {
 
+    /**
+     * Filters individual [elements] and perform an inclusion rule as mentioned in [elementFilter]
+     * @see AuditEventElementFilter.filter
+     */
     override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
         return elements
             .stream()
@@ -52,8 +69,16 @@ class InclusionFilter : AuditEventElementFilter {
     }
 }
 
+/**
+ * Provides an implementation of [AuditEventElementFilter] for excluding elements from [Element] list based on configurations in [ElementFilter]
+ * @see AuditEventElementFilter
+ */
 class ExclusionFilter : AuditEventElementFilter {
 
+    /**
+     * Filters individual [elements] and perform an exclusion rule as mentioned in [elementFilter]
+     * @see AuditEventElementFilter.filter
+     */
     override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
         return elements
             .stream()
