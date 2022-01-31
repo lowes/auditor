@@ -5,9 +5,7 @@ import com.lowes.auditor.client.entities.interfaces.infrastructure.event.EventPu
 import com.lowes.auditor.client.entities.interfaces.infrastructure.frameworks.LogProvider
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventElementFilter
 import com.lowes.auditor.client.entities.interfaces.usecase.AuditEventFilter
-import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
-import com.lowes.auditor.client.infrastructure.frameworks.service.DefaultLogProvider
 import com.lowes.auditor.client.library.service.AuditEventDecoratorService
 import com.lowes.auditor.client.library.service.AuditEventFilterService
 import com.lowes.auditor.client.library.service.AuditEventGeneratorService
@@ -36,12 +34,12 @@ class AuditorModule(
      */
     val auditEventGeneratorService: AuditEventGeneratorService by lazy {
         AuditEventGeneratorService(
-                elementAggregatorUseCase,
-                auditorEventConfig,
-                eventPublisher,
-                auditEventFilterService,
-                auditEventDecoratorService,
-                eventLogUseCase
+            elementAggregatorUseCase,
+            auditorEventConfig,
+            eventPublisher,
+            auditEventFilterService,
+            auditEventDecoratorService,
+            eventLogUseCase
         )
     }
 
