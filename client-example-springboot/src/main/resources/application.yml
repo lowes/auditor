@@ -33,25 +33,6 @@ auditor:
     configs:
       client.id: client-example
 
-#lowesiss:
-#  springboot:
-#    kafka:
-#      clusters:
-#        auditor-cluster:
-#          bootstrapServers: "localhost:9092"
-#          defaultConsumerConfigs:
-#            auto.offset.reset: latest
-#            client.id: product-catalog-initiateDataConsumer-client
-#            enable.auto.commit: false
-#            group.id: product-catalog-intakeConsumer-group
-#            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      consumers:
-#        auditor-consumer:
-#          enabled: true
-#          topic: testTopic
-#          clusterId: "auditor-cluster"
-
 
 
 
