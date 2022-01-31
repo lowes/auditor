@@ -4,7 +4,7 @@
     "updatedValue": null,
     "previousValue": "randMetamap007",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.value",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.value",
       "identifiers": null
     }
   },
@@ -13,7 +13,7 @@
     "updatedValue": "randMetain",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.uom",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.uom",
       "identifiers": null
     }
   },
@@ -22,7 +22,7 @@
     "updatedValue": "randMetamap",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.value",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.value",
       "identifiers": null
     }
   },
@@ -31,7 +31,7 @@
     "updatedValue": null,
     "previousValue": "randMetain007",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.uom",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.uom",
       "identifiers": null
     }
   }

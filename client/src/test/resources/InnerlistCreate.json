@@ -4,7 +4,7 @@
     "updatedValue": "rand0",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.id",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.id",
       "identifiers": null
     }
   },
@@ -13,7 +13,7 @@
     "updatedValue": "rand0Name",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.name",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.name",
       "identifiers": null
     }
   },
@@ -22,7 +22,7 @@
     "updatedValue": "value1",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.value",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.value",
       "identifiers": null
     }
   },
@@ -31,7 +31,7 @@
     "updatedValue": "Ft",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.uom",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.uom",
       "identifiers": null
     }
   },
@@ -40,7 +40,7 @@
     "updatedValue": "test",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.listString.0",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.0",
       "identifiers": null
     }
   },
@@ -49,7 +49,7 @@
     "updatedValue": "test1",
     "previousValue": null,
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.listItem.0.listString.1",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.1",
       "identifiers": null
     }
   }

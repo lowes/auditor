@@ -4,7 +4,7 @@
     "updatedValue": null,
     "previousValue": "1234",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.itemNumber",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.itemNumber",
       "identifiers": null
     }
   },
@@ -13,7 +13,7 @@
     "updatedValue": null,
     "previousValue": "1234",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.model",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.model",
       "identifiers": null
     }
   },
@@ -22,7 +22,7 @@
     "updatedValue": null,
     "previousValue": "new_item",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.description",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.description",
       "identifiers": null
     }
   },
@@ -31,7 +31,7 @@
     "updatedValue": null,
     "previousValue": "5.67",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.price",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.price",
       "identifiers": null
     }
   }

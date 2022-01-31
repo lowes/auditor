@@ -4,7 +4,7 @@
     "updatedValue": "John",
     "previousValue": "123",
     "metadata": {
-      "fqdn": "com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item.metadata.id",
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadata.id",
       "identifiers": null
     }
   }
