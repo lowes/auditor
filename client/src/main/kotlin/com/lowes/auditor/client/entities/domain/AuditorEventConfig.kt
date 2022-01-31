@@ -94,8 +94,10 @@ data class LoggingFilter(
 
 /**
  * Data class containing configurations for Element filters.
- * @property includes list of element which will be used when an "InclusionFilter" is used. If an audit element name matches any of [includes], it will be included
- * @property excludes list of element which will be used when an "ExclusionFilter" is used. If an audit element name matches any of [excludes], it will be excluded
+ * @property includes list of element which will be used when an "InclusionFilter" is used.
+ * If an audit element name matches any of [includes], it will be included
+ * @property excludes list of element which will be used when an "ExclusionFilter" is used.
+ * If an audit element name matches any of [excludes], it will be excluded
  * @property metaData additional metadata that can be used to decorate audited elements
  */
 data class ElementFilterOptions(
