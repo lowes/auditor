@@ -23,14 +23,14 @@ object FrameworkModule {
     }
 
     /**
-     * Singleton and lazy initialized instance of [DefaultLogProvider] used as default logger when no other log provider is present.
+     * Provides singleton and lazily initialized instance of [DefaultLogProvider] used as default logger when no other log provider is present.
      */
     val defaultLogProvider: DefaultLogProvider by lazy {
         DefaultLogProvider()
     }
 
     /**
-     * Singleton and lazy initialized instance of [ObjectLogGenerator] used for generating audit logs
+     * Provides singleton and lazily initialized instance of [ObjectLogGenerator] used for generating audit logs
      */
     val objectLogGenerator: ObjectLogGenerator by lazy {
         ObjectLogGeneratorService(JsonObject.objectMapper)

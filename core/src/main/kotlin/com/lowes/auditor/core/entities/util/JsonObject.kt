@@ -13,8 +13,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
  * Provides a default instance of JsonObject and its properties to be used across modules
  */
 object JsonObject {
+
     /**
-     * Returns a lazily initialized [ObjectMapper] singleton instance
+     * Provides singleton and lazily initialized instance of [ObjectMapper]
      */
     val objectMapper: ObjectMapper by lazy {
         jacksonObjectMapper()
@@ -27,7 +28,7 @@ object JsonObject {
     }
 
     /**
-     * Returns a lazily initialized [objectWriter] singleton instance
+     * Provides singleton and lazily initialized instance of [objectWriter]
      */
     val objectWriter: ObjectWriter by lazy {
         objectMapper.writer()

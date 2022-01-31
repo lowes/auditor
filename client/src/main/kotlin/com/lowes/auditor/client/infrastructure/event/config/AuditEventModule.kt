@@ -16,14 +16,14 @@ class AuditEventModule(
 ) {
 
     /**
-     * Singleton and lazy initialized instance of [KafkaSender] used for sending audit events.
+     * Provides singleton and lazily initialized instance of [KafkaSender] used for sending audit events.
      */
     private val auditEventSender: KafkaSender<String, String> by lazy {
         KafkaSender.create(SenderOptions.create(configs(producerConfig)))
     }
 
     /**
-     * Singleton and lazy initialized instance of [EventPublisher] that wraps underlying kafka sender
+     * Provides singleton and lazily initialized instance of [EventPublisher] that wraps underlying kafka sender
      */
     val auditEventProducerService: EventPublisher by lazy {
         AuditEventProducerService(producerConfig, auditEventSender, JsonObject.objectWriter)
