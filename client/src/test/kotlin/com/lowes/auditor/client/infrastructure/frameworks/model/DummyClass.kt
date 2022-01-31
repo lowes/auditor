@@ -1,4 +1,4 @@
-package com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model
+package com.lowes.auditor.client.infrastructure.frameworks.model
 
 import java.math.BigDecimal
 

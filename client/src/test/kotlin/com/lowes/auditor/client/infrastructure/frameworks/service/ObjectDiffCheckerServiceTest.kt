@@ -1,12 +1,12 @@
-package com.lowes.auditor.client.issspringboot.infrastructure.frameworks.service
+package com.lowes.auditor.client.infrastructure.frameworks.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
-import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.DummyClass
-import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Item
-import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.Rand
-import com.lowes.auditor.client.issspringboot.infrastructure.frameworks.model.SubObject
+import com.lowes.auditor.client.infrastructure.frameworks.model.DummyClass
+import com.lowes.auditor.client.infrastructure.frameworks.model.Item
+import com.lowes.auditor.client.infrastructure.frameworks.model.Rand
+import com.lowes.auditor.client.infrastructure.frameworks.model.SubObject
 import com.lowes.auditor.core.entities.domain.Element
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.longs.shouldBeLessThan
