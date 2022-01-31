@@ -52,7 +52,7 @@ data class AuditorEventConfig(
 /**
  * Data class containing filter details. These filters are used during audit generation process to include/exclude/log
  * audit elements.
- * @property event instance of [EventFilter] which filters elements based on event type
+ * @property event instance of [EventFilter] which filters audit events based on event type
  * @property element instance of [ElementFilter] which filters elements based on Element type
  * @property logging instance of [LoggingFilter] which logs audit events
  */
@@ -94,8 +94,8 @@ data class LoggingFilter(
 
 /**
  * Data class containing configurations for Element filters.
- * @property includes list of element which will be used when an "InclusionFilter" is used
- * @property excludes list of element which will be used when an "ExclusionFilter" is used
+ * @property includes list of element which will be used when an "InclusionFilter" is used. If an audit element name matches any of [includes], it will be included
+ * @property excludes list of element which will be used when an "ExclusionFilter" is used. If an audit element name matches any of [excludes], it will be excluded
  * @property metaData additional metadata that can be used to decorate audited elements
  */
 data class ElementFilterOptions(
