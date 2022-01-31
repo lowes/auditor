@@ -16,6 +16,15 @@ import reactor.util.retry.Retry
 import reactor.util.retry.RetrySpec
 import java.time.Duration
 
+/**
+ * Audit event generator service that generates audits and logs and publishes them to underlying event publisher
+ * @property elementAggregatorUseCase instance of [ElementAggregatorUseCase]
+ * @property initialConfig instance of [AuditorEventConfig] configured during startup
+ * @property eventPublisher instance of [EventPublisher]
+ * @property auditEventFilterService instance of [AuditEventFilterService]
+ * @property auditEventDecoratorService instance of [AuditEventDecoratorService]
+ * @property eventLogUseCase instance of [EventLogUseCase]
+ */
 class AuditEventGeneratorService(
     private val elementAggregatorUseCase: ElementAggregatorUseCase,
     private val initialConfig: AuditorEventConfig,
@@ -26,6 +35,13 @@ class AuditEventGeneratorService(
 ) {
     private val logger = LoggerFactory.getLogger(AuditEventGeneratorService::class.java)
 
+    /**
+     * Generates audits by comparing [oldObject] and [newObject] properties and decorates them with metadata based on [requestConfig]
+     * @param oldObject instance of [Any]
+     * @param newObject instance of [Any]
+     * @param requestConfig instance of [AuditorEventConfig]
+     * @return flux of generated [AuditEvent]
+     */
     fun audit(oldObject: Any?, newObject: Any?, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = elementAggregatorUseCase.aggregate(oldObject, newObject, config)
@@ -38,6 +54,12 @@ class AuditEventGeneratorService(
             .flatMap { events }
     }
 
+    /**
+     * Generates logs by logging current [entity] while decorating it with metadata based on [requestConfig]
+     * @param entity instance of [Any] that needs to be logged
+     * @param requestConfig instance of [AuditorEventConfig]
+     * @return flux of generated [AuditEvent]
+     */
     fun log(entity: Any, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = Flux.from(eventLogUseCase.logEvent(entity, config))
@@ -50,6 +72,10 @@ class AuditEventGeneratorService(
             .flatMap { events }
     }
 
+    /**
+     * Performs retry in case any of the chain fails. In most cases this is not required as kafka producer is expected to perform retries.
+     * This is especially used during some edge use cases(when kafka/network is flaky and when kafka producer does not retry)
+     */
     private fun doRetry(config: AuditorEventConfig, message: String): Retry {
         return if (config.retry?.enabled == true) {
             RetrySpec.fixedDelay(
