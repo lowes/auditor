@@ -17,3 +17,8 @@ frameworkModule {
     application.enabled.set(false)
     springboot.enabled.set(false)
 }
+
+testModule {
+    testTask.integration.set(true)
+    testTask.functional.set(true)
+}
