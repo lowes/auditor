@@ -7,7 +7,10 @@ import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
 
-object IntegrationTestSpecConfig : AbstractProjectConfig() {
+/**
+ * Sets up kotest configuration for unit test module.
+ */
+object UnitTestSpecConfig : AbstractProjectConfig() {
 
     override val parallelism = Runtime.getRuntime().availableProcessors() * 2
 

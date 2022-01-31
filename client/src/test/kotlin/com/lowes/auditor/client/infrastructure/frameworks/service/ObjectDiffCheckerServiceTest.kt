@@ -13,6 +13,9 @@ import io.kotest.matchers.longs.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
 
+/**
+ * Unit Tests for [ObjectDiffCheckerService]
+ */
 class ObjectDiffCheckerServiceTest : BehaviorSpec({
     val diffChecker = FrameworkModule.getObjectDiffChecker(AuditorEventConfig())
     val obj = ObjectMapper()
