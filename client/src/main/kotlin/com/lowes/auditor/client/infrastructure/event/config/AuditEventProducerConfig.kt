@@ -32,7 +32,7 @@ data class AuditEventProducerConfig(
     /**
      * Provides merged view of [preConfiguredProducerConfig] and [configs].
      * In case same config is present in both, [configs] values takes precedence.
-     *@return instance of [Map] containg merged kafka configs
+     *@return instance of [Map] containing merged kafka configs
      */
     fun getMergedConfig(): Map<String, String> {
         return preConfiguredProducerConfig.plus(configs.orEmpty())
