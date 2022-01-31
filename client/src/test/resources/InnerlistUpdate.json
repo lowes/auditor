@@ -1,146 +1,129 @@
-[
-  {
-    "name": "name",
-    "updatedValue": "rand2",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.name",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "uom",
-    "updatedValue": "rand0Ft",
-    "previousValue": "Ft",
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.uom",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand0test1",
-    "previousValue": "test1",
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.1",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "value",
-    "updatedValue": "rand2value1",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.doubleList.0.value",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand0test",
-    "previousValue": "test",
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.0",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "name",
-    "updatedValue": "rand1rand21321",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.name",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "id",
-    "updatedValue": "rand2",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.id",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "uom",
-    "updatedValue": "rand2Ft",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.doubleList.0.uom",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "id",
-    "updatedValue": "rand1",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.id",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "uom",
-    "updatedValue": "rand1Ft",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.doubleList.0.uom",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "value",
-    "updatedValue": "rand0value",
-    "previousValue": "value1",
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.value",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "value",
-    "updatedValue": "rand1value1",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.doubleList.0.value",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand1test1",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.listString.1",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand1test",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.listString.0",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand2test1",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.listString.1",
-      "identifiers": null
-    }
-  },
-  {
-    "name": "listString",
-    "updatedValue": "rand2test",
-    "previousValue": null,
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.listString.0",
-      "identifiers": null
-    }
+[ {
+  "name" : "uom",
+  "updatedValue" : "rand1Ft",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.doubleList.0.uom",
+    "identifiers" : null
   }
-]
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand0test",
+  "previousValue" : "test",
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.0",
+    "identifiers" : null
+  }
+}, {
+  "name" : "value",
+  "updatedValue" : "rand0value",
+  "previousValue" : "value1",
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.value",
+    "identifiers" : null
+  }
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand0test1",
+  "previousValue" : "test1",
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.listString.1",
+    "identifiers" : null
+  }
+}, {
+  "name" : "value",
+  "updatedValue" : "rand1value1",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.doubleList.0.value",
+    "identifiers" : null
+  }
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand1test1",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.listString.1",
+    "identifiers" : null
+  }
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand2test",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.listString.0",
+    "identifiers" : null
+  }
+}, {
+  "name" : "uom",
+  "updatedValue" : "rand0Ft",
+  "previousValue" : "Ft",
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.0.doubleList.0.uom",
+    "identifiers" : null
+  }
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand2test1",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.listString.1",
+    "identifiers" : null
+  }
+}, {
+  "name" : "name",
+  "updatedValue" : "rand2",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.name",
+    "identifiers" : null
+  }
+}, {
+  "name" : "id",
+  "updatedValue" : "rand1",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.id",
+    "identifiers" : null
+  }
+}, {
+  "name" : "listString",
+  "updatedValue" : "rand1test",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.listString.0",
+    "identifiers" : null
+  }
+}, {
+  "name" : "id",
+  "updatedValue" : "rand2",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.id",
+    "identifiers" : null
+  }
+}, {
+  "name" : "value",
+  "updatedValue" : "rand2value1",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.doubleList.0.value",
+    "identifiers" : null
+  }
+}, {
+  "name" : "uom",
+  "updatedValue" : "rand2Ft",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.2.doubleList.0.uom",
+    "identifiers" : null
+  }
+}, {
+  "name" : "name",
+  "updatedValue" : "rand1rand21321",
+  "previousValue" : null,
+  "metadata" : {
+    "fqdn" : "com.lowes.auditor.client.infrastructure.frameworks.model.Item.listItem.1.name",
+    "identifiers" : null
+  }
+} ]

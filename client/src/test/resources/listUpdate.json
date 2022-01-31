@@ -1,19 +1,19 @@
 [
   {
-    "name": "uom",
-    "updatedValue": "in",
-    "previousValue": "cm",
-    "metadata": {
-      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.subList.0.uom",
-      "identifiers": null
-    }
-  },
-  {
     "name": "stringList",
     "updatedValue": "String123",
     "previousValue": "String",
     "metadata": {
       "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.stringList.0",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": "in",
+    "previousValue": "cm",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.subList.0.uom",
       "identifiers": null
     }
   }
