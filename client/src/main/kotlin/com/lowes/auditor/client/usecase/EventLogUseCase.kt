@@ -11,9 +11,19 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.UUID
 
+/**
+ * Contains use cases for generating audit event logs.
+ * @property objectLogGenerator instance of [ObjectLogGenerator]
+ */
 class EventLogUseCase(
     private val objectLogGenerator: ObjectLogGenerator
 ) {
+    /**
+     * Generates [AuditEvent] from the entity that needs to logged. Also, applies metadata and other relevant information from [auditorEventConfig]
+     * @param entity instance of [Any]
+     * @param auditorEventConfig instance of [AuditorEventConfig]
+     * @return mono of [AuditEvent]
+     */
     fun logEvent(entity: Any, auditorEventConfig: AuditorEventConfig): Mono<AuditEvent> {
         return objectLogGenerator.generate(entity)
             .map {
