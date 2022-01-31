@@ -5,7 +5,7 @@ import com.lowes.auditor.core.entities.domain.AuditEvent
 import reactor.util.context.ContextView
 
 /**
- * Audit event filter interface containing functions to filter events
+ * Audit event filter interface containing functions to filter audit events
  */
 interface AuditEventFilter {
 
