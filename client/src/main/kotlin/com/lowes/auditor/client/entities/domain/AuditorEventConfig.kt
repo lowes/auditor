@@ -145,7 +145,7 @@ data class EventSourceMetadataConfig(
 
 /**
  * Data class configurations for retry publisher
- * @property enabled [Boolean] flag to enable/disable the logging feature
+ * @property enabled [Boolean] flag to enable/disable the publisher retry feature
  * @property count number of times a retry will be attempted for failed event publish
  * @property delay instance of [Duration] signifying delay between consecutive retry attempts.
  */
