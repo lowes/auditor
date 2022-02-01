@@ -1,11 +1,11 @@
-# Auditor-v1 client-example-springboot
+# Auditor-v1 client-example
 
 ## Configurations
-Refer `client-spring-boot-starter`'s README.md for detailed configuration list.
+Refer `client`'s README.md for detailed configuration list.
 
 ## Running locally
-All the below commands are supposed to be executed inside `client-example-springboot` directory
-This example uses containers behind the scene to spin up kafka and zookeeper containers.
+All the below commands are supposed to be executed inside `client-example` directory
+This examples uses containers behind the scene to spin up kafka and zookeeper containers.
 You can run the containers by executing either of the following commands:
 #### Using docker:
 ```
@@ -16,8 +16,8 @@ docker compose up -d
 lima nerdctl compose up -d
 ```
 Once the containers are up you can run the Example applications.<br/>
-For java, run: [PriceApplication.java](./src/main/java/fooprice/PriceApplication.java)<br/>
-For kotlin, run: [ItemApplication.kt](./src/main/kotlin/foo/ItemApplication.kt)
+For java, run: [StandalonePriceApplication.java](./src/main/java/fooprice/StandalonePriceApplication.java)<br/>
+For kotlin, run: [StandaloneItemApplication.kt](./src/main/kotlin/foo/StandaloneItemApplication.kt)
 
 Above examples, will publish both `audit` and `log` information to `auditTopic` in kafka. To view the results in kafka,
 you can use any available kafka explorers tool. For purpose of this readme, we will rely on [kafka drop](https://github.com/obsidiandynamics/kafdrop).

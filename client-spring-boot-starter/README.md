@@ -1,6 +1,21 @@
 # Auditor-v1 client-spring-boot-starter
 It's a spring boot starter over client api(s). Useful for application that uses spring boot.
 
+### Using auditor-v1 client-spring-boot-starter library
+Refer the gradle/maven dependency detail below to use the client library in spring-boot-starter mode:
+  ##### Gradle:
+  ```
+  implementation("com.lowes.iss.auditor:client-spring-boot-starter:${version}")
+  ```
+  ##### Maven:
+  ```
+  <dependency>
+      <groupId>com.lowes.iss.auditor</groupId>
+      <artifactId>client-spring-boot-starter</artifactId>
+      <version>${version}</version>
+  </dependency>
+  ```
+
 ## Configurations
 Auditor client can be customized via `AuditorEventConfig` class either during start-up or during runtime invocation of auditor's audit/log api(s).
 During startup time following configurations can be added to application's yml:
