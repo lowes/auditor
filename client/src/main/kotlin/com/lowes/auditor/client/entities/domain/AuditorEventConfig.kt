@@ -11,7 +11,7 @@ import com.lowes.auditor.core.entities.domain.EventType
 import java.time.Duration
 
 /**
- * Data class containing configurations for auditor
+ * Data class containing configurations for auditor. Property values are kept as var for easy java interoperability.
  * @property applicationName name of the application that will be sent as part of audit
  * @property eventSource instance of [EventSourceConfig]
  * @property eventSubType subtype of the audit event that will be sent as part of audit
@@ -21,13 +21,13 @@ import java.time.Duration
  * @property retry instance of [RetryPublisherConfig] controlling number of retries in case of errors.
  */
 data class AuditorEventConfig(
-    val applicationName: String? = null,
-    val eventSource: EventSourceConfig? = null,
-    val eventSubType: String? = null,
-    val metadata: Map<String, String>? = null,
-    val filters: Filters? = null,
-    val maxElements: Int? = null,
-    val retry: RetryPublisherConfig? = null,
+    var applicationName: String? = null,
+    var eventSource: EventSourceConfig? = null,
+    var eventSubType: String? = null,
+    var metadata: Map<String, String>? = null,
+    var filters: Filters? = null,
+    var maxElements: Int? = null,
+    var retry: RetryPublisherConfig? = null,
 ) {
     companion object {
         /**

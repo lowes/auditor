@@ -79,8 +79,8 @@ class AuditEventGeneratorService(
     private fun doRetry(config: AuditorEventConfig, message: String): Retry {
         return if (config.retry?.enabled == true) {
             RetrySpec.fixedDelay(
-                config.retry.count.orDefault(TEN.toLong()),
-                config.retry.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
+                config.retry?.count.orDefault(TEN.toLong()),
+                config.retry?.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
             )
                 .doBeforeRetry {
                     logger.info(

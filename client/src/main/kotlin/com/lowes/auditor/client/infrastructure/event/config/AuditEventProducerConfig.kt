@@ -1,7 +1,7 @@
 package com.lowes.auditor.client.infrastructure.event.config
 
 /**
- * Data class containing configs related to kafka sender.
+ * Data class containing configs related to kafka sender. Property values are kept as var for easy java interoperability.
  * @property enabled [Boolean] flag to enable/disable the kafka sender
  * @property bootstrapServers comma separated list of host/port pairs of kafka brokers.
  * @property topic name of the kafka topic
@@ -9,10 +9,10 @@ package com.lowes.auditor.client.infrastructure.event.config
  * @property preConfiguredProducerConfig  preconfigured configs to ensure high throughput and better resiliency. can be overridden by [configs]
  */
 data class AuditEventProducerConfig(
-    val enabled: Boolean? = false,
-    val bootstrapServers: String? = null,
-    val topic: String? = null,
-    val configs: Map<String, String>? = null,
+    var enabled: Boolean? = false,
+    var bootstrapServers: String? = null,
+    var topic: String? = null,
+    var configs: Map<String, String>? = null,
     val preConfiguredProducerConfig: Map<String, String> = mapOf(
         "retries" to "2147483647",
         "request.timeout.ms" to "300000",
