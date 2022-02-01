@@ -34,8 +34,14 @@ auditor:
           includes:                           # Matches each element name against each excludes list. If match is found, the given element will be excluded.
             - model
             - price
-      logging:                                # enable/disable loggig filter. Default value: false
+      logging:                                # flag to enable/disable loggig filter. Default value: false
         enabled: true
+    maxElements: 500                          # maximum number of elements to be audited, elements above this number will be ignored. Default value: 500
+    retry:
+      enabled: true                           # flag to enable/disable the publisher retry feature. Default value: true
+      count: 10                               # number of times a retry will be attempted for failed event publish. Default value: 10
+      delay: 30s                              # instance of [Duration] signifying delay between consecutive retry attempts. Default value: 30 seconds
+
   producer:
     enabled: true                             # enable/disable kafka producer. Default value: false
     bootstrapServers: "localhost:9092"        # comma separated list of host/port pairs of kafka brokers.
