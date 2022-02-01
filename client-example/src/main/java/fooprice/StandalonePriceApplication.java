@@ -26,11 +26,11 @@ public class StandalonePriceApplication implements Runnable {
     }
 
     public static void main(String[] args) {
-        AuditEventProducerConfig producerConfig =  new AuditEventProducerConfig();
+        AuditEventProducerConfig producerConfig = new AuditEventProducerConfig();
         producerConfig.setEnabled(true);
         producerConfig.setBootstrapServers("localhost:9092");
         producerConfig.setTopic("auditTopic");
-        producerConfig.setConfigs(Map.of("client.id","client-example"));
+        producerConfig.setConfigs(Map.of("client.id", "client-example"));
         AuditorEventConfig auditorEventConfig = new AuditorEventConfig();
         auditorEventConfig.setApplicationName("client-example");
         Auditor auditor = Auditor.getInstance(producerConfig, auditorEventConfig);
