@@ -6,7 +6,6 @@ import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerCo
 import com.lowes.auditor.core.entities.domain.EventSourceType;
 import com.lowes.auditor.core.entities.domain.EventType;
 import fooprice.model.Price;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class StandalonePriceApplication implements Runnable {
         Price newPrice = getPrice(itemNumber);
         newPrice.setDescription("new_price_description");
         newPrice.setPrice(50);
-        newPrice.setMetadata(Map.of("MetaKey", "metaValue","NewMetaKey", "NewMetaValue"));
+        newPrice.setMetadata(Map.of("MetaKey", "metaValue", "NewMetaKey", "NewMetaValue"));
         newPrice.setOffers(Collections.emptyList());
         newPrice.setData(new Price.PriceData(""));
         auditor.audit(oldPrice, newPrice);
@@ -48,10 +47,10 @@ public class StandalonePriceApplication implements Runnable {
         newPrice.setDescription("new_price_description");
         AuditorEventConfig config = new AuditorEventConfig();
         config.setApplicationName("client-example-java");
-        config.setEventSource(new EventSourceConfig(
-                EventSourceType.USER,
-                new EventSourceMetadataConfig("static-user-id", null, null)
-        ));
+        config.setEventSource(
+                new EventSourceConfig(
+                        EventSourceType.USER,
+                        new EventSourceMetadataConfig("static-user-id", null, null)));
         config.setMetadata(Map.of("iteNumber", "Sadly i am only static-value"));
         auditor.audit(oldPrice, newPrice, config);
     }
@@ -60,17 +59,22 @@ public class StandalonePriceApplication implements Runnable {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
         newPrice.setDescription("new_price_description");
-        Price.PriceData priceData= new Price.PriceData("NewPriceDataValue");
+        Price.PriceData priceData = new Price.PriceData("NewPriceDataValue");
         newPrice.setData(priceData);
         AuditorEventConfig config = new AuditorEventConfig();
         config.setApplicationName("client-example-java");
-        config.setEventSource(new EventSourceConfig(
-                EventSourceType.USER,
-                new EventSourceMetadataConfig("${updatedBy}", null, null)
-        ));
-        config.setMetadata(Map.of(
-                "iteNumber", "${itemNumber}", "price.data", "${data.value}", "static-key", "static-value"
-        ));
+        config.setEventSource(
+                new EventSourceConfig(
+                        EventSourceType.USER,
+                        new EventSourceMetadataConfig("${updatedBy}", null, null)));
+        config.setMetadata(
+                Map.of(
+                        "iteNumber",
+                        "${itemNumber}",
+                        "price.data",
+                        "${data.value}",
+                        "static-key",
+                        "static-value"));
         auditor.audit(oldPrice, newPrice, config);
     }
 
@@ -81,7 +85,8 @@ public class StandalonePriceApplication implements Runnable {
         newPrice.setDescription("new_price_description");
         newPrice.setPrice(50);
         AuditorEventConfig config = new AuditorEventConfig();
-        EventFilter eventFilter = new EventFilter(true, List.of(EventType.CREATED, EventType.UPDATED));
+        EventFilter eventFilter =
+                new EventFilter(true, List.of(EventType.CREATED, EventType.UPDATED));
         Filters filters = new Filters();
         filters.setEvent(eventFilter);
         config.setFilters(filters);
@@ -133,17 +138,16 @@ public class StandalonePriceApplication implements Runnable {
         auditor.log(getPrice(itemNumber));
     }
 
-    private Price getPrice(UUID itemNumber){
+    private Price getPrice(UUID itemNumber) {
         Price.PriceData data = new Price.PriceData("PriceDataValue");
-        return  new Price(
+        return new Price(
                 itemNumber,
                 1234,
                 "old_price_description",
                 Map.of("MetaKey", "metaValue"),
                 List.of("offers"),
                 data,
-                "DoctorStrange!"
-        );
+                "DoctorStrange!");
     }
 
     @Override
@@ -162,7 +166,6 @@ public class StandalonePriceApplication implements Runnable {
         testLog(itemNumber);
         System.out.println("Done");
     }
-
 
     public static void main(String[] args) {
         AuditEventProducerConfig producerConfig = new AuditEventProducerConfig();

@@ -13,7 +13,14 @@ public class Price {
     private PriceData data;
     private String updatedBy;
 
-    public Price(UUID itemNumber, Integer price, String description, Map<String, String> metadata, List<String> offers, PriceData data, String updatedBy) {
+    public Price(
+            UUID itemNumber,
+            Integer price,
+            String description,
+            Map<String, String> metadata,
+            List<String> offers,
+            PriceData data,
+            String updatedBy) {
         this.itemNumber = itemNumber;
         this.price = price;
         this.description = description;
