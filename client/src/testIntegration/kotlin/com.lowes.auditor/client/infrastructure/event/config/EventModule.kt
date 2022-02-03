@@ -10,7 +10,7 @@ import reactor.kafka.receiver.ReceiverOptions
 /**
  * Sets up configuration for Auditor Event Module
  */
-object EventTestModule {
+object EventModule {
 
     /**
      * lazily initialized instance of Instance of [ObjectMapper] which is commonly used across modules
