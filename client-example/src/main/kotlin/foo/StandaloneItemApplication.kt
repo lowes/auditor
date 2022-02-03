@@ -18,7 +18,7 @@ import foo.model.ItemData
 import java.util.UUID
 
 class StandaloneItemApplication(
-        private val auditor: Auditor
+    private val auditor: Auditor
 ) : Runnable {
     private fun testCreateOldObjectNullAndNewObject(itemNumber: UUID) {
         val oldItem = null
@@ -35,24 +35,24 @@ class StandaloneItemApplication(
     private fun testUpdateBothObject(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
         val newItem = getItem(itemNumber)
-                .copy(
-                        description = "new_item_description",
-                        model = 100,
-                        metadata = mapOf("MetaKey" to "MetaValue", "NewMetaKey" to "NewMetaValue"),
-                        categories = emptyList(),
-                        data = ItemData("")
-                )
+            .copy(
+                description = "new_item_description",
+                model = 100,
+                metadata = mapOf("MetaKey" to "MetaValue", "NewMetaKey" to "NewMetaValue"),
+                categories = emptyList(),
+                data = ItemData("")
+            )
         auditor.audit(oldItem, newItem)
     }
 
     private fun testStaticDataSubstitution(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
         val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description")
+            .copy(description = "new_item_description")
         val config = AuditorEventConfig(
-                applicationName = "client-example-kotlin",
-                eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("static-user-id")),
-                metadata = mapOf("iteNumber" to "Sadly i am only static-value")
+            applicationName = "client-example-kotlin",
+            eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("static-user-id")),
+            metadata = mapOf("iteNumber" to "Sadly i am only static-value")
         )
         auditor.audit(oldItem, newItem, config)
     }
@@ -60,26 +60,26 @@ class StandaloneItemApplication(
     private fun testDynamicDataSubstitution(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
         val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description", data = ItemData("NewItemDataValue"))
+            .copy(description = "new_item_description", data = ItemData("NewItemDataValue"))
         val config = AuditorEventConfig(
-                applicationName = "client-example-kotlin",
-                eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("\${updatedBy}")),
-                metadata = mapOf(
-                        "iteNumber" to "\${itemNumber}",
-                        "price.data" to "\${data.value}",
-                        "static-key" to  "static-value"
-                )
+            applicationName = "client-example-kotlin",
+            eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("\${updatedBy}")),
+            metadata = mapOf(
+                "iteNumber" to "\${itemNumber}",
+                "price.data" to "\${data.value}",
+                "static-key" to "static-value"
+            )
         )
         auditor.audit(oldItem, newItem, config)
     }
 
     private fun testEventFilters(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
-                .copy(categories = null)
+            .copy(categories = null)
         val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description", model = 100, )
+            .copy(description = "new_item_description", model = 100)
         val config = AuditorEventConfig(
-                filters = Filters(event = EventFilter(enabled = true, type = listOf(EventType.CREATED, EventType.UPDATED)))
+            filters = Filters(event = EventFilter(enabled = true, type = listOf(EventType.CREATED, EventType.UPDATED)))
         )
         auditor.audit(oldItem, newItem, config)
     }
@@ -87,29 +87,30 @@ class StandaloneItemApplication(
     private fun testElementIncludesFilters(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
         val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description", model = 100, )
+            .copy(description = "new_item_description", model = 100)
         val config = AuditorEventConfig(
-                filters = Filters(element = ElementFilter(
-                        enabled = true,
-                        listOf("InclusionFilter"),
-                        options = ElementFilterOptions(includes = listOf("description")))
+            filters = Filters(
+                element = ElementFilter(
+                    enabled = true,
+                    listOf("InclusionFilter"),
+                    options = ElementFilterOptions(includes = listOf("description"))
                 )
+            )
         )
         auditor.audit(oldItem, newItem, config)
     }
 
     private fun testElementExcludesFilters(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
-        val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description", model = 100, )
+        val newItem = getItem(itemNumber).copy(description = "new_item_description", model = 100)
         val config = AuditorEventConfig(
-                filters = Filters(
-                        element = ElementFilter(
-                                enabled = true,
-                                listOf("ExclusionFilter"),
-                                options = ElementFilterOptions(excludes = listOf("description"))
-                        )
+            filters = Filters(
+                element = ElementFilter(
+                    enabled = true,
+                    listOf("ExclusionFilter"),
+                    options = ElementFilterOptions(excludes = listOf("description"))
                 )
+            )
         )
         auditor.audit(oldItem, newItem, config)
     }
@@ -117,9 +118,9 @@ class StandaloneItemApplication(
     private fun testLoggingFilters(itemNumber: UUID) {
         val oldItem = getItem(itemNumber)
         val newItem = getItem(itemNumber)
-                .copy(description = "new_item_description")
+            .copy(description = "new_item_description")
         val config = AuditorEventConfig(
-                filters = Filters(logging = LoggingFilter(true))
+            filters = Filters(logging = LoggingFilter(true))
         )
         auditor.audit(oldItem, newItem, config)
     }
@@ -130,13 +131,13 @@ class StandaloneItemApplication(
 
     private fun getItem(itemNumber: UUID): Item {
         return Item(
-                itemNumber,
-                1234,
-                "old_item_description",
-                mapOf("MetaKey" to "metaValue"),
-                listOf("categories"),
-                ItemData("ItemDataValue"),
-                "DoctorStrange!"
+            itemNumber,
+            1234,
+            "old_item_description",
+            mapOf("MetaKey" to "metaValue"),
+            listOf("categories"),
+            ItemData("ItemDataValue"),
+            "DoctorStrange!"
         )
     }
 
@@ -159,10 +160,10 @@ class StandaloneItemApplication(
 
 fun main() {
     val producerConfig = AuditEventProducerConfig(
-            enabled = true,
-            bootstrapServers = "localhost:9092",
-            topic = "auditTopic",
-            configs = mapOf("client.id" to "client-example")
+        enabled = true,
+        bootstrapServers = "localhost:9092",
+        topic = "auditTopic",
+        configs = mapOf("client.id" to "client-example")
     )
     val auditorEventConfig = AuditorEventConfig(applicationName = "client-example")
     val auditor = getInstance(producerConfig, auditorEventConfig)
