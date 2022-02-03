@@ -57,9 +57,9 @@ data class AuditorEventConfig(
  * @property logging instance of [LoggingFilter] which logs audit events
  */
 data class Filters(
-    val event: EventFilter? = null,
-    val element: ElementFilter? = null,
-    val logging: LoggingFilter? = null,
+        var event: EventFilter? = null,
+        var element: ElementFilter? = null,
+        var logging: LoggingFilter? = null,
 )
 
 /**
@@ -68,8 +68,8 @@ data class Filters(
  * @property type list of [EventType]
  */
 data class EventFilter(
-    val enabled: Boolean? = null,
-    val type: List<EventType>? = null,
+        var enabled: Boolean? = null,
+        var type: List<EventType>? = null,
 )
 
 /**
@@ -79,9 +79,9 @@ data class EventFilter(
  * @property options instance of [ElementFilterOptions]
  */
 data class ElementFilter(
-    val enabled: Boolean? = null,
-    val types: List<String>? = null,
-    val options: ElementFilterOptions? = null,
+        var enabled: Boolean? = null,
+        var types: List<String>? = null,
+        var options: ElementFilterOptions? = null,
 )
 
 /**
@@ -89,7 +89,7 @@ data class ElementFilter(
  * @property enabled [Boolean] flag to enable/disable the logging feature
  */
 data class LoggingFilter(
-    val enabled: Boolean? = null,
+        var enabled: Boolean? = null,
 )
 
 /**
@@ -101,9 +101,9 @@ data class LoggingFilter(
  * @property metaData additional metadata that can be used to decorate audited elements
  */
 data class ElementFilterOptions(
-    val includes: List<String>? = null,
-    val excludes: List<String>? = null,
-    val metaData: Map<String, String>? = null
+        var includes: List<String>? = null,
+        var excludes: List<String>? = null,
+        var metaData: Map<String, String>? = null
 )
 
 /**
@@ -112,8 +112,8 @@ data class ElementFilterOptions(
  * @property metadata instance of [EventSourceMetadataConfig]
  */
 data class EventSourceConfig(
-    val type: EventSourceType? = null,
-    val metadata: EventSourceMetadataConfig? = null,
+        var type: EventSourceType? = null,
+        var metadata: EventSourceMetadataConfig? = null,
 ) {
     fun toEventSource(): EventSource {
         return EventSource(
@@ -130,9 +130,9 @@ data class EventSourceConfig(
  * @property name name for the event source
  */
 data class EventSourceMetadataConfig(
-    val id: String? = null,
-    val email: String? = null,
-    val name: String? = null,
+        var id: String? = null,
+        var email: String? = null,
+        var name: String? = null,
 ) {
     fun toEventSourceMetadata(): EventSourceMetadata {
         return EventSourceMetadata(
@@ -150,7 +150,7 @@ data class EventSourceMetadataConfig(
  * @property delay instance of [Duration] signifying delay between consecutive retry attempts.
  */
 data class RetryPublisherConfig(
-    val enabled: Boolean? = null,
-    val count: Long? = null,
-    val delay: Duration? = null
+        var enabled: Boolean? = null,
+        var count: Long? = null,
+        var delay: Duration? = null
 )

@@ -20,7 +20,7 @@ class EventFilterUseCase : AuditEventFilter {
             if (eventFilter.type.isNullOrEmpty()) {
                 true
             } else {
-                eventFilter.type.contains(event.type)
+                eventFilter.type.orEmpty().contains(event.type)
             }
         } else {
             true
