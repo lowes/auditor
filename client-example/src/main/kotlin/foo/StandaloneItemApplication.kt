@@ -131,13 +131,13 @@ class StandaloneItemApplication(
 
     private fun getItem(itemNumber: UUID): Item {
         return Item(
-            itemNumber,
-            1234,
-            "old_item_description",
-            mapOf("MetaKey" to "metaValue"),
-            listOf("categories"),
-            ItemData("ItemDataValue"),
-            "DoctorStrange!"
+            itemNumber = itemNumber,
+            model = 1234,
+            description = "old_item_description",
+            metadata = mapOf("MetaKey" to "metaValue"),
+            categories = listOf("categories"),
+            data = ItemData("ItemDataValue"),
+            updatedBy = "DoctorStrange!"
         )
     }
 
