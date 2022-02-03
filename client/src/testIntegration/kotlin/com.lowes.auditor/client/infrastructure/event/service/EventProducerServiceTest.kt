@@ -1,7 +1,7 @@
 package com.lowes.auditor.client.infrastructure.event.service
 
 import com.lowes.auditor.client.IntegrationTestSpec
-import com.lowes.auditor.client.infrastructure.event.config.EventTestModule
+import com.lowes.auditor.client.infrastructure.event.config.EventModule
 import com.lowes.auditor.client.listeners.KafkaListener
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import com.lowes.auditor.core.entities.domain.Element
@@ -23,7 +23,7 @@ import java.util.UUID
 class EventProducerServiceTest : IntegrationTestSpec() {
     init {
         Given("Test Producer Event") {
-            val consumer = KafkaReceiver.create(EventTestModule.testConsumer.subscription(Collections.singleton(KafkaListener.TOPIC)))
+            val consumer = KafkaReceiver.create(EventModule.testConsumer.subscription(Collections.singleton(KafkaListener.TOPIC)))
             val randomId = UUID.randomUUID()
             val auditEvent = AuditEvent(
                 id = randomId,
@@ -53,7 +53,7 @@ class EventProducerServiceTest : IntegrationTestSpec() {
                 )
             )
             When("Auditor produces an Event") {
-                val producedAuditEvent = EventTestModule.auditEventProducerService.publishEvents(Flux.just(auditEvent))
+                val producedAuditEvent = EventModule.auditEventProducerService.publishEvents(Flux.just(auditEvent))
                 Then("Assert that Audit Even is successfully produced") {
                     StepVerifier
                         .create(producedAuditEvent)
@@ -66,7 +66,7 @@ class EventProducerServiceTest : IntegrationTestSpec() {
                     val consumedData = consumer.receive()
                         .map {
                             it.receiverOffset().acknowledge()
-                            EventTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                            EventModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
                         }
                     Then("Assert that Audit Event is consumed Successfully") {
                         StepVerifier
