@@ -52,6 +52,7 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "11"
+            languageVersion = "1.5"
         }
     }
 
