@@ -59,7 +59,7 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-reflect:_")
         implementation(Kotlin.stdlib.jdk8)
         implementation("io.projectreactor:reactor-core:_")
-        testImplementation(Spring.reactor.test)
+        testImplementation("io.projectreactor:reactor-test:_")
         testImplementation(Testing.mockK)
         testImplementation(Testing.kotest.assertions.core)
         testImplementation(Testing.kotest.runner.junit5)
