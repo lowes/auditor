@@ -9,42 +9,23 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON
 apply(from = "$rootDir/gradle/integration-test.gradle.kts")
 apply(from = "$rootDir/gradle/functional-test.gradle.kts")
 
-object Versions {
-    // language and frameworks
-    const val kotlin = "1.4.30"
-    const val reactor = "3.4.3"
-    // test
-    const val kotest = "4.4.1"
-    const val mockk = "1.10.6"
-    const val testContainers = "1.15.2"
-    // codequality
-    const val jacoco = "0.8.6"
-}
-
 plugins {
-    val kotlin = "1.4.30"
-    val openApiGenerator = "5.3.1"
-    val ktlint = "9.4.1"
-    val detekt = "1.15.0"
-    val artifactory = "4.26.2"
-    val nebulaRelease = "15.3.0"
     idea
     jacoco
     `maven-publish`
-    kotlin("jvm") version kotlin
-    id("org.jlleitschuh.gradle.ktlint") version ktlint
-    id("io.gitlab.arturbosch.detekt") version detekt
-    id("com.jfrog.artifactory") version artifactory
-    id("nebula.release") version nebulaRelease
-    kotlin("plugin.spring") version kotlin apply false
-    id("org.openapi.generator") version openApiGenerator apply false
+    kotlin("jvm")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("io.gitlab.arturbosch.detekt")
+    id("com.jfrog.artifactory")
+    id("nebula.release")
+    kotlin("plugin.spring") apply false
+    id("org.openapi.generator") apply false
 }
 
 // repositories
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 subprojects {
@@ -63,7 +44,6 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
     }
 
     // compile
@@ -72,22 +52,23 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "11"
-            freeCompilerArgs = listOf("-Xopt-in=kotlin.ExperimentalStdlibApi")
+            languageVersion = "1.5"
+            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         }
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
-        implementation("io.projectreactor:reactor-core:${Versions.reactor}")
-        testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
-        testImplementation("io.mockk:mockk:${Versions.mockk}")
-        testImplementation("io.kotest:kotest-assertions-core:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-runner-junit5:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-extensions-spring:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-property:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-extensions-testcontainers:${Versions.kotest}")
-        testImplementation("org.testcontainers:kafka:${Versions.testContainers}")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+        implementation(Kotlin.stdlib.jdk8)
+        implementation("io.projectreactor:reactor-core:_")
+        testImplementation("io.projectreactor:reactor-test:_")
+        testImplementation(Testing.mockK)
+        testImplementation(Testing.kotest.assertions.core)
+        testImplementation(Testing.kotest.runner.junit5)
+        testImplementation(Testing.kotest.property)
+        testImplementation(Testing.kotestExtensions.spring)
+        testImplementation(Testing.kotestExtensions.testContainers)
+        testImplementation("org.testcontainers:kafka:_")
     }
 
     // test
@@ -123,31 +104,33 @@ subprojects {
     detekt {
         buildUponDefaultConfig = true // preconfigure defaults
         config = files("$rootDir/gradle/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
-        reports {
-            html.enabled = true // observe findings in your browser with structure and code snippets
-            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
-            xml.enabled = true
-        }
     }
 
     tasks {
         withType<Detekt> {
             this.jvmTarget = "14"
+            reports {
+                html.required.set(true) // observe findings in your browser with structure and code snippets
+                xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
+                txt.required.set(true) // similar to the console output, contains issue signature to manually edit baseline files
+                sarif.required.set(true) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with Github Code Scanning
+            }
         }
     }
 
     // jacoco
     jacoco {
-        toolVersion = Versions.jacoco
+        toolVersion = "0.8.7"
     }
 
     tasks.jacocoTestReport {
         dependsOn(tasks.withType(Test::class.java))
         executionData.setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
         reports {
-            xml.isEnabled = true
-            csv.isEnabled = true
-            html.destination = file("$buildDir/jacocoHtml")
+            xml.required.set(true)
+            csv.required.set(true)
+            html.required.set(true)
+            html.outputLocation.set(file("$buildDir/jacocoHtml"))
         }
     }
 

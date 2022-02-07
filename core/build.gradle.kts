@@ -1,11 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
-object Versions {
-    // languages and frameworks
-    const val jackson = "2.12.1"
-}
-
 plugins {
     id("org.openapi.generator")
     `java-library`
@@ -17,9 +12,9 @@ tasks.jar {
 
 // dependencies
 dependencies {
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
-    implementation("com.fasterxml.jackson.module:jackson-module-afterburner:${Versions.jackson}")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jackson}")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:_")
+    implementation("com.fasterxml.jackson.module:jackson-module-afterburner:_")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
 }
 
 val openApiConfigMap = mapOf(

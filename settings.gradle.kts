@@ -15,3 +15,7 @@ include(
     "client-example",
     "client-example-springboot"
 )
+plugins {
+    val refreshVersions = "0.40.1"
+    id("de.fayard.refreshVersions") version refreshVersions
+}
