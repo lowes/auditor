@@ -4,7 +4,7 @@ object Versions {
 // dependencies
 dependencies {
     implementation(project(":client"))
-    implementation("org.apache.logging.log4j:log4j-api:${Versions.log4j}")
-    implementation("org.apache.logging.log4j:log4j-core:${Versions.log4j}")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:${Versions.log4j}")
+    implementation("org.apache.logging.log4j:log4j-api:_")
+    implementation("org.apache.logging.log4j:log4j-core:_")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:_")
 }

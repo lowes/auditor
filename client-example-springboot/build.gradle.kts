@@ -6,5 +6,5 @@ object Versions {
 // dependencies
 dependencies {
     implementation(project(":client-spring-boot-starter"))
-    implementation("org.springframework.boot:spring-boot-starter:${Versions.springboot}")
+    implementation("org.springframework.boot:spring-boot-starter:_")
 }

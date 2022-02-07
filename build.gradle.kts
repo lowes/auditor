@@ -77,17 +77,17 @@ subprojects {
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
-        implementation("io.projectreactor:reactor-core:${Versions.reactor}")
-        testImplementation("io.projectreactor:reactor-test:${Versions.reactor}")
-        testImplementation("io.mockk:mockk:${Versions.mockk}")
-        testImplementation("io.kotest:kotest-assertions-core:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-runner-junit5:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-extensions-spring:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-property:${Versions.kotest}")
-        testImplementation("io.kotest:kotest-extensions-testcontainers:${Versions.kotest}")
-        testImplementation("org.testcontainers:kafka:${Versions.testContainers}")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+        implementation(Kotlin.stdlib.jdk8)
+        implementation("io.projectreactor:reactor-core:_")
+        testImplementation(Spring.reactor.test)
+        testImplementation(Testing.mockK)
+        testImplementation(Testing.kotest.assertions.core)
+        testImplementation(Testing.kotest.runner.junit5)
+        testImplementation(Testing.kotest.extensions.spring)
+        testImplementation(Testing.kotest.property)
+        testImplementation(Testing.kotest.extensions.testContainers)
+        testImplementation("org.testcontainers:kafka:_")
     }
 
     // test
