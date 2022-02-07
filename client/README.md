@@ -12,15 +12,15 @@ These api(s) also accepts following parameters which customizes the auditor beha
 <br/><br/>
 
 ### Using auditor-v1 client library 
-Refer the gradle/maven dependency detail below to use the client library in standalone mode:   
+Refer the gradle/maven dependency detail below to use the client library in stand-alone mode:
    ##### Gradle:
    ```
-   implementation("com.lowes.iss.auditor:client:${version}") 
-   ``` 
+   implementation("com.lowes.auditor:client:${version}")
+   ```
    ##### Maven:
    ```
    <dependency>
-        <groupId>com.lowes.iss.auditor</groupId>
+        <groupId>com.lowes.auditor</groupId>
         <artifactId>client</artifactId>
         <version>${version}</version>
     </dependency>
