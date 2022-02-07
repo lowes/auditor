@@ -153,7 +153,7 @@ subprojects {
 
     // publish
     artifactory {
-        setContextUrl("<<maven-repo-url-here>>")
+        setContextUrl("<<//todo maven-repo-url-here>>")
         publish(
             delegateClosureOf<PublisherConfig> {
                 repository(

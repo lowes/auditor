@@ -1,0 +1,338 @@
+openapi: 3.0.3
+info:
+  description: >-
+    Auditor-v1 Event DTO. Refer [here](//todo) for more information
+    This document contains `Event DTO` for auditor-v1 api.
+    When [3.1.0](https://github.com/OAI/OpenAPI-Specification/releases/tag/3.1.0-rc1) gets released, paths will become optional.
+    Hence Paths, Request, Response, Errors components can be removed thereafter.
+  version: 1.0.0
+  title: Auditor-v1 Event DTO
+  contact:
+    email: lowesopensource@lowes.com
+    name: Lowe's Companies, Inc.
+tags: []
+paths:
+  /logs:
+    post:
+      tags:
+        - Logs
+      summary: Filter logs by request body parameters
+      description: 'Fetch audit logs by request body parameters'
+      operationId: Fetch audit logs
+      parameters:
+        - name: X-Application-Name
+          in: header
+          description: application name that is calling the auditor api
+          required: true
+          explode: true
+          schema:
+            type: string
+          deprecated: false
+        - name: X-Request-Id
+          in: header
+          description: Unique request id tied to request
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditEventLogRequest'
+      responses:
+        '200':
+          description: Fetches and displays the audit event log
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditEventLogResponse'
+        '400':
+          description: Bad request error like REQUEST_VALIDATION_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '424':
+          description: Dependent service error like INFRASTRUCTURE_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error like UNHANDLED_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+externalDocs:
+  url: '//todo'
+
+components:
+  schemas:
+    AuditEventLogRequest:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventIdRequest'
+        applicationName:
+          $ref: '#/components/schemas/SourceApplicationNameRequest'
+        timestamp:
+          $ref: '#/components/schemas/EventTimeStampRequest'
+        type:
+          $ref: '#/components/schemas/EventTypeRequest'
+        subType:
+          $ref: '#/components/schemas/EventSubTypeRequest'
+        source:
+          $ref: '#/components/schemas/EventSourceRequest'
+        metadata:
+          $ref: '#/components/schemas/EventMetadataRequest'
+      required:
+        - id
+        - applicationName
+        - timestamp
+        - type
+        - source
+    AuditEventLogResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventIdResponse'
+        applicationName:
+          $ref: '#/components/schemas/SourceApplicationNameResponse'
+        timestamp:
+          $ref: '#/components/schemas/EventTimeStampResponse'
+        type:
+          $ref: '#/components/schemas/EventTypeResponse'
+        subType:
+          $ref: '#/components/schemas/EventSubTypeResponse'
+        source:
+          $ref: '#/components/schemas/EventSourceResponse'
+        metadata:
+          $ref: '#/components/schemas/EventMetadataResponse'
+        elements:
+          $ref: '#/components/schemas/ElementsResponse'
+        log:
+          $ref: '#/components/schemas/EvenLogResponse'
+      required:
+        - id
+        - applicationName
+        - timestamp
+        - type
+        - source
+
+    EventIdRequest:
+      $ref: '#/components/schemas/EventIdDTO'
+    SourceApplicationNameRequest:
+      $ref: '#/components/schemas/SourceApplicationNameDTO'
+    EventTimeStampRequest:
+      $ref: '#/components/schemas/EventTimeStampDTO'
+    EventTypeRequest:
+      $ref: '#/components/schemas/EventTypeDTO'
+    EventSubTypeRequest:
+      $ref: '#/components/schemas/EventSubTypeDTO'
+    EventSourceRequest:
+      $ref: '#/components/schemas/EventSourceDTO'
+    EventMetadataRequest:
+      $ref: '#/components/schemas/EventMetadataDTO'
+
+    EventIdResponse:
+      $ref: '#/components/schemas/EventIdDTO'
+    SourceApplicationNameResponse:
+      $ref: '#/components/schemas/SourceApplicationNameDTO'
+    EventTimeStampResponse:
+      $ref: '#/components/schemas/EventTimeStampDTO'
+    EventTypeResponse:
+      $ref: '#/components/schemas/EventTypeDTO'
+    EventSubTypeResponse:
+      $ref: '#/components/schemas/EventSubTypeDTO'
+    EventSourceResponse:
+      $ref: '#/components/schemas/EventSourceDTO'
+    EventMetadataResponse:
+      $ref: '#/components/schemas/EventMetadataDTO'
+    ElementsResponse:
+      $ref: '#/components/schemas/ElementsDTO'
+    EvenLogResponse:
+      $ref: '#/components/schemas/EventLogDTO'
+
+    AuditEventDTO:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventIdDTO'
+        applicationName:
+          $ref: '#/components/schemas/SourceApplicationNameDTO'
+        timestamp:
+          $ref: '#/components/schemas/EventTimeStampDTO'
+        type:
+          $ref: '#/components/schemas/EventTypeDTO'
+        subType:
+          $ref: '#/components/schemas/EventSubTypeDTO'
+        source:
+          $ref: '#/components/schemas/EventSourceDTO'
+        metadata:
+          $ref: '#/components/schemas/EventMetadataDTO'
+        elements:
+          $ref: '#/components/schemas/ElementsDTO'
+        log:
+          $ref: '#/components/schemas/EventLogDTO'
+      required:
+        - id
+        - applicationName
+        - timestamp
+        - type
+        - source
+
+    EventIdDTO:
+      type: string
+      format: uuid
+      description: Transaction ID of the audit event
+    SourceApplicationNameDTO:
+      type: string
+      description: Name of the Application generating the audit event
+    EventTimeStampDTO:
+      type: string
+      format: date-time
+      description: UTC timestamp of the audit event
+    EventTypeDTO:
+      type: string
+      description: Type of the audit event
+      enum:
+        - CREATED
+        - UPDATED
+        - DELETED
+      default: UPDATED
+    EventSubTypeDTO:
+      type: string
+      description: subtype of the audit event, a free form field. Additional type metadata that can be used to query the specific the event.
+    EventSourceDTO:
+      type: object
+      description: Details of the source who created the event.
+      properties:
+        type:
+          $ref: '#/components/schemas/EventSourceTypeDTO'
+        metadata:
+          $ref: '#/components/schemas/EventSourceMetadataDTO'
+      required:
+        - type
+    EventSourceTypeDTO:
+      type: string
+      description: Source type of the audit event
+      enum:
+        - SYSTEM
+        - USER
+    EventSourceMetadataDTO:
+      type: object
+      description: a map of the metadata describing source of the event
+      properties:
+        id:
+          type: string
+          description: id of the system/user causing the event (if available)
+        email:
+          type: string
+          description: email of the sysem/user causing the event (if available)
+        name:
+          type: string
+          description: name of the system/user causing the event (if available)
+    EventMetadataDTO:
+      type: object
+      description: a free form map of the event metadata
+      additionalProperties:
+        type: string
+    ElementsDTO:
+      type: array
+      description: an array containing all elements constituting the audit event
+      items:
+        $ref: '#/components/schemas/ElementDTO'
+    ElementDTO:
+      type: object
+      description: Each individual element constituting the audit event
+      properties:
+        name:
+          type: string
+          description: Name of the element (attribute/items) that is created/updated/deleted
+        updatedValue:
+          type: string
+          description: new value of the element (if available)
+        previousValue:
+          type: string
+          description: old value of the element (if available)
+        metadata:
+          $ref: '#/components/schemas/ElementMetadataDTO'
+    ElementMetadataDTO:
+      type: object
+      description: a map of the metadata describing element.
+      properties:
+        fqdn:
+          type: string
+          description: fully qualified domain name of the attribute/item containing domain and subdomain, separated by a dot.
+        identifiers:
+          $ref: '#/components/schemas/ElementIdentifiersDTO'
+    ElementIdentifiersDTO:
+      type: object
+      description: free form map to uniquely identify each domain under which the attribute/item  belongs.
+      additionalProperties:
+        type: string
+    EventLogDTO:
+      type: string
+      description: Captures the textual representation of the entity being logged
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'All possible Error codes'
+          enum:
+            - REQUEST_VALIDATION_ERROR
+            - UNAUTHORIZED_ERROR
+            - INFRASTRUCTURE_ERROR
+            - UNHANDLED_ERROR
+          default:
+            UNHANDLED_ERROR
+        message:
+          type: string
+          description: 'Human readable error message'
+        errors:
+          type: array
+          description: 'All possible Errors/Exception that led to the gven error'
+          items:
+            type: object
+            properties:
+              reason:
+                type: string
+                description: 'All possible reason for each error'
+                enum:
+                  - REQUIRED_FIELD
+                  - INVALID_FORMAT
+              element:
+                type: string
+                description: 'An option element for each error, like field name for REQUEST_VALIDATION_ERROR'
+              message:
+                type: string
+                description: 'Human readable error message'
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Application-Key
+
+security:
+  - ApiKeyAuth: []
