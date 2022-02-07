@@ -54,7 +54,6 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "11"
-            freeCompilerArgs = listOf("-Xopt-in=kotlin.ExperimentalStdlibApi")
         }
     }
 
@@ -62,7 +61,7 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-reflect:_")
         implementation(Kotlin.stdlib.jdk8)
         implementation("io.projectreactor:reactor-core:_")
-        testImplementation("io.projectreactor:reactor-test:_")
+        testImplementation(Spring.reactor.test)
         testImplementation(Testing.mockK)
         testImplementation(Testing.kotest.assertions.core)
         testImplementation(Testing.kotest.runner.junit5)
