@@ -53,6 +53,7 @@ subprojects {
         kotlinOptions {
             jvmTarget = "11"
             languageVersion = "1.5"
+            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         }
     }
 
