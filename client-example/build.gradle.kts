@@ -1,6 +1,3 @@
-object Versions {
-    const val log4j = "2.17.1"
-}
 // dependencies
 dependencies {
     implementation(project(":client"))

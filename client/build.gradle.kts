@@ -1,9 +1,3 @@
-object Versions {
-    // languages and frameworks
-    const val jackson = "2.12.1"
-    const val reactorKafka = "1.3.2"
-}
-
 tasks.jar {
     archiveBaseName.set("auditor-client")
 }

@@ -1,11 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
-object Versions {
-    // languages and frameworks
-    const val jackson = "2.12.1"
-}
-
 plugins {
     id("org.openapi.generator")
     `java-library`

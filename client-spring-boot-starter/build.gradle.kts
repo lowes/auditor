@@ -1,9 +1,3 @@
-object Versions {
-    // language and frameworks
-    const val springboot = "2.4.3"
-    const val logback = "1.2.10"
-}
-
 plugins {
     `java-library`
 }
