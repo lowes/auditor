@@ -104,6 +104,20 @@ If you need to run test specifically, run following commands as per your needs:
 ./gradlew clean functionalTest -> Runs all functional tests
 ```
 
+#### Adding/Updating dependencies
+We are using [refreshVersions](https://github.com/jmfayard/refreshVersions) to manage version upgrades.
+When you add a new dependency, please run the following:
+```
+./gradlew refreshVersionsMigrate
+```
+This will migrate the versions to [versions.properties](./versions.properties).
+To upgrade a specific dependency or all dependencies, run the following:
+```
+./gradlew refreshVersions
+```
+Above command will fetch the latest versions of all dependencies used in the project.
+you should pick the appropriate version to upgrade to. It can be done by copying the given version under comments and putting it against the said dependency property key.
+
 #### Pull requests
 Pull requests are always welcomed!
 Once your local setup is completed, and you have tested out your changes,
