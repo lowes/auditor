@@ -2,7 +2,8 @@ package com.lowes.auditor.client.config
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.spec.IsolationMode
-import java.time.Duration
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 /**
  * Sets up kotest configuration for unit test module.
@@ -13,8 +14,6 @@ object UnitTestSpecConfig : AbstractProjectConfig() {
 
     override val isolationMode: IsolationMode = IsolationMode.InstancePerTest
 
-    override val invocationTimeout = 60000L
-
-    override val timeout = Duration.ofSeconds(10)
-
+    @OptIn(ExperimentalTime::class)
+    override val timeout: kotlin.time.Duration = 60.seconds
 }
