@@ -2,12 +2,14 @@ package com.lowes.auditor.client.config
 
 import com.lowes.auditor.client.listeners.KafkaListener
 import io.kotest.core.config.AbstractProjectConfig
-import io.kotest.core.listeners.Listener
+import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.test.TestCaseOrder
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
- * Setting Functional Test Spec Configs
+ * Sets up kotest configuration for Integration Test Module
  */
 object FunctionalTestSpecConfig : AbstractProjectConfig() {
 
@@ -15,9 +17,11 @@ object FunctionalTestSpecConfig : AbstractProjectConfig() {
 
     override val isolationMode: IsolationMode = IsolationMode.SingleInstance
 
-    override val timeout = kotlin.time.Duration.Companion.INFINITE
+    override val timeout: Duration = 60.seconds
 
-    override fun listeners(): List<Listener> = listOf(KafkaListener)
+    override fun extensions(): List<Extension> {
+        return listOf(KafkaListener)
+    }
 
     override val testCaseOrder: TestCaseOrder = TestCaseOrder.Sequential
 }

@@ -1,11 +1,8 @@
 package com.lowes.auditor.client.config
 
 import io.kotest.core.config.AbstractProjectConfig
-import io.kotest.core.listeners.Listener
 import io.kotest.core.spec.IsolationMode
-import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
-import kotlin.time.toDuration
+import java.time.Duration
 
 /**
  * Sets up kotest configuration for unit test module.
@@ -18,8 +15,6 @@ object UnitTestSpecConfig : AbstractProjectConfig() {
 
     override val invocationTimeout = 60000L
 
-    @ExperimentalTime
-    override val timeout = 720.toDuration(DurationUnit.SECONDS)
+    override val timeout = Duration.ofSeconds(10)
 
-    override fun listeners(): List<Listener> = listOf()
 }
