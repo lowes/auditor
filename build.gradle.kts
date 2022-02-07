@@ -26,7 +26,6 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 subprojects {
@@ -45,7 +44,6 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
     }
 
     // compile
