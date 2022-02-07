@@ -63,9 +63,9 @@ subprojects {
         testImplementation(Testing.mockK)
         testImplementation(Testing.kotest.assertions.core)
         testImplementation(Testing.kotest.runner.junit5)
-        testImplementation(Testing.kotest.extensions.spring)
         testImplementation(Testing.kotest.property)
-        testImplementation(Testing.kotest.extensions.testContainers)
+        testImplementation(Testing.kotestExtensions.spring)
+        testImplementation(Testing.kotestExtensions.testContainers)
         testImplementation("org.testcontainers:kafka:_")
     }
 
