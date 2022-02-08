@@ -44,6 +44,8 @@ class AuditorTest : FunctionalTestSpec() {
             .receive()
             .doOnNext { it.receiverOffset().acknowledge() }
 
+        val noEventDuration = Duration.ofSeconds(2)
+
         Given("Two Instance of same Object with Differences") {
             val object1 = getItem()
                 .copy(
@@ -82,7 +84,7 @@ class AuditorTest : FunctionalTestSpec() {
                                     updatedValue = "12",
                                     previousValue = "1",
                                     metadata = ElementMetadata(
-                                        fqdn = "com.lowes.auditor.client.api.model.Item.rand.id",
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_ID,
                                         identifiers = null
                                     )
                                 ),
@@ -91,7 +93,7 @@ class AuditorTest : FunctionalTestSpec() {
                                     updatedValue = "34",
                                     previousValue = "3",
                                     metadata = ElementMetadata(
-                                        fqdn = "com.lowes.auditor.client.api.model.Item.listItem.0.id",
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_LIST_ITEM_0_ID,
                                         identifiers = null
                                     )
                                 ),
@@ -100,7 +102,7 @@ class AuditorTest : FunctionalTestSpec() {
                                     updatedValue = "23",
                                     previousValue = "2",
                                     metadata = ElementMetadata(
-                                        fqdn = "com.lowes.auditor.client.api.model.Item.rand2.id",
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_2_ID,
                                         identifiers = null
                                     )
                                 ),
@@ -109,14 +111,14 @@ class AuditorTest : FunctionalTestSpec() {
                                     updatedValue = "1234",
                                     previousValue = "123",
                                     metadata = ElementMetadata(
-                                        fqdn = "com.lowes.auditor.client.api.model.Item.itemNumber",
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_ITEM_NUMBER,
                                         identifiers = null
                                     )
                                 )
                             ).sortedBy { it.metadata?.fqdn }
                             true
                         }
-                        .expectNoEvent(Duration.ofSeconds(2))
+                        .expectNoEvent(noEventDuration)
                         .thenCancel()
                         .verify()
                 }
@@ -131,38 +133,37 @@ class AuditorTest : FunctionalTestSpec() {
                         }
                     StepVerifier.create(consumedData)
                         .expectNextMatches {
-                            it.applicationName shouldBe "functional-test"
                             it.type shouldBe EventType.DELETED
                             it.elements?.sortedBy { it.name } shouldBe listOf(
                                 Element(
                                     name = "emailAddress",
                                     updatedValue = null,
-                                    previousValue = "howyoudoin@friends.com",
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.emailAddress")
+                                    previousValue = getUser().emailAddress,
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_EMAIL_ADDRESS)
                                 ),
                                 Element(
                                     name = "firstName",
                                     updatedValue = null,
-                                    previousValue = "Joey",
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.firstName")
+                                    previousValue = getUser().firstName,
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_FIRST_NAME)
                                 ),
                                 Element(
                                     name = "lastName",
                                     updatedValue = null,
-                                    previousValue = "Tribbiani",
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.lastName")
+                                    previousValue = getUser().lastName,
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_LAST_NAME)
                                 ),
                                 Element(
                                     name = "nationality",
                                     updatedValue = null,
-                                    previousValue = "Mexican",
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.nationality")
+                                    previousValue = getUser().nationality,
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_NATIONALITY)
                                 )
 
                             ).sortedBy { it.name }
                             true
                         }
-                        .expectNoEvent(Duration.ofSeconds(2))
+                        .expectNoEvent(noEventDuration)
                         .thenCancel()
                         .verify()
                 }
@@ -177,63 +178,57 @@ class AuditorTest : FunctionalTestSpec() {
                         }
                     StepVerifier.create(consumedData)
                         .expectNextMatches {
-                            it.applicationName shouldBe "functional-test"
                             it.type shouldBe EventType.CREATED
                             it.elements?.sortedBy { it.name } shouldBe listOf(
-                                // Element(name = "firstName", updatedValue = null, previousValue = "Joey", metadata = ElementMetadata(fqdn = "com"))
                                 Element(
                                     name = "emailAddress",
                                     updatedValue = "howyoudoin@friends.com",
                                     previousValue = null,
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.emailAddress")
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_EMAIL_ADDRESS)
                                 ),
                                 Element(
                                     name = "firstName",
                                     updatedValue = "Joey",
                                     previousValue = null,
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.firstName")
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_FIRST_NAME)
                                 ),
                                 Element(
                                     name = "lastName",
                                     updatedValue = "Tribbiani",
                                     previousValue = null,
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.lastName")
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_LAST_NAME)
                                 ),
                                 Element(
                                     name = "nationality",
                                     updatedValue = "Mexican",
                                     previousValue = null,
-                                    metadata = ElementMetadata(fqdn = "com.lowes.auditor.client.api.model.User.nationality")
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_NATIONALITY)
                                 )
 
                             ).sortedBy { it.name }
                             true
                         }
-                        .expectNoEvent(Duration.ofSeconds(2))
+                        .expectNoEvent(noEventDuration)
                         .thenCancel()
                         .verify()
                 }
             }
 
-            When("Audit the new and old object with Auditor Event Config") {
+            When("Audit the new and old object with Inclusion filter for Rand.id") {
                 auditor.audit(
                     oldObject = object1,
                     newObject = object2,
                     auditorEventConfig = AuditorEventConfig(
-                        applicationName = "override-application-name",
+                        applicationName = OVERRIDE_APPLICATION_NAME,
                         eventSource = EventSourceConfig(EventSourceType.USER),
                         eventSubType = "subType",
                         metadata = mapOf("key" to "value"),
                         filters = Filters(
                             element = ElementFilter(
                                 enabled = true,
-                                types = listOf("InclusionFilter", "ExclusionFilter"),
+                                types = listOf("InclusionFilter"),
                                 options = ElementFilterOptions(
-                                    includes = listOf("id"),
-                                    excludes = listOf(
-                                        "com.lowes.auditor.client.api.model.Item.listItem.0.id",
-                                        "com.lowes.auditor.client.api.model.Item.rand2.id"
-                                    )
+                                    includes = listOf(COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_ID)
                                 )
                             )
                         )
@@ -247,7 +242,7 @@ class AuditorTest : FunctionalTestSpec() {
                     StepVerifier
                         .create(consumedData)
                         .expectNextMatches {
-                            it.applicationName shouldBe "override-application-name"
+                            it.applicationName shouldBe OVERRIDE_APPLICATION_NAME
                             it.type shouldBe EventType.UPDATED
                             it.source shouldBe EventSource(
                                 type = EventSourceType.USER,
@@ -259,14 +254,282 @@ class AuditorTest : FunctionalTestSpec() {
                                     updatedValue = "12",
                                     previousValue = "1",
                                     metadata = ElementMetadata(
-                                        fqdn = "com.lowes.auditor.client.api.model.Item.rand.id",
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_ID,
                                         identifiers = null
                                     )
                                 )
                             )
                             true
                         }
-                        .expectNoEvent(Duration.ofSeconds(2))
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Audit the new and old object with Exclusion filter for Rand.id") {
+                auditor.audit(
+                    oldObject = object1,
+                    newObject = object2,
+                    auditorEventConfig = AuditorEventConfig(
+                        applicationName = OVERRIDE_APPLICATION_NAME,
+                        eventSource = EventSourceConfig(EventSourceType.USER),
+                        eventSubType = "subType",
+                        metadata = mapOf("key" to "value"),
+                        filters = Filters(
+                            element = ElementFilter(
+                                enabled = true,
+                                types = listOf("ExclusionFilter"),
+                                options = ElementFilterOptions(
+                                    excludes = listOf(COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_ID)
+                                )
+                            )
+                        )
+                    )
+                )
+                Then("Assert the Audit Event is send ") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.applicationName shouldBe OVERRIDE_APPLICATION_NAME
+                            it.type shouldBe EventType.UPDATED
+                            it.source shouldBe EventSource(
+                                type = EventSourceType.USER,
+                                metadata = EventSourceMetadata()
+                            )
+                            it.elements?.sortedBy { it.metadata?.fqdn } shouldBe listOf(
+                                Element(
+                                    name = "id",
+                                    updatedValue = "34",
+                                    previousValue = "3",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_LIST_ITEM_0_ID
+                                    )
+                                ),
+                                Element(
+                                    name = "id",
+                                    updatedValue = "23",
+                                    previousValue = "2",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_2_ID
+                                    )
+                                ),
+                                Element(
+                                    name = "itemNumber",
+                                    updatedValue = "1234",
+                                    previousValue = "123",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_ITEM_NUMBER
+                                    )
+                                )
+                            ).sortedBy { it.metadata?.fqdn }
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Updating a list of Object") {
+                auditor.audit(
+                    oldObject = getItem()
+                        .copy(
+                            listItem = mutableListOf(Rand(id = "1"), Rand(id = "2")),
+                        ),
+                    newObject = getItem()
+                        .copy(
+                            listItem = mutableListOf(Rand(id = "1"), Rand(id = "3"))
+                        )
+                )
+                Then("Assert that the mutable List of Rand object is updated") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.type shouldBe EventType.UPDATED
+                            it.elements?.sortedBy { it.metadata?.fqdn } shouldBe listOf(
+                                Element(
+                                    name = "id",
+                                    updatedValue = "3",
+                                    previousValue = "2",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_LIST_ITEM_1_ID
+                                    )
+                                ),
+                            ).sortedBy { it.metadata?.fqdn }
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Updating a map key value") {
+                auditor.audit(
+                    oldObject = getItem()
+                        .copy(
+                            metadata = mapOf("key1" to "value1")
+                        ),
+                    newObject = getItem()
+                        .copy(
+                            metadata = mapOf("key2" to "value2")
+                        )
+                )
+                Then("Assert that a Create and Delete Audit Event is sent") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.type shouldBe EventType.CREATED
+                            it.elements shouldBe listOf(
+                                Element(
+                                    name = "key2",
+                                    updatedValue = "value2",
+                                    previousValue = null,
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_2)
+                                )
+                            )
+                            true
+                        }
+                        .expectNextMatches {
+                            it.type shouldBe EventType.DELETED
+                            it.elements shouldBe listOf(
+                                Element(
+                                    name = "key1",
+                                    updatedValue = null,
+                                    previousValue = "value1",
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_1)
+                                )
+                            )
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Updating an Integer") {
+                auditor.audit(
+                    oldObject = getItem()
+                        .copy(model = 1),
+                    newObject = getItem()
+                        .copy(model = 2)
+                )
+                Then("Assert that an Update Audit Event is sent") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.type shouldBe EventType.UPDATED
+                            it.elements shouldBe listOf(
+                                Element(
+                                    name = "model",
+                                    updatedValue = "2",
+                                    previousValue = "1",
+                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_MODEL)
+                                )
+                            )
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Updating an Integer and static metadata is set using AuditorEventConfig ") {
+                auditor.audit(
+                    oldObject = getItem()
+                        .copy(model = 1),
+                    newObject = getItem()
+                        .copy(model = 2),
+                    auditorEventConfig = AuditorEventConfig(
+                        applicationName = OVERRIDE_APPLICATION_NAME,
+                        eventSource = EventSourceConfig(EventSourceType.USER),
+                        eventSubType = "subType",
+                        metadata = mapOf("itemNumber" to "some_static_itemNumber")
+                    )
+                )
+                Then("Assert that an Update Audit Event is sent") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.type shouldBe EventType.UPDATED
+                            it.metadata shouldBe mapOf("itemNumber" to "some_static_itemNumber")
+                            it.elements shouldBe listOf(
+                                Element(
+                                    name = "model",
+                                    updatedValue = "2",
+                                    previousValue = "1",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_MODEL
+                                    )
+                                )
+                            )
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
+                        .thenCancel()
+                        .verify()
+                }
+            }
+
+            When("Updating an Integer and dynamic metadata is set using AuditorEventConfig ") {
+                auditor.audit(
+                    oldObject = getItem("14")
+                        .copy(model = 1),
+                    newObject = getItem("14")
+                        .copy(model = 2),
+                    auditorEventConfig = AuditorEventConfig(
+                        applicationName = OVERRIDE_APPLICATION_NAME,
+                        eventSource = EventSourceConfig(EventSourceType.USER),
+                        eventSubType = "subType",
+                        metadata = mapOf("itemNumber" to "\${itemNumber}-\${model}")
+                    )
+                )
+                Then("Assert that an Update Audit Event is sent") {
+                    val consumedData = consumer
+                        .map {
+                            FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                        }
+                    StepVerifier
+                        .create(consumedData)
+                        .expectNextMatches {
+                            it.type shouldBe EventType.UPDATED
+                            it.metadata shouldBe mapOf("itemNumber" to "14-2")
+                            it.elements shouldBe listOf(
+                                Element(
+                                    name = "model",
+                                    updatedValue = "2",
+                                    previousValue = "1",
+                                    metadata = ElementMetadata(
+                                        fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_MODEL
+                                    )
+                                )
+                            )
+                            true
+                        }
+                        .expectNoEvent(noEventDuration)
                         .thenCancel()
                         .verify()
                 }
@@ -286,7 +549,7 @@ class AuditorTest : FunctionalTestSpec() {
                             FunctionalTestModule.objectMapper.readValue(it.log, User::class.java) shouldBe user1
                             true
                         }
-                        .expectNoEvent(Duration.ofSeconds(2))
+                        .expectNoEvent(noEventDuration)
                         .thenCancel()
                         .verify()
                 }
@@ -294,9 +557,9 @@ class AuditorTest : FunctionalTestSpec() {
         }
     }
 
-    private fun getItem(): Item {
+    private fun getItem(itemNumber: String? = "123"): Item {
         return Item(
-            itemNumber = "123",
+            itemNumber = itemNumber,
             model = 1,
             description = "description",
             metadata = mapOf(
@@ -347,3 +610,20 @@ class AuditorTest : FunctionalTestSpec() {
         )
     }
 }
+
+/**
+ * Constants used for the test cases
+ */
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_ITEM_NUMBER = "com.lowes.auditor.client.api.model.Item.itemNumber"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_ID = "com.lowes.auditor.client.api.model.Item.rand.id"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_RAND_2_ID = "com.lowes.auditor.client.api.model.Item.rand2.id"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_LIST_ITEM_0_ID = "com.lowes.auditor.client.api.model.Item.listItem.0.id"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_LIST_ITEM_1_ID = "com.lowes.auditor.client.api.model.Item.listItem.1.id"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_MODEL = "com.lowes.auditor.client.api.model.Item.model"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_1 = "com.lowes.auditor.client.api.model.Item.metadata.key1"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_2 = "com.lowes.auditor.client.api.model.Item.metadata.key2"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_EMAIL_ADDRESS = "com.lowes.auditor.client.api.model.User.emailAddress"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_FIRST_NAME = "com.lowes.auditor.client.api.model.User.firstName"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_LAST_NAME = "com.lowes.auditor.client.api.model.User.lastName"
+private const val COM_LOWES_AUDITOR_CLIENT_API_MODEL_USER_NATIONALITY = "com.lowes.auditor.client.api.model.User.nationality"
+private const val OVERRIDE_APPLICATION_NAME = "override-application-name"

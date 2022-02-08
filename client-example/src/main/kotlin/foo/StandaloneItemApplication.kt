@@ -52,7 +52,7 @@ class StandaloneItemApplication(
         val config = AuditorEventConfig(
             applicationName = "client-example-kotlin",
             eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("static-user-id")),
-            metadata = mapOf("iteNumber" to "Sadly i am only static-value")
+            metadata = mapOf("itemNumber" to "Sadly i am only static-value")
         )
         auditor.audit(oldItem, newItem, config)
     }
@@ -65,7 +65,7 @@ class StandaloneItemApplication(
             applicationName = "client-example-kotlin",
             eventSource = EventSourceConfig(EventSourceType.USER, EventSourceMetadataConfig("\${updatedBy}")),
             metadata = mapOf(
-                "iteNumber" to "\${itemNumber}",
+                "itemNumber" to "\${itemNumber}",
                 "price.data" to "\${data.value}",
                 "static-key" to "static-value"
             )
