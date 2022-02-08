@@ -32,7 +32,7 @@ class AuditEventFilterService(
                 it.first to
                     event.copy(elements = elementFilterUseCase.filter(event.elements.orEmpty(), auditorEventConfig.filters?.element))
             }
-            .filter { if (it.second.log.isNullOrEmpty()) !it.second.elements.isNullOrEmpty() else true }
+            .filter { !it.second.log.isNullOrEmpty() || !it.second.elements.isNullOrEmpty() }
             .filter { loggingFilterUseCase.filter(it.first, it.second, auditorEventConfig.filters) }
             .map { it.second }
     }

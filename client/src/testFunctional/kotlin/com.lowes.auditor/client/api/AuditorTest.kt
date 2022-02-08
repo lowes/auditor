@@ -428,7 +428,7 @@ class AuditorTest : FunctionalTestSpec() {
                     newObject = getItem()
                         .copy(model = 2)
                 )
-                Then("Assert that an Update Audit Event is sent") {
+                Then("Assert that an Update Audit Event is sent for the model number") {
                     val consumedData = consumer
                         .map {
                             FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
