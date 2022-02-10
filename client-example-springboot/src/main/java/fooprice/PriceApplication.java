@@ -20,7 +20,6 @@ public class PriceApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Price oldPrice = new Price(UUID.randomUUID(), 1234, "old_item", null);
 
-        UUID newItemNumber = UUID.randomUUID();
         Price newPrice =
                 new Price(
                         UUID.randomUUID(),
