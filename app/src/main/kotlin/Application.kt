@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 
 @EnableAutoConfiguration
 @SpringBootApplication
-open class Application
+class Application
 
 /**
  * Runs the app server

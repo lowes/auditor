@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class StandalonePriceApplication implements Runnable {
-    private String NEW_PRICE_DESCRIPTION = "new_price_description";
+    private final String NEW_PRICE_DESCRIPTION = "new_price_description";
     private final Auditor auditor;
 
     public StandalonePriceApplication(Auditor auditor) {

@@ -1,3 +1,4 @@
+---
 auditor:
   event:
     kafkaConsumer:

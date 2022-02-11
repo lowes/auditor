@@ -11,7 +11,7 @@ import java.util.UUID
 
 @EnableAutoConfiguration
 @SpringBootApplication
-open class ItemApplication(
+class ItemApplication(
     val auditor: Auditor
 ) : CommandLineRunner {
 

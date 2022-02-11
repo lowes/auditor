@@ -1,3 +1,7 @@
+plugins {
+    id("org.springframework.boot")
+}
+
 // dependencies
 dependencies {
     implementation(project(":client-spring-boot-starter"))
