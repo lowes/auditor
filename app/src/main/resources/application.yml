@@ -1,0 +1,22 @@
+auditor:
+  event:
+    kafkaConsumer:
+      bootstrapServers: "localhost:9092"
+      configs:
+        client.id: auditor-consumer-client-id
+        group.id: auditor-consumer-group-id
+      enabled: true
+      topic: auditTopic
+  elasticsearch:
+    clusterUrl: "localhost:9200"
+
+management:
+  endpoints:
+    web:
+      base-path: /auditor/v1/actuator/
+      exposure:
+        include: info, health, metrics, prometheus
+
+repository:
+  auditEventIndexPrefix: "item-"
+  auditLogIndexAlias: "log-item-rollover-alias"
