@@ -20,6 +20,7 @@ plugins {
     id("nebula.release")
     kotlin("plugin.spring") apply false
     id("org.openapi.generator") apply false
+    id("org.springframework.boot") apply false
 }
 
 // repositories

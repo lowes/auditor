@@ -15,7 +15,8 @@ include(
     "client",
     "client-spring-boot-starter",
     "client-example",
-    "client-example-springboot"
+    "client-example-springboot",
+    "app"
 )
 plugins {
     val refreshVersions = "0.40.1"
