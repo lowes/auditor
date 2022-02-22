@@ -1,7 +1,7 @@
 # Auditor-v1
 Solves the audit needs for any JVM based application.
 ### Version
-The latest release `version` is `<//todo>`
+The latest release `version` is `<//todo-will be updated once the maven central is integrated>`
 <br/><br/>
 ### Motivation
 Auditing is a cross-cutting concerns of many applications supporting business process/workflows.
@@ -35,12 +35,12 @@ The project is composed of following modules:
 - [app](./app): Contains deployable app that will listen to kafka and inserts the audit events and logs to elastic search.
 <br/><br/>
 ### Integration:
-You will have to point the maven/gradle repo to Maven release repository: link<//todo> to download any of the client libraries.
+You will have to point the maven/gradle repo to Maven release repository: link<//todo-will be updated once the maven central is integrated> to download any of the client libraries.
 ##### Gradle:
 ```
 repositories {
     maven {
-        url = uri("<<//todo Maven repo link here >>")
+        url = uri("<<//todo Maven repo link here-will be updated once the maven central is integrated>>")
     }
 }
 ```
