@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class StandalonePriceApplication implements Runnable {
+    private String NEW_PRICE_DESCRIPTION = "new_price_description";
     private final Auditor auditor;
 
     public StandalonePriceApplication(Auditor auditor) {
@@ -33,7 +34,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testUpdateBothObject(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         newPrice.setPrice(50);
         newPrice.setMetadata(Map.of("MetaKey", "metaValue", "NewMetaKey", "NewMetaValue"));
         newPrice.setOffers(Collections.emptyList());
@@ -44,7 +45,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testStaticDataSubstitution(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         AuditorEventConfig config = new AuditorEventConfig();
         config.setApplicationName("client-example-java");
         config.setEventSource(
@@ -58,7 +59,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testDynamicDataSubstitution(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         Price.PriceData priceData = new Price.PriceData("NewPriceDataValue");
         newPrice.setData(priceData);
         AuditorEventConfig config = new AuditorEventConfig();
@@ -82,7 +83,7 @@ public class StandalonePriceApplication implements Runnable {
         Price oldPrice = getPrice(itemNumber);
         oldPrice.setOffers(null);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         newPrice.setPrice(50);
         AuditorEventConfig config = new AuditorEventConfig();
         EventFilter eventFilter =
@@ -96,7 +97,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testElementIncludesFilters(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         newPrice.setPrice(50);
         AuditorEventConfig config = new AuditorEventConfig();
         ElementFilterOptions options = new ElementFilterOptions();
@@ -111,7 +112,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testElementExcludesFilters(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         newPrice.setPrice(50);
         AuditorEventConfig config = new AuditorEventConfig();
         ElementFilterOptions options = new ElementFilterOptions();
@@ -126,7 +127,7 @@ public class StandalonePriceApplication implements Runnable {
     private void testLoggingFilters(UUID itemNumber) {
         Price oldPrice = getPrice(itemNumber);
         Price newPrice = getPrice(itemNumber);
-        newPrice.setDescription("new_price_description");
+        newPrice.setDescription(NEW_PRICE_DESCRIPTION);
         AuditorEventConfig config = new AuditorEventConfig();
         Filters filters = new Filters();
         filters.setLogging(new LoggingFilter(true));

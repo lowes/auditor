@@ -466,7 +466,7 @@ class AuditorTest : FunctionalTestSpec() {
                         metadata = mapOf("itemNumber" to "some_static_itemNumber")
                     )
                 )
-                Then("Assert that an Update Audit Event is sent") {
+                Then("Assert that an Update Audit Event is sent - static metadata") {
                     val consumedData = consumer
                         .map {
                             FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
@@ -507,7 +507,7 @@ class AuditorTest : FunctionalTestSpec() {
                         metadata = mapOf("itemNumber" to "\${itemNumber}-\${model}")
                     )
                 )
-                Then("Assert that an Update Audit Event is sent") {
+                Then("Assert that an Update Audit Event is sent - dynamic metadata") {
                     val consumedData = consumer
                         .map {
                             FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
