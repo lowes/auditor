@@ -19,6 +19,8 @@ import com.lowes.auditor.core.entities.domain.EventSource
 import com.lowes.auditor.core.entities.domain.EventSourceMetadata
 import com.lowes.auditor.core.entities.domain.EventSourceType
 import com.lowes.auditor.core.entities.domain.EventType
+import io.kotest.matchers.collections.shouldBeIn
+import io.kotest.matchers.collections.shouldBeOneOf
 import io.kotest.matchers.shouldBe
 import reactor.kafka.receiver.KafkaReceiver
 import reactor.test.StepVerifier
@@ -389,30 +391,32 @@ class AuditorTest : FunctionalTestSpec() {
                         .map {
                             FunctionalTestModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
                         }
+
+                    val events = listOf(EventType.CREATED, EventType.DELETED)
+                    val elements = listOf(
+                        Element(
+                            name = "key1",
+                            updatedValue = null,
+                            previousValue = "value1",
+                            metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_1)
+                        ),
+                        Element(
+                            name = "key2",
+                            updatedValue = "value2",
+                            previousValue = null,
+                            metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_2)
+                        )
+                    )
                     StepVerifier
                         .create(consumedData)
                         .expectNextMatches {
-                            it.type shouldBe EventType.CREATED
-                            it.elements shouldBe listOf(
-                                Element(
-                                    name = "key2",
-                                    updatedValue = "value2",
-                                    previousValue = null,
-                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_2)
-                                )
-                            )
+                            it.type shouldBeOneOf events
+                            it.elements?.get(0) shouldBeIn elements
                             true
                         }
                         .expectNextMatches {
-                            it.type shouldBe EventType.DELETED
-                            it.elements shouldBe listOf(
-                                Element(
-                                    name = "key1",
-                                    updatedValue = null,
-                                    previousValue = "value1",
-                                    metadata = ElementMetadata(fqdn = COM_LOWES_AUDITOR_CLIENT_API_MODEL_ITEM_METADATA_KEY_1)
-                                )
-                            )
+                            it.type shouldBeOneOf events
+                            it.elements?.get(0) shouldBeIn elements
                             true
                         }
                         .expectNoEvent(noEventDuration)
