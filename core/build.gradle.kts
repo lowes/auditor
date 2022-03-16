@@ -6,10 +6,6 @@ plugins {
     `java-library`
 }
 
-tasks.jar {
-    archiveBaseName.set("auditor-core")
-}
-
 // dependencies
 dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:_")

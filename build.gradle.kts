@@ -1,7 +1,5 @@
-import groovy.lang.GroovyObject
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON
@@ -13,11 +11,10 @@ plugins {
     idea
     jacoco
     `maven-publish`
+    signing
     kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
-    id("com.jfrog.artifactory")
-    id("nebula.release")
     kotlin("plugin.spring") apply false
     id("org.openapi.generator") apply false
     id("org.springframework.boot") apply false
@@ -31,13 +28,12 @@ repositories {
 
 subprojects {
     apply(plugin = "org.gradle.idea")
+    apply(plugin = "org.gradle.signing")
     apply(plugin = "org.gradle.jacoco")
     apply(plugin = "org.gradle.maven-publish")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "io.gitlab.arturbosch.detekt")
-    apply(plugin = "com.jfrog.artifactory")
-    apply(plugin = "nebula.release")
     apply(from = "$rootDir/gradle/integration-test.gradle.kts")
     apply(from = "$rootDir/gradle/functional-test.gradle.kts")
 
@@ -135,49 +131,97 @@ subprojects {
         }
     }
 
-    // publish
-    artifactory {
-        setContextUrl("<<//todo maven-repo-url-here>>")
-        publish(
-            delegateClosureOf<PublisherConfig> {
-                repository(
-                    delegateClosureOf<GroovyObject> {
-                        setProperty("repoKey", getArtifactoryRepo(project.version.toString()))
-                        setProperty("username", project.findProperty("artifactory_user") ?: "dummy_user")
-                        setProperty("password", project.findProperty("artifactory_password") ?: "dummy_password")
-                        setProperty("maven", true)
+    if (!project.name.contains("example")) {
+        publishing {
+            publications {
+                create<MavenPublication>("maven") {
+                    from(components["java"])
+                    afterEvaluate {
+                        artifactId = "auditor-".plus(tasks.jar.get().archiveBaseName.get())
+                        group = "io.github.lowes"
+                        version = getAuditorVersion()
                     }
-                )
-                defaults(
-                    delegateClosureOf<GroovyObject> {
-                        invokeMethod("publications", "mavenJava")
+                    pom {
+                        name.set("Auditor")
+                        description.set("Auditing Library for JVM apps")
+                        url.set("https://github.com/lowes/auditor")
+                        licenses {
+                            license {
+                                name.set("Apache-2.0")
+                                url.set("https://opensource.org/licenses/Apache-2.0")
+                            }
+                        }
+                        developers {
+                            developer {
+                                id.set("lowesoss")
+                                name.set("Lowe's Home Improvement")
+                                organization.set("Lowe's")
+                                organizationUrl.set("https://www.lowes.com")
+                            }
+                        }
+                        scm {
+                            url.set(
+                                "https://github.com/lowes/auditor.git"
+                            )
+                            connection.set(
+                                "scm:git:git://github.com/lowes/auditor.git"
+                            )
+                            developerConnection.set(
+                                "scm:git:git://github.com/lowes/auditor.git"
+                            )
+                        }
+                        issueManagement {
+                            url.set("https://github.com/lowes/auditor/issues")
+                        }
                     }
-                )
+                }
             }
-        )
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
-                afterEvaluate {
-                    artifactId = tasks.jar.get().archiveBaseName.get()
-                    group = "com.lowes.auditor"
+            repositories {
+                maven {
+                    name = "snapshot"
+                    setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots")
+                    credentials {
+                        username = System.getenv("OSSRH_USER") ?: project.properties["ossrhUsername"].toString()
+                        password = System.getenv("OSSRH_PASSWORD") ?: project.properties["ossrhPassword"].toString()
+                    }
+                }
+                maven {
+                    name = "release"
+                    setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+                    credentials {
+                        username = System.getenv("OSSRH_USER") ?: project.properties["ossrhUsername"].toString()
+                        password = System.getenv("OSSRH_PASSWORD") ?: project.properties["ossrhPassword"].toString()
+                    }
                 }
             }
         }
+
+        signing {
+            isRequired = true
+            sign(publishing.publications["maven"])
+        }
+    }
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
     }
 
     // Test tasks
     val tasksNames: MutableList<String> = gradle.startParameter.taskNames
     if (tasksNames.contains("integrationTest") && !tasksNames.contains("functionalTest") && !tasksNames.contains("test")) {
         gradle.startParameter.excludedTaskNames += setOf("functionalTest", "test")
-    } else if (tasksNames.contains("functionalTest") && !tasksNames.contains("integrationTest") && !tasksNames.contains("test")) {
+    } else if (tasksNames.contains("functionalTest") && !tasksNames.contains("integrationTest") && !tasksNames.contains(
+            "test"
+        )
+    ) {
         gradle.startParameter.excludedTaskNames += setOf("integrationTest", "test")
     } else if (tasksNames.contains("test") && !tasksNames.contains("integrationTest") && !tasksNames.contains("functionalTest")) {
         gradle.startParameter.excludedTaskNames += setOf("integrationTest", "functionalTest")
     }
 }
 
-fun getArtifactoryRepo(version: String): String = if (version.contains("-dev")) "snapshots" else "releases"
+fun getAuditorVersion(): String {
+    val version = System.getenv().getOrDefault("AUDITOR_VERSION", "0.0.1")
+    return if (gradle.startParameter.taskNames.any { it.contains("Snapshot") }) version.plus("-SNAPSHOT") else version
+}

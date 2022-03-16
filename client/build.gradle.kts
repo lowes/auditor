@@ -1,7 +1,3 @@
-tasks.jar {
-    archiveBaseName.set("auditor-client")
-}
-
 // dependencies
 dependencies {
     api(project(":core"))
