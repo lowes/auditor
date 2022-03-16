@@ -2,10 +2,6 @@ plugins {
     `java-library`
 }
 
-tasks.jar {
-    archiveBaseName.set("auditor-client-spring-boot-starter")
-}
-
 // dependencies
 dependencies {
     api(project(":core"))
