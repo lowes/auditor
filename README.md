@@ -5,9 +5,6 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/lowes/auditor.svg)](http://isitmaintained.com/project/lowes/auditor "Percentage of issues still open")
 
 Solves the audit needs for any JVM based application.
-### Version
-The latest release `version` is `<//todo-will be updated once the maven central is integrated>`
-<br/><br/>
 ### Motivation
 Auditing is a cross-cutting concerns of many applications supporting business process/workflows.
 There are some solutions out there like [Javers](https://javers.org/), [Audit4J](https://github.com/audit4j), [Log4j Audit](https://logging.apache.org/log4j-audit/latest/index.html) etc.. that aims to provide auditing functionality for java applications. 
@@ -44,20 +41,19 @@ You will have to point the maven/gradle repo to Maven release repository: link</
 ##### Gradle:
 ```
 repositories {
-    maven {
-        url = uri("<<//todo Maven repo link here-will be updated once the maven central is integrated>>")
-    }
+    mavenCentral()
 }
 ```
 ##### Maven:
 ```
 <repositories>
-    <repository>
-      <id>//todo artifactory-id</id>
-      <name>//todo artifactory-name</name>
-      <url>//todo artifiactor-url</url>
-    </repository>
-  </repositories>
+  <repository>
+    <id>central</id>
+    <name>Maven Central</name>
+    <layout>default</layout>
+    <url>https://repo1.maven.org/maven2</url>
+  </repository>
+</repositories>
 ```
 <br/><br/>
 ### Using auditor-v1 client library

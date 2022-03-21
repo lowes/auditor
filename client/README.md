@@ -15,13 +15,13 @@ These api(s) also accepts following parameters which customizes the auditor beha
 Refer the gradle/maven dependency detail below to use the client library in stand-alone mode:
    ##### Gradle:
    ```
-   implementation("com.lowes.auditor:client:${version}")
+   implementation("io.github.lowes:auditor-client:${version}")
    ```
    ##### Maven:
    ```
    <dependency>
-        <groupId>com.lowes.auditor</groupId>
-        <artifactId>client</artifactId>
+        <groupId>io.github.lowes</groupId>
+        <artifactId>auditor-client</artifactId>
         <version>${version}</version>
     </dependency>
    ``` 
