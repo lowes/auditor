@@ -1,4 +1,9 @@
 # Auditor-v1
+![GitHub Workflow Status (event)](https://img.shields.io/github/workflow/status/lowes/auditor/Gradle%20Package?event=push)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.lowes/auditor-core)
+![GitHub](https://img.shields.io/github/license/lowes/auditor)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/lowes/auditor.svg)](http://isitmaintained.com/project/lowes/auditor "Percentage of issues still open")
+
 Solves the audit needs for any JVM based application.
 ### Version
 The latest release `version` is `<//todo-will be updated once the maven central is integrated>`
