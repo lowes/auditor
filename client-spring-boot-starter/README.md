@@ -5,13 +5,13 @@ It's a spring boot starter over client api(s). Useful for application that uses 
 Refer the gradle/maven dependency detail below to use the client library in spring-boot-starter mode:
   ##### Gradle:
   ```
-  implementation("com.lowes.auditor:client-spring-boot-starter:${version}")
+  implementation("io.github.lowes:auditor-client-spring-boot-starter:${version}")
   ```
   ##### Maven:
   ```
   <dependency>
-      <groupId>com.lowes.auditor</groupId>
-      <artifactId>client-spring-boot-starter</artifactId>
+      <groupId>io.github.lowes</groupId>
+      <artifactId>auditor-client-spring-boot-starter</artifactId>
       <version>${version}</version>
   </dependency>
   ```

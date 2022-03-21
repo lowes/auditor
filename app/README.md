@@ -9,6 +9,10 @@ To build it locally, run the following commands from root project location.
 After the build, an all dependency inclusive fat jar will be produced in location:`app/build/libs` with name `app-<version-info>.jar`.
 you can use the jar for deployment.
 
+### Standalone JAR file
+Alternatively you can download the latest standalone jar file directly.<br>
+Go to [Maven Repository Link](https://mvnrepository.com/artifact/io.github.lowes/auditor-app)
+and select the latest version and then select jar option in the Files Section.
 
 ## Configurations
 This module comes with following configurations:
