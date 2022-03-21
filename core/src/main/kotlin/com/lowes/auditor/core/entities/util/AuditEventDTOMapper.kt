@@ -40,7 +40,7 @@ object AuditEventDTOMapper {
     }
 
     /**
-     * Coverts list of [Element] to list of [ElementDTO]
+     * Converts list of [Element] to list of [ElementDTO]
      */
     private fun toElementDTO(elements: List<Element>?): List<ElementDTO>? {
         return elements?.map {
