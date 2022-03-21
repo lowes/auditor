@@ -45,7 +45,7 @@ jobs:
       run: |
         export AUDITOR_VERSION=${GITHUB_REF#refs/*/}
         echo $SECRETS_GPG_KEY | base64 -d > secrets-keys.gpg 
-        ./gradlew -Dorg.gradle.project.signing.keyId=$SIGNING_KEYID -Dorg.gradle.project.signing.password=$SIGNING_PASSWORD -Dorg.gradle.project.signing.secretKeyRingFile=/home/runner/work/auditor/auditor/secrets-keys.gpg publishAllPublicationsToSnapshotRepository
+        ./gradlew -Dorg.gradle.project.signing.keyId=$SIGNING_KEYID -Dorg.gradle.project.signing.password=$SIGNING_PASSWORD -Dorg.gradle.project.signing.secretKeyRingFile=/home/runner/work/auditor/auditor/secrets-keys.gpg publishAllPublicationsToReleaseRepository
       env: 
         SIGNING_KEYID: ${{ secrets.SIGNING_KEYID }}
         SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
