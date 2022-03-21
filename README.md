@@ -1,7 +1,7 @@
 # Auditor-v1
-![GitHub Workflow Status (event)](https://img.shields.io/github/workflow/status/lowes/auditor/Gradle%20Package?event=push)
-![Maven Central](https://img.shields.io/maven-central/v/io.github.lowes/auditor-core)
-![GitHub](https://img.shields.io/github/license/lowes/auditor)
+[![GitHub Workflow Status (event)](https://img.shields.io/github/workflow/status/lowes/auditor/Gradle%20Package?event=push)](https://github.com/lowes/auditor/actions/workflows/gradle-publish.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.lowes/auditor-core)](https://search.maven.org/search?q=g:io.github.lowes%20AND%20a:auditor*)
+[![GitHub](https://img.shields.io/github/license/lowes/auditor)](https://github.com/lowes/auditor/blob/main/LICENSE)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/lowes/auditor.svg)](http://isitmaintained.com/project/lowes/auditor "Percentage of issues still open")
 
 Solves the audit needs for any JVM based application.
