@@ -223,6 +223,6 @@ subprojects {
 
 fun getAuditorVersion(): String {
     val version = System.getenv().getOrDefault("AUDITOR_VERSION", "v0.0.1")
-    val finalVersion = if(version.startsWith('v')) version.drop(1) else version
+    val finalVersion = if (version.startsWith('v')) version.drop(1) else version
     return if (gradle.startParameter.taskNames.any { it.contains("Snapshot") }) finalVersion.plus("-SNAPSHOT") else finalVersion
 }
