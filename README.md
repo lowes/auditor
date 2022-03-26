@@ -8,7 +8,6 @@
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
 [![Code Climate issues](https://img.shields.io/codeclimate/issues/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor/issues)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/lowes/auditor.svg)](http://isitmaintained.com/project/lowes/auditor "Percentage of issues still open")
 
 Solves the audit needs for any JVM based application.
 ### Motivation
