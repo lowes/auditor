@@ -28,17 +28,25 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
         
-    - name: Assemble binaries on tags
-      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
-      with:
-        arguments: clean assemble
-        
     - name: Build on Pull requests or merges
       if: ${{ github.event_name == 'pull_request' || github.event.pull_request.merged == 'true' || github.ref == 'refs/heads/main' }}
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
         arguments: clean build
+
+    - name: Test & publish code coverage
+      if: ${{ github.event_name == 'pull_request' || github.event.pull_request.merged == 'true' || github.ref == 'refs/heads/main' }}
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      with:
+        coverageLocations: ${{github.workspace}}/client/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+
+    - name: Assemble binaries on tags
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
+      with:
+        arguments: clean assemble
 
     - name: Publish to MavenCentral
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
