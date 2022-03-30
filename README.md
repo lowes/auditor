@@ -9,6 +9,7 @@
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
 [![Code Climate issues](https://img.shields.io/codeclimate/issues/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor/issues)
 [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 
 Solves the audit needs for any JVM based application.
 ### Motivation
@@ -87,48 +88,9 @@ Refer the [client-spring-boot-starter's README.md](./client-spring-boot-starter/
 ### Using auditor-v1 app server
 Auditor server is present inside `app` module. Refer the [app module's README.md](./app/README.md) for how to use the app server.
 <br/><br/>
+
 ### Contributing: local-setup, development and testing:
-
-#### Setup
-All commands mentioned below are expected to be run from your project root location.
-
-After cloning the repository in your local, you need to run the following command to install `ktlintFormat` git pre-commit hook:
-```
-./gradlew addKtlintFormatGitPreCommitHook
-```
-This ensures the files are formatted before checking in.
-
-#### Build and test
-To build the project, you need to run the following:
-```
- ./gradlew clean build
-``` 
-This will build and test all the modules(core, client, app, etc).
-If you need to run test specifically, run following commands as per your needs:
-```
-./gradlew clean test -> Runs all unit tests
-./gradlew clean integrationTest -> Runs all integrataion tests
-./gradlew clean functionalTest -> Runs all functional tests
-```
-
-#### Adding/Updating dependencies
-We are using [refreshVersions](https://github.com/jmfayard/refreshVersions) to manage version upgrades.
-When you add a new dependency, please run the following:
-```
-./gradlew refreshVersionsMigrate
-```
-This will migrate the versions to [versions.properties](./versions.properties).
-To upgrade a specific dependency or all dependencies, run the following:
-```
-./gradlew refreshVersions
-```
-Above command will fetch the latest versions of all dependencies used in the project.
-you should pick the appropriate version to upgrade to. It can be done by copying the given version under comments and putting it against the said dependency property key.
-
-#### Pull requests
-Pull requests are always welcomed!
-Once your local setup is completed, and you have tested out your changes,
-you can raise PR against `main` branch.
+Please refer to our [Contributing](./CONTRIBUTING.md) page for more details.
 
 For any queries/community support reach out to stack overflow channel: <//todo>
 

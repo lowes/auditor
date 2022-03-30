@@ -1,0 +1,15 @@
+name: Documentation Request
+description: Suggest an improvement to the documentation
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-vs-actual-behavior
+    attributes:
+      label: Please provide the expected behavior vs the actual behavior you encountered
