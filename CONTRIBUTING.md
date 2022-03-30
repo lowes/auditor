@@ -1,4 +1,4 @@
-#How to  Contribute
+# How to  Contribute
 
 You can contribute in different ways:
 
