@@ -43,7 +43,7 @@ The project is composed of following modules:
 - [app](./app): Contains deployable app that will listen to kafka and inserts the audit events and logs to elastic search.
 <br/><br/>
 ### Integration:
-You will have to point the maven/gradle repo to Maven release repository: link<//todo-will be updated once the maven central is integrated> to download any of the client libraries.
+The modules are available on [maven central repo](https://search.maven.org/search?q=g:io.github.lowes%20AND%20a:auditor*). Just point your maven/gradle to maven central and you should be able to download the relevant modules.
 ##### Gradle:
 ```
 repositories {
