@@ -7,7 +7,7 @@
 [![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/lowes/auditor)](https://github.com/lowes/auditor/pulls?q=is%3Apr+is%3Aclosed)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
-[![Code Climate issues](https://img.shields.io/codeclimate/issues/lowes/auditor)](https://codeclimate.com/github/ankur4u007/lowes/issues)
+[![Code Climate issues](https://img.shields.io/codeclimate/issues/lowes/auditor)](https://codeclimate.com/github/lowes/lowes/issues)
 [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 
