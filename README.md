@@ -5,9 +5,10 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/lowes/auditor)
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.lowes/auditor-core?server=https%3A%2F%2Fs01.oss.sonatype.org%2F)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/lowes/auditor-client/)
 [![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/lowes/auditor)](https://github.com/lowes/auditor/pulls?q=is%3Apr+is%3Aclosed)
-[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
-[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor)
-[![Code Climate issues](https://img.shields.io/codeclimate/issues/ankur4u007/auditor)](https://codeclimate.com/github/ankur4u007/auditor/issues)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
+[![Code Climate issues](https://img.shields.io/codeclimate/issues/lowes/auditor)](https://codeclimate.com/github/lowes/lowes/issues)
+[![Code Climate coverage](https://img.shields.io/codeclimate/coverage/lowes/auditor)](https://codeclimate.com/github/lowes/auditor)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 
 Solves the audit needs for any JVM based application.
