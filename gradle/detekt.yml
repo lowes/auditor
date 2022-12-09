@@ -12,3 +12,7 @@ complexity:
     thresholdInClasses: 20
     thresholdInFiles: 30
     thresholdInInterfaces: 20
+
+naming:
+  InvalidPackageDeclaration:
+    rootPackage: "com.lowes.auditor.app"
