@@ -35,7 +35,7 @@ jobs:
         arguments: clean build
 
     - name: Test & publish code coverage
-      if: ${{ github.event_name == 'pull_request' || github.event.pull_request.merged == 'true' || github.ref == 'refs/heads/main' }}
+      if: ${{ github.event.pull_request.merged == 'true' || github.ref == 'refs/heads/main' }}
       uses: paambaati/codeclimate-action@v3.0.0
       env:
         CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
