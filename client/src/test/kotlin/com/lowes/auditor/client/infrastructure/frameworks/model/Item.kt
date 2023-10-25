@@ -9,7 +9,7 @@ data class Item(
     val metadata: Map<String, String>? = null,
     val rand: Rand? = null,
     val rand2: Rand? = null,
-    val listItem: MutableList<Rand> ? = null,
+    val listItem: MutableList<Rand>? = null,
     val metadataRand: Map<String, Rand>? = null,
     val stringList: List<String>? = null,
     val price: BigDecimal? = null,
@@ -26,6 +26,7 @@ data class Rand(
 )
 
 data class SubObject(
+    val id: String? = null,
     val value: String? = null,
     val uom: String? = null
 )

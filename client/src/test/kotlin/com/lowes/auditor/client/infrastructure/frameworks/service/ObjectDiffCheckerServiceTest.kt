@@ -2,6 +2,7 @@ package com.lowes.auditor.client.infrastructure.frameworks.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
+import com.lowes.auditor.client.entities.domain.IgnoreCollectionOrderConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
 import com.lowes.auditor.client.infrastructure.frameworks.model.DummyClass
 import com.lowes.auditor.client.infrastructure.frameworks.model.Item
@@ -53,21 +54,30 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new simple object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Simple object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/create.json").readBytes(), Array<Element>::class.java).toList()
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/create.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Compare old and new simple object") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Simple object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/udpate.json").readBytes(), Array<Element>::class.java).toList()
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/update.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Only old simple object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
-            Then("Only previous values are populates - Simple object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/delete.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only previous values are populated - Simple object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/delete.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
@@ -115,22 +125,31 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         )
         When("Only new nested list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
-            Then("Only updated values are populates - Nested list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistCreate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only updated values are populated - Nested list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/innerListCreate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Compare old and new nested list object") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
-            Then("Conatains all update, create and delete Events - Nested list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistUpdate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Contains all update, create and delete Events - Nested list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/innerListUpdate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Only old nested list object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
-            Then("Only previous values are populates - Nested list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistDelete.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only previous values are populated - Nested list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/innerListDelete.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
@@ -155,22 +174,31 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         )
         When("Only new collection list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
-            Then("Only updated values are populates - Collection list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/listCreate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only updated values are populated - Collection list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/listCreate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Compare old and new collection list objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
-            Then("Conatains all update, create and delete Events - Collection list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/listUpdate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Contains all update, create and delete Events - Collection list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/listUpdate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Only old collection list object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
-            Then("Only previous values are populates - Collection list object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/listdelete.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only previous values are populated - Collection list object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/listDelete.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
@@ -184,32 +212,41 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
 
     Given("Test for Collection map") {
         val oldItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
+            subMap = mapOf("one" to SubObject(value = "100", uom = "ft")),
             metadata = mapOf("id" to "123")
         )
 
         val newItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
+            subMap = mapOf("one" to SubObject(value = "100", uom = "ft")),
             metadata = mapOf("id" to "John")
         )
         When("Only new collection map object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
-            Then("Only updated values are populates - Collection map object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapCreate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only updated values are populated - Collection map object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapCreate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When(" - Collection map objectCompare old and new collection map objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Collection map object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapUpdate.json").readBytes(), Array<Element>::class.java).toList()
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapUpdate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Only old collection map object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
-            Then("Only previous values are populates - Collection map object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapDelete.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only previous values are populated - Collection map object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapDelete.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
@@ -239,22 +276,31 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         )
         When("Only new collection mapInner object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
-            Then("Only updated values are populates - Collection mapInner object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerCreate.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only updated values are populated - Collection mapInner object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapInnerCreate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Compare old and new collection mapInner objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Collection mapInner object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerpUpdate.json").readBytes(), Array<Element>::class.java).toList()
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapInnerUpdate.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
         When("Only old collection mapInner object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
-            Then("Only previous values are populates - Collection mapInner object") {
-                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerDelete.json").readBytes(), Array<Element>::class.java).toList()
+            Then("Only previous values are populated - Collection mapInner object") {
+                diff shouldBe obj.readValue(
+                    javaClass.getResource("/mapInnerDelete.json")!!.readBytes(),
+                    Array<Element>::class.java
+                ).toList()
             }
         }
 
@@ -262,6 +308,113 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
             val diff = diffChecker.diff(newItem, newItem).collectList().block()
             Then("Empty List - Collection mapInner object") {
                 diff shouldBe emptyList()
+            }
+        }
+    }
+
+    Given("Diff Checker is configured to use alternate array identifier") {
+        val oldItem = Item(
+            itemNumber = "42",
+            description = "original item",
+            metadata = mapOf("first" to "apple", "second" to "banana", "third" to "carrot"),
+            stringList = listOf("ant", "bear", "cat"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so1", "val1", "uom1"), SubObject("so2", "val2", "uom2")),
+                    listString = listOf("string1a", "string1a", "string1b")
+                ),
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so3", "val3", "uom3"), SubObject("so4", "val4", "uom4")),
+                    listString = listOf("string2a", "string2a", "string2b")
+                )
+            )
+        )
+        val oldItemShuffled = Item(
+            itemNumber = "42",
+            description = "original item",
+            metadata = mapOf("first" to "apple", "third" to "carrot", "second" to "banana"),
+            stringList = listOf("cat", "ant", "bear"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so4", "val4", "uom4"), SubObject("so3", "val3", "uom3")),
+                    listString = listOf("string2b", "string2a", "string2a")
+                ),
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so1", "val1", "uom1"), SubObject("so2", "val2", "uom2")),
+                    listString = listOf("string1a", "string1b", "string1a")
+                )
+            )
+        )
+        val newItem = Item(
+            itemNumber = "42",
+            description = "new item",
+            metadata = mapOf("first" to "apple", "third" to "carrot", "second" to "berry", "fourth" to "donut"),
+            stringList = listOf("caterpillar", "anteater", "bear"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so4", "val4", "uom4update"), SubObject("so3", "val3", "uom3")),
+                    listString = listOf("string2b", "string2a", "string2c")
+                ),
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so2", "val2update", "uom2")),
+                    listString = listOf("string1a", "string1b", "string1a", "string1a", "string1a")
+                )
+            )
+        )
+
+        And("Field to use is not specified") {
+            val defaultIdentifierConfig =
+                AuditorEventConfig(ignoreCollectionOrder = IgnoreCollectionOrderConfig(enabled = true))
+            val diffCheckerAltArrayId = FrameworkModule.getObjectDiffChecker(defaultIdentifierConfig)
+
+            When("Comparing objects where only collection order has changed") {
+                val diff = diffCheckerAltArrayId.diff(oldItem, oldItemShuffled).collectList().block()
+                Then("Diff will be empty (Default)") {
+                    diff shouldBe emptyList()
+                }
+            }
+            When("Comparing objects with meaningful changes") {
+                val diff = diffCheckerAltArrayId.diff(oldItem, newItem).collectList().block()
+                Then("Diff will contain all create, update, and delete events (Default)") {
+                    diff shouldBe obj.readValue(
+                        javaClass.getResource("/ignoreOrderDefault.json")!!.readBytes(),
+                        Array<Element>::class.java
+                    ).toList()
+                }
+            }
+        }
+
+        And("Fields to use are provided") {
+            val nameIdentifierConfig = AuditorEventConfig(
+                ignoreCollectionOrder = IgnoreCollectionOrderConfig(enabled = true, fields = listOf("name", "value"))
+            )
+            val diffCheckerAltArrayFields = FrameworkModule.getObjectDiffChecker(nameIdentifierConfig)
+            When("Comparing objects where only collection order has changed") {
+                val diff = diffCheckerAltArrayFields.diff(oldItem, oldItemShuffled).collectList().block()
+                Then("Diff will be empty (Custom)") {
+                    diff shouldBe emptyList()
+                }
+            }
+            When("Comparing objects with meaningful changes") {
+                val diff = diffCheckerAltArrayFields.diff(oldItem, newItem).collectList().block()
+                Then("Diff will contain all create, update, and delete events (Default)") {
+                    diff shouldBe obj.readValue(
+                        javaClass.getResource("/ignoreOrderCustom.json")!!.readBytes(),
+                        Array<Element>::class.java
+                    ).toList()
+                }
             }
         }
     }
