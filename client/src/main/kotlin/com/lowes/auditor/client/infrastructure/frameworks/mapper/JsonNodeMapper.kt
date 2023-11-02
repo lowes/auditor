@@ -46,12 +46,12 @@ object JsonNodeMapper {
                                         identifier = getAltIdentifier(element, altIdentifierFields) ?: identifier
                                     }
                                     val fqcnValue = getFqcnValue(hasFields, identifier, fqcn, entry).plus(".").plus(identifier)
-                                    if (t.t2.isValueNode) {
+                                    if (element.isValueNode) {
                                         val updatedValue = if (eventType == EventType.CREATED) {
-                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                            findType(element)?.let { it1 -> getValue(it1, element) }
                                         } else null
                                         val previousValue = if (eventType == EventType.DELETED) {
-                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                            findType(element)?.let { it1 -> getValue(it1, element) }
                                         } else null
                                         Flux.just(
                                             Element(

@@ -54,30 +54,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new simple object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Simple object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/create.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/create.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Compare old and new simple object") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Simple object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/update.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/udpate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Only old simple object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
             Then("Only previous values are populated - Simple object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/delete.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/delete.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
@@ -126,30 +117,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new nested list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Nested list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/innerListCreate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistCreate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Compare old and new nested list object") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Nested list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/innerListUpdate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistUpdate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Only old nested list object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
             Then("Only previous values are populated - Nested list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/innerListDelete.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/InnerlistDelete.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
@@ -175,30 +157,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new collection list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Collection list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/listCreate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/listCreate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Compare old and new collection list objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Collection list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/listUpdate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/listUpdate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Only old collection list object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
             Then("Only previous values are populated - Collection list object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/listDelete.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/listdelete.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
@@ -223,30 +196,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new collection map object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Collection map object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapCreate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapCreate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When(" - Collection map objectCompare old and new collection map objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Collection map object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapUpdate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapUpdate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Only old collection map object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
             Then("Only previous values are populated - Collection map object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapDelete.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapDelete.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
@@ -277,30 +241,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
         When("Only new collection mapInner object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Collection mapInner object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapInnerCreate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerCreate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Compare old and new collection mapInner objects") {
             val diff = diffChecker.diff(oldItem, newItem).collectList().block()
             Then("Contains all update, create and delete Events - Collection mapInner object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapInnerUpdate.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerpUpdate.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 
         When("Only old collection mapInner object is present - Delete") {
             val diff = diffChecker.diff(newItem, null).collectList().block()
             Then("Only previous values are populated - Collection mapInner object") {
-                diff shouldBe obj.readValue(
-                    javaClass.getResource("/mapInnerDelete.json")!!.readBytes(),
-                    Array<Element>::class.java
-                ).toList()
+                diff shouldBe obj.readValue(javaClass.getResource("/mapInnerDelete.json").readBytes(), Array<Element>::class.java).toList()
             }
         }
 

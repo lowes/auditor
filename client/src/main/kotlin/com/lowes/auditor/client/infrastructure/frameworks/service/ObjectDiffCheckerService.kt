@@ -55,17 +55,11 @@ class ObjectDiffCheckerService(
     }
 
     /**
-     * Checks list of elements with same fqdn for changes
+     * Converts a single object properties into flux of [Element]
      */
     private fun getElementsWhenSingleObjectExists(singleObject: Any, eventType: EventType, fqcn: String? = null): Flux<Element> {
         val node = objectMapper.valueToTree<JsonNode>(singleObject)
-        return JsonNodeMapper.toElement(
-            node,
-            eventType,
-            fqcn ?: singleObject.javaClass.canonicalName,
-            ignoreCollectionOrder,
-            altIdentifierFields
-        )
+        return JsonNodeMapper.toElement(node, eventType, fqcn ?: singleObject.javaClass.canonicalName, ignoreCollectionOrder, altIdentifierFields)
     }
 
     /**
