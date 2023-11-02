@@ -26,6 +26,7 @@ data class Rand(
 )
 
 data class SubObject(
+    val id: String? = null,
     val value: String? = null,
     val uom: String? = null
 )
