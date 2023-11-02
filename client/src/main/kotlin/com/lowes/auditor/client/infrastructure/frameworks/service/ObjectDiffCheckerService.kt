@@ -75,29 +75,37 @@ class ObjectDiffCheckerService(
     /**
      * Checks list of elements with same fqdn for changes
      */
-    private fun getChanges(elements: List<Element>): List<Element> {
-        val changes = mutableListOf<Element>()
-        // typical create/delete
-        if (elements.size == 1) changes.add(elements[0])
-        // typical update, not sure if order will be consistent so check both ways
-        else if (elements.size == 2) {
-            if (elements[0].previousValue != null && elements[0].previousValue != elements[1].updatedValue)
-                changes.add(elements[0].copy(updatedValue = elements[1].updatedValue))
-            else if (elements[1].previousValue != null && elements[1].previousValue != elements[0].updatedValue)
-                changes.add(elements[1].copy(updatedValue = elements[0].updatedValue))
-        }
-        // will only be reached if ignoring order is enabled and a collection contains duplicate primitives
-        // since all values will be the same, we just need to compare the number of previous/updated
-        else {
-            val previous = mutableListOf<Element>()
-            val updated = mutableListOf<Element>()
-            elements.forEach { element ->
-                if (element.previousValue != null) previous.add(element)
-                else if (element.updatedValue != null) updated.add(element)
-            }
-            if (previous.size > updated.size) changes.addAll(previous.drop(updated.size))
-            else if (updated.size > previous.size) changes.addAll(updated.drop(previous.size))
-        }
-        return changes
+    private fun getElementsWhenSingleObjectExists(singleObject: Any, eventType: EventType, fqcn: String? = null): Flux<Element> {
+        val node = objectMapper.valueToTree<JsonNode>(singleObject)
+        return JsonNodeMapper.toElement(node, eventType, fqcn ?: singleObject.javaClass.canonicalName, ignoreCollectionOrder, altIdentifierFields)
     }
+}
+
+/**
+ * Checks list of elements with same fqdn for changes
+ */
+private fun getChanges(elements: List<Element>): List<Element> {
+    val changes = mutableListOf<Element>()
+    // typical create/delete
+    if (elements.size == 1) changes.add(elements[0])
+    // typical update, not sure if order will be consistent so check both ways
+    else if (elements.size == 2) {
+        if (elements[0].previousValue != null && elements[0].previousValue != elements[1].updatedValue)
+            changes.add(elements[0].copy(updatedValue = elements[1].updatedValue))
+        else if (elements[1].previousValue != null && elements[1].previousValue != elements[0].updatedValue)
+            changes.add(elements[1].copy(updatedValue = elements[0].updatedValue))
+    }
+    // will only be reached if ignoring order is enabled and a collection contains duplicate primitives
+    // since all values will be the same, we just need to compare the number of previous/updated
+    else {
+        val previous = mutableListOf<Element>()
+        val updated = mutableListOf<Element>()
+        elements.forEach { element ->
+            if (element.previousValue != null) previous.add(element)
+            else if (element.updatedValue != null) updated.add(element)
+        }
+        if (previous.size > updated.size) changes.addAll(previous.drop(updated.size))
+        else if (updated.size > previous.size) changes.addAll(updated.drop(previous.size))
+    }
+    return changes
 }

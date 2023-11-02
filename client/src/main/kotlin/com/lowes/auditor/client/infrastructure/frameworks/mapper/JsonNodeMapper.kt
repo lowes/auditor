@@ -28,70 +28,62 @@ object JsonNodeMapper {
         ignoreCollectionOrder: Boolean,
         altIdentifierFields: List<String>
     ): Flux<Element> {
-        val isObjectNode = node.fields().hasNext()
-        return Flux.fromIterable(getIterables(isObjectNode, node))
+        val hasFields = node.fields().hasNext()
+        return Flux.fromIterable(getIterables(hasFields, node))
             .index()
             .flatMap { indexEntryPair ->
                 val index = indexEntryPair.t1.toString()
                 val entry = indexEntryPair.t2
-                when (findType(entry.value)) {
-                    null -> {
-                        Flux.empty()
-                    }
-
-                    NodeType.ARRAY -> {
-                        Flux.fromIterable(entry.value)
-                            .index()
-                            .flatMap { indexNodePair ->
-                                var identifier = indexNodePair.t1.toString()
-                                val element = indexNodePair.t2
-                                if (ignoreCollectionOrder) {
-                                    identifier = getAltIdentifier(element, altIdentifierFields) ?: identifier
-                                }
-                                val fqcnValue =
-                                    getFqcnValue(isObjectNode, identifier, fqcn, entry).plus(".").plus(identifier)
-                                if (element.isValueNode) {
-                                    val updatedValue = if (eventType == EventType.CREATED) element.asText() else null
-                                    val previousValue = if (eventType == EventType.DELETED) element.asText() else null
-                                    Flux.just(
-                                        Element(
-                                            name = entry.key,
-                                            updatedValue = updatedValue,
-                                            previousValue = previousValue,
-                                            metadata = ElementMetadata(
-                                                fqdn = fqcnValue
+                findType(entry.value)
+                    ?.let {
+                        if (it == NodeType.ARRAY) {
+                            Flux.fromIterable(entry.value)
+                                .index()
+                                .flatMap { t ->
+                                    var identifier = t.t1.toString()
+                                    val element = t.t2
+                                    if (ignoreCollectionOrder) {
+                                        identifier = getAltIdentifier(element, altIdentifierFields) ?: identifier
+                                    }
+                                    val fqcnValue = getFqcnValue(hasFields, identifier, fqcn, entry).plus(".").plus(identifier)
+                                    if (t.t2.isValueNode) {
+                                        val updatedValue = if (eventType == EventType.CREATED) {
+                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                        } else null
+                                        val previousValue = if (eventType == EventType.DELETED) {
+                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                        } else null
+                                        Flux.just(
+                                            Element(
+                                                name = entry.key,
+                                                updatedValue = updatedValue,
+                                                previousValue = previousValue,
+                                                metadata = ElementMetadata(
+                                                    fqdn = fqcnValue
+                                                )
                                             )
                                         )
-                                    )
-                                } else {
-                                    toElement(element, eventType, fqcnValue, ignoreCollectionOrder, altIdentifierFields)
+                                    } else {
+                                        toElement(element, eventType, fqcnValue, ignoreCollectionOrder, altIdentifierFields)
+                                    }
                                 }
-                            }
-                    }
-
-                    NodeType.OBJECT -> {
-                        toElement(
-                            entry.value,
-                            eventType,
-                            getFqcnValue(isObjectNode, null, fqcn, entry),
-                            ignoreCollectionOrder,
-                            altIdentifierFields
-                        )
-                    }
-
-                    else -> {
-                        Flux.just(
-                            Element(
-                                name = entry.key,
-                                updatedValue = if (eventType == EventType.CREATED) entry.value.asText() else null,
-                                previousValue = if (eventType == EventType.DELETED) entry.value.asText() else null,
-                                metadata = ElementMetadata(
-                                    fqdn = getFqcnValue(isObjectNode, index, fqcn, entry)
+                        } else if (it == NodeType.OBJECT) {
+                            toElement(entry.value, eventType, getFqcnValue(hasFields, index, fqcn, entry), ignoreCollectionOrder, altIdentifierFields)
+                        } else {
+                            val updatedValue = if (eventType == EventType.CREATED) getValue(it, entry.value) else null
+                            val previousValue = if (eventType == EventType.DELETED) getValue(it, entry.value) else null
+                            Flux.just(
+                                Element(
+                                    name = entry.key,
+                                    updatedValue = updatedValue,
+                                    previousValue = previousValue,
+                                    metadata = ElementMetadata(
+                                        fqdn = getFqcnValue(hasFields, index, fqcn, entry)
+                                    )
                                 )
                             )
-                        )
-                    }
-                }
+                        }
+                    } ?: Flux.empty()
             }
     }
 
@@ -99,12 +91,12 @@ object JsonNodeMapper {
      * Derives the fully qualified class name for a given element.
      */
     private fun getFqcnValue(
-        isObjectNode: Boolean,
+        hasFields: Boolean,
         index: String?,
         fqcn: String,
         entry: Map.Entry<String, JsonNode>
     ): String {
-        return if (isObjectNode) {
+        return if (hasFields) {
             fqcn.plus(".").plus(entry.key)
         } else {
             fqcn.plus(".").plus(index).plus(".").plus(entry.key)

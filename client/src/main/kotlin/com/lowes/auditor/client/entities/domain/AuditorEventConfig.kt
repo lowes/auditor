@@ -159,7 +159,7 @@ data class RetryPublisherConfig(
 
 /**
  * Data class configuration for ignoring order when comparing collection elements.
- * This is done by using an identifier other than numerical index to build paths to values.
+ * This is done by using a unique identifier other than numerical index to build paths to values.
  * For lists/sets of objects, a list of fields to use can be provided, or "id" will be used by default.
  * For primitives, the value itself is used. Map elements are already compared by key.
  * @property enabled [Boolean] flag to enable/disable the order ignoring feature
