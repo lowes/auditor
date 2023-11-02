@@ -115,6 +115,16 @@ object JsonNodeMapper {
     }
 
     /**
+     * Gets the value of the leaf node
+     */
+    private fun getValue(nodeType: NodeType, node: JsonNode): String? {
+        return when (nodeType) {
+            NodeType.TEXT -> node.asText()
+            else -> null
+        }
+    }
+
+    /**
      * Determines the type of the [JsonNode] and returns and equivalent [NodeType]
      */
     private fun findType(node: JsonNode): NodeType? {
