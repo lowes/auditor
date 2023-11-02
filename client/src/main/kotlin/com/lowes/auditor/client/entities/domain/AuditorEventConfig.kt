@@ -19,6 +19,7 @@ import java.time.Duration
  * @property filters instance of [Filters] that provides different filters to run during the audit generation
  * @property maxElements maximum number of elements to be audited.
  * @property retry instance of [RetryPublisherConfig] controlling number of retries in case of errors.
+ * @property ignoreCollectionOrder instance of [IgnoreCollectionOrderConfig] to compare list elements using value(s) other than index.
  */
 data class AuditorEventConfig(
     var applicationName: String? = null,
@@ -28,6 +29,7 @@ data class AuditorEventConfig(
     var filters: Filters? = null,
     var maxElements: Int? = null,
     var retry: RetryPublisherConfig? = null,
+    var ignoreCollectionOrder: IgnoreCollectionOrderConfig? = null
 ) {
     companion object {
         /**
@@ -153,4 +155,17 @@ data class RetryPublisherConfig(
     var enabled: Boolean? = null,
     var count: Long? = null,
     var delay: Duration? = null
+)
+
+/**
+ * Data class configuration for ignoring order when comparing collection elements.
+ * This is done by using a unique identifier other than numerical index to build paths to values.
+ * For lists/sets of objects, a list of fields to use can be provided, or "id" will be used by default.
+ * For primitives, the value itself is used. Map elements are already compared by key.
+ * @property enabled [Boolean] flag to enable/disable the order ignoring feature
+ * @property fields list containing name(s) of object fields to use as the identifier
+ */
+data class IgnoreCollectionOrderConfig(
+    var enabled: Boolean? = null,
+    var fields: List<String>? = null
 )

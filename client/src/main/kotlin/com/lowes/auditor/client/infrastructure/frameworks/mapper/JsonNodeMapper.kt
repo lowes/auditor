@@ -21,12 +21,18 @@ object JsonNodeMapper {
      * @param fqcn fully qualified class name
      * @return flux of [Element]
      */
-    fun toElement(node: JsonNode, eventType: EventType, fqcn: String): Flux<Element> {
+    fun toElement(
+        node: JsonNode,
+        eventType: EventType,
+        fqcn: String,
+        ignoreCollectionOrder: Boolean,
+        altIdentifierFields: List<String>
+    ): Flux<Element> {
         val hasFields = node.fields().hasNext()
         return Flux.fromIterable(getIterables(hasFields, node))
             .index()
             .flatMap { indexEntryPair ->
-                val index = indexEntryPair.t1
+                val index = indexEntryPair.t1.toString()
                 val entry = indexEntryPair.t2
                 findType(entry.value)
                     ?.let {
@@ -34,7 +40,12 @@ object JsonNodeMapper {
                             Flux.fromIterable(entry.value)
                                 .index()
                                 .flatMap { t ->
-                                    val fqcnValue = getFqcnValue(hasFields, t.t1, fqcn, entry).plus(".").plus(t.t1)
+                                    var identifier = t.t1.toString()
+                                    val element = t.t2
+                                    if (ignoreCollectionOrder) {
+                                        identifier = getAltIdentifier(element, altIdentifierFields) ?: identifier
+                                    }
+                                    val fqcnValue = getFqcnValue(hasFields, identifier, fqcn, entry).plus(".").plus(identifier)
                                     if (t.t2.isValueNode) {
                                         val updatedValue = if (eventType == EventType.CREATED) {
                                             findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
@@ -53,18 +64,14 @@ object JsonNodeMapper {
                                             )
                                         )
                                     } else {
-                                        toElement(t.t2, eventType, fqcnValue)
+                                        toElement(element, eventType, fqcnValue, ignoreCollectionOrder, altIdentifierFields)
                                     }
                                 }
                         } else if (it == NodeType.OBJECT) {
-                            toElement(entry.value, eventType, getFqcnValue(hasFields, index, fqcn, entry))
+                            toElement(entry.value, eventType, getFqcnValue(hasFields, index, fqcn, entry), ignoreCollectionOrder, altIdentifierFields)
                         } else {
-                            val updatedValue = if (eventType == EventType.CREATED) {
-                                getValue(it, entry.value)
-                            } else null
-                            val previousValue = if (eventType == EventType.DELETED) {
-                                getValue(it, entry.value)
-                            } else null
+                            val updatedValue = if (eventType == EventType.CREATED) getValue(it, entry.value) else null
+                            val previousValue = if (eventType == EventType.DELETED) getValue(it, entry.value) else null
                             Flux.just(
                                 Element(
                                     name = entry.key,
@@ -85,7 +92,7 @@ object JsonNodeMapper {
      */
     private fun getFqcnValue(
         hasFields: Boolean,
-        index: Long,
+        index: String?,
         fqcn: String,
         entry: Map.Entry<String, JsonNode>
     ): String {
@@ -127,5 +134,16 @@ object JsonNodeMapper {
             node.nodeType == JsonNodeType.OBJECT -> NodeType.OBJECT
             else -> null
         }
+    }
+
+    /**
+     * Creates a string identifier to use instead of index when building fqcn
+     */
+    private fun getAltIdentifier(element: JsonNode, altIdentifierFields: List<String>): String? {
+        var altIdentifier = ""
+        if (element.isObject) element.fields()
+            .forEach { (key, value) -> if (altIdentifierFields.contains(key)) altIdentifier += value.asText() }
+        if (element.isValueNode) altIdentifier = element.asText().filterNot { it.isWhitespace() }
+        return altIdentifier.ifEmpty { null }
     }
 }

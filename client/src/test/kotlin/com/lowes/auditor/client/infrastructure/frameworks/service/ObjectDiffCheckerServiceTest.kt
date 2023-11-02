@@ -2,6 +2,7 @@ package com.lowes.auditor.client.infrastructure.frameworks.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowes.auditor.client.entities.domain.AuditorEventConfig
+import com.lowes.auditor.client.entities.domain.IgnoreCollectionOrderConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
 import com.lowes.auditor.client.infrastructure.frameworks.model.DummyClass
 import com.lowes.auditor.client.infrastructure.frameworks.model.Item
@@ -184,12 +185,12 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
 
     Given("Test for Collection map") {
         val oldItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
+            subMap = mapOf("one" to SubObject(value = "100", uom = "ft")),
             metadata = mapOf("id" to "123")
         )
 
         val newItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
+            subMap = mapOf("one" to SubObject(value = "100", uom = "ft")),
             metadata = mapOf("id" to "John")
         )
         When("Only new collection map object is present - Create") {
@@ -262,6 +263,113 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
             val diff = diffChecker.diff(newItem, newItem).collectList().block()
             Then("Empty List - Collection mapInner object") {
                 diff shouldBe emptyList()
+            }
+        }
+    }
+
+    Given("Diff Checker is configured to use alternate array identifier") {
+        val oldItem = Item(
+            itemNumber = "42",
+            description = "original item",
+            metadata = mapOf("first" to "apple", "second" to "banana", "third" to "carrot"),
+            stringList = listOf("ant", "bear", "cat"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so1", "val1", "uom1"), SubObject("so2", "val2", "uom2")),
+                    listString = listOf("string1a", "string1a", "string1b")
+                ),
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so3", "val3", "uom3"), SubObject("so4", "val4", "uom4")),
+                    listString = listOf("string2a", "string2a", "string2b")
+                )
+            )
+        )
+        val oldItemShuffled = Item(
+            itemNumber = "42",
+            description = "original item",
+            metadata = mapOf("first" to "apple", "third" to "carrot", "second" to "banana"),
+            stringList = listOf("cat", "ant", "bear"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so4", "val4", "uom4"), SubObject("so3", "val3", "uom3")),
+                    listString = listOf("string2b", "string2a", "string2a")
+                ),
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so1", "val1", "uom1"), SubObject("so2", "val2", "uom2")),
+                    listString = listOf("string1a", "string1b", "string1a")
+                )
+            )
+        )
+        val newItem = Item(
+            itemNumber = "42",
+            description = "new item",
+            metadata = mapOf("first" to "apple", "third" to "carrot", "second" to "berry", "fourth" to "donut"),
+            stringList = listOf("caterpillar", "anteater", "bear"),
+            listItem = mutableListOf(
+                Rand(
+                    id = "rand2",
+                    name = "two",
+                    doubleList = listOf(SubObject("so4", "val4", "uom4update"), SubObject("so3", "val3", "uom3")),
+                    listString = listOf("string2b", "string2a", "string2c")
+                ),
+                Rand(
+                    id = "rand1",
+                    name = "one",
+                    doubleList = listOf(SubObject("so2", "val2update", "uom2")),
+                    listString = listOf("string1a", "string1b", "string1a", "string1a", "string1a")
+                )
+            )
+        )
+
+        And("Field to use is not specified") {
+            val defaultIdentifierConfig =
+                AuditorEventConfig(ignoreCollectionOrder = IgnoreCollectionOrderConfig(enabled = true))
+            val diffCheckerAltArrayId = FrameworkModule.getObjectDiffChecker(defaultIdentifierConfig)
+
+            When("Comparing objects where only collection order has changed") {
+                val diff = diffCheckerAltArrayId.diff(oldItem, oldItemShuffled).collectList().block()
+                Then("Diff will be empty (Default)") {
+                    diff shouldBe emptyList()
+                }
+            }
+            When("Comparing objects with meaningful changes") {
+                val diff = diffCheckerAltArrayId.diff(oldItem, newItem).collectList().block()
+                Then("Diff will contain all create, update, and delete events (Default)") {
+                    diff shouldBe obj.readValue(
+                        javaClass.getResource("/ignoreOrderDefault.json")!!.readBytes(),
+                        Array<Element>::class.java
+                    ).toList()
+                }
+            }
+        }
+
+        And("Fields to use are provided") {
+            val nameIdentifierConfig = AuditorEventConfig(
+                ignoreCollectionOrder = IgnoreCollectionOrderConfig(enabled = true, fields = listOf("name", "value"))
+            )
+            val diffCheckerAltArrayFields = FrameworkModule.getObjectDiffChecker(nameIdentifierConfig)
+            When("Comparing objects where only collection order has changed") {
+                val diff = diffCheckerAltArrayFields.diff(oldItem, oldItemShuffled).collectList().block()
+                Then("Diff will be empty (Custom)") {
+                    diff shouldBe emptyList()
+                }
+            }
+            When("Comparing objects with meaningful changes") {
+                val diff = diffCheckerAltArrayFields.diff(oldItem, newItem).collectList().block()
+                Then("Diff will contain all create, update, and delete events (Default)") {
+                    diff shouldBe obj.readValue(
+                        javaClass.getResource("/ignoreOrderCustom.json")!!.readBytes(),
+                        Array<Element>::class.java
+                    ).toList()
+                }
             }
         }
     }
