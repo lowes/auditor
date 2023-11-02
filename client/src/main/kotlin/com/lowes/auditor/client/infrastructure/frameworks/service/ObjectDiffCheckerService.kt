@@ -37,7 +37,7 @@ class ObjectDiffCheckerService(
         return when {
             objectOne == null && objectTwo != null -> getElementsWhenSingleObjectExists(objectTwo, CREATED)
             objectOne != null && objectTwo == null -> getElementsWhenSingleObjectExists(objectOne, DELETED)
-            objectOne != null && objectTwo != null -> getElementsWhenBothObjectsExist(objectOne, objectTwo)
+            objectOne != null && objectTwo != null -> getElementsWhenBothObjectExists(objectOne, objectTwo)
             else -> Flux.empty()
         }
     }
@@ -45,7 +45,7 @@ class ObjectDiffCheckerService(
     /**
      * Converts the difference between two object's properties into flux of [Element]
      */
-    private fun getElementsWhenBothObjectsExist(objectOne: Any, objectTwo: Any): Flux<Element> {
+    private fun getElementsWhenBothObjectExists(objectOne: Any, objectTwo: Any): Flux<Element> {
         val objectOneElements = getElementsWhenSingleObjectExists(objectOne, DELETED)
         val objectTwoElements = getElementsWhenSingleObjectExists(objectTwo, CREATED)
         return Flux.merge(objectOneElements, objectTwoElements)

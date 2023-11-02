@@ -106,8 +106,8 @@ object JsonNodeMapper {
     /**
      * Converts a node to iterables if it's type was collection.
      */
-    private fun getIterables(isObjectNode: Boolean, node: JsonNode): List<MutableMap.MutableEntry<String, JsonNode>> {
-        return if (isObjectNode) {
+    private fun getIterables(hasFields: Boolean, node: JsonNode): List<MutableMap.MutableEntry<String, JsonNode>> {
+        return if (hasFields) {
             node.fields().asSequence().toList()
         } else {
             node.toList().flatMap { it.fields().asSequence().toList() }
