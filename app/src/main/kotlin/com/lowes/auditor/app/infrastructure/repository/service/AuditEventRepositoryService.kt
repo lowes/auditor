@@ -5,7 +5,7 @@ import com.lowes.auditor.app.infrastructure.repository.config.RepositoryConfig
 import com.lowes.auditor.core.entities.domain.AuditEvent
 import com.lowes.auditor.core.entities.util.AuditEventDTOMapper
 import org.slf4j.LoggerFactory
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations
+import org.springframework.data.elasticsearch.core.ReactiveElasticsearchOperations
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
@@ -13,13 +13,13 @@ import reactor.core.publisher.Mono
 /**
  * Implementation of [RepositoryService] interface. Provides capabilities to interact with underlying database.
  * @property repositoryConfig instance of [RepositoryConfig]
- * @property elasticsearchTemplate instance of [ElasticsearchOperations]
+ * @property reactiveElasticsearchOperations instance of [ReactiveElasticsearchOperations]
  * @see RepositoryService
  */
 @Service
 class AuditEventRepositoryService(
     private val repositoryConfig: RepositoryConfig,
-    private val elasticsearchTemplate: ElasticsearchOperations,
+    private val reactiveElasticsearchOperations: ReactiveElasticsearchOperations,
 ) : RepositoryService {
     private val logger = LoggerFactory.getLogger(AuditEventRepositoryService::class.java)
 
@@ -61,7 +61,7 @@ class AuditEventRepositoryService(
         indexName: String,
         doc: DocType,
     ): Mono<DocType> {
-        return Mono.create<DocType> { elasticsearchTemplate.save(doc, IndexCoordinates.of(indexName)) }
+        return reactiveElasticsearchOperations.save(doc, IndexCoordinates.of(indexName))
             .doOnNext { logger.info("Record saved for index {}", indexName) }
     }
 }

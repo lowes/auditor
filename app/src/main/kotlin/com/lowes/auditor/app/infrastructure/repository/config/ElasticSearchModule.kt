@@ -1,28 +1,26 @@
 package com.lowes.auditor.app.infrastructure.repository.config
 
-import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.elasticsearch.client.ClientConfiguration
-import org.springframework.data.elasticsearch.client.RestClients
-import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration
+import org.springframework.data.elasticsearch.client.elc.ReactiveElasticsearchConfiguration
 import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomConversions
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Connecting to the Elasticsearch using [RestHighLevelClient] and setting custom WritingConverter for handling timestamp conversion
+ * Connecting to the Elasticsearch using [ReactiveElasticsearchConfiguration] and setting custom WritingConverter for handling timestamp conversion
  * by overriding [ElasticsearchCustomConversions] conversion
  *
  * @property elasticSearchConfig instance of [ElasticsearchConfig]
- * @see AbstractElasticsearchConfiguration
+ * @see ReactiveElasticsearchConfiguration
  */
 @Configuration(proxyBeanMethods = false)
 class ElasticSearchModule(
     private val elasticSearchConfig: ElasticsearchConfig,
-) : AbstractElasticsearchConfiguration() {
+) : ReactiveElasticsearchConfiguration() {
     /**
      * custom method to convert OffsetDateTime to string
      *
@@ -37,7 +35,7 @@ class ElasticSearchModule(
     /**
      * Elasticsearch custom conversions for WritingConverter and ReadingConverter
      * @return ElasticsearchCustomConversions
-     * @see AbstractElasticsearchConfiguration.elasticsearchCustomConversions
+     * @see ElasticsearchCustomConversions
      */
     @Bean
     override fun elasticsearchCustomConversions(): ElasticsearchCustomConversions {
@@ -46,19 +44,18 @@ class ElasticSearchModule(
         )
     }
 
-    /**
-     * Initializing RestHighLevelClient with given ClientConfiguration
-     * @return RestHighLevelClient
-     * @see AbstractElasticsearchConfiguration.elasticsearchClient
-     */
-    @Bean
-    override fun elasticsearchClient(): RestHighLevelClient {
-        val clientConfiguration =
-            ClientConfiguration.builder()
+    override fun clientConfiguration(): ClientConfiguration {
+        var clientConfiguration =
+            ClientConfiguration
+                .builder()
                 .connectedTo(elasticSearchConfig.clusterUrl.orEmpty())
                 .withConnectTimeout(elasticSearchConfig.timeouts.connect)
                 .withSocketTimeout(elasticSearchConfig.timeouts.socket)
-                .build()
-        return RestClients.create(clientConfiguration).rest()
+        clientConfiguration = elasticSearchConfig.username?.let {
+            elasticSearchConfig.password?.let { it1 ->
+                clientConfiguration.withBasicAuth(it, it1)
+            }
+        } ?: clientConfiguration
+        return clientConfiguration.build()
     }
 }
