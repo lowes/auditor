@@ -16,10 +16,10 @@ include(
     "client-spring-boot-starter",
     "client-example",
     "client-example-springboot",
-    "app"
+    "app",
 )
 plugins {
-    val refreshVersions = "0.40.1"
+    val refreshVersions = "0.60.5"
     id("de.fayard.refreshVersions") version refreshVersions
 }
 
