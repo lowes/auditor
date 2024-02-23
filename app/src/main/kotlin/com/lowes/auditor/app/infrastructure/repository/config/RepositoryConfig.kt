@@ -12,5 +12,5 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix = "repository")
 data class RepositoryConfig(
     var auditEventIndexPrefix: String = "item-",
-    var auditLogIndexAlias: String = "log-item-rollover-alias"
+    var auditLogIndexAlias: String = "log-item-rollover-alias",
 )

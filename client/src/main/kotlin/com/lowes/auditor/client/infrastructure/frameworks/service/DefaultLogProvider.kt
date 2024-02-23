@@ -10,12 +10,15 @@ import reactor.util.context.ContextView
  * @see LogProvider
  */
 class DefaultLogProvider : LogProvider {
-
     /**
      * Provides a default logger for audit events
      * @see LogProvider.log
      */
-    override fun log(context: ContextView, logger: Logger, event: AuditEvent) {
+    override fun log(
+        context: ContextView,
+        logger: Logger,
+        event: AuditEvent,
+    ) {
         logger.info("Event: {}", event)
     }
 }

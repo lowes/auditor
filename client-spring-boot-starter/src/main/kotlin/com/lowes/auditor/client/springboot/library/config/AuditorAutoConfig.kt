@@ -21,5 +21,5 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix = AUDITOR)
 data class AuditorAutoConfig(
     val config: AuditorEventConfig = AuditorEventConfig.getDefaultInstance(),
-    val producer: AuditEventProducerConfig = AuditEventProducerConfig()
+    val producer: AuditEventProducerConfig = AuditEventProducerConfig(),
 )

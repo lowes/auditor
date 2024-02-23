@@ -18,9 +18,8 @@ import java.util.regex.Pattern
 class AuditEventDecoratorService(
     private val auditorObjectMapper: ObjectMapper,
     // supports pattern of form - ${JsonNodeHere}
-    private val compiledPattern: Pattern = Pattern.compile("(\\\$\\{[\\w.]+\\})+")
+    private val compiledPattern: Pattern = Pattern.compile("(\\\$\\{[\\w.]+\\})+"),
 ) {
-
     /**
      * Decorates incoming flux of [AuditEvent] with additional metadata.
      * These metadata is derived from [newObject] by converting to a [JsonNode]
@@ -29,7 +28,10 @@ class AuditEventDecoratorService(
      * @param newObject instance of [Any]
      * @return flux of decorated [AuditEvent]
      */
-    fun decorate(events: Flux<AuditEvent>, newObject: Any?): Flux<AuditEvent> {
+    fun decorate(
+        events: Flux<AuditEvent>,
+        newObject: Any?,
+    ): Flux<AuditEvent> {
         return events.map {
             val rootNode = auditorObjectMapper.valueToTree<JsonNode>(newObject)
             val source = it.source
@@ -38,7 +40,7 @@ class AuditEventDecoratorService(
             it.copy(
                 source = fetchSource(rootNode, source),
                 subType = fetchNodeValue(rootNode, subtype),
-                metadata = fetchMetadata(rootNode, metadata)
+                metadata = fetchMetadata(rootNode, metadata),
             )
         }
     }
@@ -47,13 +49,17 @@ class AuditEventDecoratorService(
      * Derives audit source information from the new objects' root [JsonNode]
      * and overrides the existing source metadata present in [EventSource].
      */
-    private fun fetchSource(rootNode: JsonNode, source: EventSource): EventSource {
+    private fun fetchSource(
+        rootNode: JsonNode,
+        source: EventSource,
+    ): EventSource {
         return source.copy(
-            metadata = EventSourceMetadata(
-                id = fetchNodeValue(rootNode, source.metadata?.id),
-                email = fetchNodeValue(rootNode, source.metadata?.email),
-                name = fetchNodeValue(rootNode, source.metadata?.name)
-            )
+            metadata =
+                EventSourceMetadata(
+                    id = fetchNodeValue(rootNode, source.metadata?.id),
+                    email = fetchNodeValue(rootNode, source.metadata?.email),
+                    name = fetchNodeValue(rootNode, source.metadata?.name),
+                ),
         )
     }
 
@@ -61,7 +67,10 @@ class AuditEventDecoratorService(
      * Fetches metadata information from the new objects' root [JsonNode] and returns the same. If its empty/blank
      * existing metadata information from [metadataParam] is returned
      */
-    private fun fetchMetadata(rootNode: JsonNode, metadataParam: Map<String, String>?): Map<String, String>? {
+    private fun fetchMetadata(
+        rootNode: JsonNode,
+        metadataParam: Map<String, String>?,
+    ): Map<String, String>? {
         return metadataParam?.map { metadata ->
             val key = metadata.key
             val value = metadata.value
@@ -74,7 +83,10 @@ class AuditEventDecoratorService(
     /**
      * Fetches node vale from [JsonNode] by looking up [pathValue] in the node.
      */
-    private fun fetchNodeValue(rootNode: JsonNode, pathValue: String?): String? {
+    private fun fetchNodeValue(
+        rootNode: JsonNode,
+        pathValue: String?,
+    ): String? {
         return pathValue?.let {
             val matcher: Matcher = compiledPattern.matcher(pathValue)
             val sb = StringBuilder(pathValue.length)

@@ -21,9 +21,8 @@ class AuditEventConsumerService(
     private val auditBaseConsumer: AuditBaseConsumer,
     consumerConfig: AuditEventConsumerConfig?,
     auditEventReceiver: ReceiverOptions<String, String>,
-    objectMapper: ObjectMapper
+    objectMapper: ObjectMapper,
 ) : EventConsumerService(consumerConfig, auditEventReceiver, objectMapper) {
-
     /**
      * Consumes audit event data from kafka and process the incoming message via [AuditBaseConsumer]
      * @return mono of [AuditEventDTO]

@@ -12,7 +12,7 @@ import reactor.util.context.ContextView
  * @property logProvider instance of underlying [LogProvider]
  */
 class LoggingFilterUseCase(
-    private val logProvider: LogProvider
+    private val logProvider: LogProvider,
 ) : AuditEventFilter {
     private val logger = LoggerFactory.getLogger(LoggingFilterUseCase::class.java)
 
@@ -20,7 +20,11 @@ class LoggingFilterUseCase(
      * Logs audit events based on [filters] and adding relevant [context] metadata
      * @see AuditEventFilter.filter
      */
-    override fun filter(context: ContextView, event: AuditEvent, filters: Filters?): Boolean {
+    override fun filter(
+        context: ContextView,
+        event: AuditEvent,
+        filters: Filters?,
+    ): Boolean {
         val loggingFilter = filters?.logging
         return if (loggingFilter?.enabled == true) {
             logProvider.log(context, logger, event)

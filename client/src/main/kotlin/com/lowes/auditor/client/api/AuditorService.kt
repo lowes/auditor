@@ -14,13 +14,15 @@ class AuditorService(
     private val auditEventGeneratorService: AuditEventGeneratorService,
     private val auditorServiceScheduler: Scheduler,
 ) : Auditor {
-
     /**
      * Performs an audit by comparing old and new objects
      * @param oldObject previous instance of the object to be compared against
      * @param newObject latest instance of the object that needs to be audited
      */
-    override fun audit(oldObject: Any?, newObject: Any?) {
+    override fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+    ) {
         audit(oldObject, newObject, null, null)
     }
 
@@ -30,7 +32,11 @@ class AuditorService(
      * @param newObject latest instance of the object that needs to be audited
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    override fun audit(oldObject: Any?, newObject: Any?, context: ContextView?) {
+    override fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        context: ContextView?,
+    ) {
         audit(oldObject, newObject, null, context)
     }
 
@@ -40,7 +46,11 @@ class AuditorService(
      * @param newObject latest instance of the object that needs to be audited
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      */
-    override fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?) {
+    override fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        auditorEventConfig: AuditorEventConfig?,
+    ) {
         audit(oldObject, newObject, auditorEventConfig, null)
     }
 
@@ -51,7 +61,12 @@ class AuditorService(
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    override fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?, context: ContextView?) {
+    override fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        auditorEventConfig: AuditorEventConfig?,
+        context: ContextView?,
+    ) {
         auditEventGeneratorService.audit(oldObject, newObject, auditorEventConfig)
             .contextWrite { it.putAll(context.orDefault(Context.empty())) }
             .subscribeOn(auditorServiceScheduler)
@@ -72,7 +87,10 @@ class AuditorService(
      * @param entity entity of type [Any] that needs to ve logged
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    override fun log(entity: Any, context: ContextView?) {
+    override fun log(
+        entity: Any,
+        context: ContextView?,
+    ) {
         log(entity, null, context)
     }
 
@@ -81,7 +99,10 @@ class AuditorService(
      * @param entity entity of type [Any] that needs to ve logged
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      */
-    override fun log(entity: Any, auditorEventConfig: AuditorEventConfig?) {
+    override fun log(
+        entity: Any,
+        auditorEventConfig: AuditorEventConfig?,
+    ) {
         log(entity, auditorEventConfig, null)
     }
 
@@ -91,7 +112,11 @@ class AuditorService(
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    override fun log(entity: Any, auditorEventConfig: AuditorEventConfig?, context: ContextView?) {
+    override fun log(
+        entity: Any,
+        auditorEventConfig: AuditorEventConfig?,
+        context: ContextView?,
+    ) {
         auditEventGeneratorService.log(entity, auditorEventConfig)
             .contextWrite { it.putAll(context.orDefault(Context.empty())) }
             .subscribeOn(auditorServiceScheduler)

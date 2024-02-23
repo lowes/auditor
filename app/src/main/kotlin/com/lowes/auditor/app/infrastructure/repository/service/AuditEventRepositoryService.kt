@@ -19,9 +19,8 @@ import reactor.core.publisher.Mono
 @Service
 class AuditEventRepositoryService(
     private val repositoryConfig: RepositoryConfig,
-    private val elasticsearchTemplate: ElasticsearchOperations
+    private val elasticsearchTemplate: ElasticsearchOperations,
 ) : RepositoryService {
-
     private val logger = LoggerFactory.getLogger(AuditEventRepositoryService::class.java)
 
     /**
@@ -58,7 +57,10 @@ class AuditEventRepositoryService(
      * @param doc audit event to persist in database
      * @return
      */
-    private fun <DocType> saveIndex(indexName: String, doc: DocType): Mono<DocType> {
+    private fun <DocType> saveIndex(
+        indexName: String,
+        doc: DocType,
+    ): Mono<DocType> {
         return Mono.create<DocType> { elasticsearchTemplate.save(doc, IndexCoordinates.of(indexName)) }
             .doOnNext { logger.info("Record saved for index {}", indexName) }
     }

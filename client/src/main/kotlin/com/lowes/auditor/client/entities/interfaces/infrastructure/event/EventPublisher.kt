@@ -7,7 +7,6 @@ import reactor.core.publisher.Flux
  * Event publisher interface containing functions to publish messages to underlying event stream
  */
 interface EventPublisher {
-
     /**
      * Publish events to an event stream.
      * @param event Flux of [AuditEvent] that needs to be sent to event stream

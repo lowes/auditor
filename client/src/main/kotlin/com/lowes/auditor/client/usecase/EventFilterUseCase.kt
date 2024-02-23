@@ -14,7 +14,11 @@ class EventFilterUseCase : AuditEventFilter {
      * Filters audit events based on [Filters]
      * @see AuditEventFilter.filter
      */
-    override fun filter(context: ContextView, event: AuditEvent, filters: Filters?): Boolean {
+    override fun filter(
+        context: ContextView,
+        event: AuditEvent,
+        filters: Filters?,
+    ): Boolean {
         val eventFilter = filters?.event
         return if (eventFilter?.enabled == true) {
             if (eventFilter.type.isNullOrEmpty()) {

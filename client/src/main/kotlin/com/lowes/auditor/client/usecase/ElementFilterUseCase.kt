@@ -14,14 +14,16 @@ import kotlin.streams.toList
  * @see AuditEventElementFilter
  */
 class ElementFilterUseCase(
-    private val elementFilters: List<AuditEventElementFilter>
+    private val elementFilters: List<AuditEventElementFilter>,
 ) : AuditEventElementFilter {
-
     /**
      * Filters individual [elements] based on [elementFilter]
      * @see AuditEventElementFilter.filter
      */
-    override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
+    override fun filter(
+        elements: List<Element>,
+        elementFilter: ElementFilter?,
+    ): List<Element> {
         return if (elementFilter?.enabled == true) {
             elementFilter
                 .types
@@ -48,12 +50,14 @@ class ElementFilterUseCase(
  * @see AuditEventElementFilter
  */
 class InclusionFilter : AuditEventElementFilter {
-
     /**
      * Filters individual [elements] and perform an inclusion rule as mentioned in [elementFilter]
      * @see AuditEventElementFilter.filter
      */
-    override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
+    override fun filter(
+        elements: List<Element>,
+        elementFilter: ElementFilter?,
+    ): List<Element> {
         return elements
             .stream()
             .filter { element ->
@@ -74,12 +78,14 @@ class InclusionFilter : AuditEventElementFilter {
  * @see AuditEventElementFilter
  */
 class ExclusionFilter : AuditEventElementFilter {
-
     /**
      * Filters individual [elements] and perform an exclusion rule as mentioned in [elementFilter]
      * @see AuditEventElementFilter.filter
      */
-    override fun filter(elements: List<Element>, elementFilter: ElementFilter?): List<Element> {
+    override fun filter(
+        elements: List<Element>,
+        elementFilter: ElementFilter?,
+    ): List<Element> {
         return elements
             .stream()
             .filter { element ->

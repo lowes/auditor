@@ -37,19 +37,21 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
     }
 
     Given("Old and New simple item Objects") {
-        val oldItem = Item(
-            itemNumber = "123",
-            model = 1234,
-            description = "old_item",
-            price = BigDecimal.valueOf(1.23)
-        )
+        val oldItem =
+            Item(
+                itemNumber = "123",
+                model = 1234,
+                description = "old_item",
+                price = BigDecimal.valueOf(1.23),
+            )
 
-        val newItem = Item(
-            itemNumber = "1234",
-            model = 1234,
-            description = "new_item",
-            price = BigDecimal.valueOf(5.67)
-        )
+        val newItem =
+            Item(
+                itemNumber = "1234",
+                model = 1234,
+                description = "new_item",
+                price = BigDecimal.valueOf(5.67),
+            )
         When("Only new simple object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populated - Simple object") {
@@ -80,39 +82,43 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
     }
 
     Given("Test for Collection Nested Lists") {
-        val oldItem = Item(
-            listItem = mutableListOf(
-                Rand(
-                    "rand0",
-                    "rand0Name",
-                    doubleList = listOf(SubObject(value = "value1", uom = "Ft")),
-                    listString = listOf("test", "test1")
-                )
-            ),
-        )
-
-        val newItem = Item(
-            listItem = mutableListOf(
-                Rand(
-                    "rand0",
-                    "rand0Name",
-                    doubleList = listOf(SubObject(value = "rand0value", uom = "rand0Ft")),
-                    listString = listOf("rand0test", "rand0test1")
-                ),
-                Rand(
-                    "rand1",
-                    "rand1rand21321",
-                    doubleList = listOf(SubObject(value = "rand1value1", uom = "rand1Ft")),
-                    listString = listOf("rand1test", "rand1test1")
-                ),
-                Rand(
-                    "rand2",
-                    "rand2",
-                    doubleList = listOf(SubObject(value = "rand2value1", uom = "rand2Ft")),
-                    listString = listOf("rand2test", "rand2test1")
-                )
+        val oldItem =
+            Item(
+                listItem =
+                    mutableListOf(
+                        Rand(
+                            "rand0",
+                            "rand0Name",
+                            doubleList = listOf(SubObject(value = "value1", uom = "Ft")),
+                            listString = listOf("test", "test1"),
+                        ),
+                    ),
             )
-        )
+
+        val newItem =
+            Item(
+                listItem =
+                    mutableListOf(
+                        Rand(
+                            "rand0",
+                            "rand0Name",
+                            doubleList = listOf(SubObject(value = "rand0value", uom = "rand0Ft")),
+                            listString = listOf("rand0test", "rand0test1"),
+                        ),
+                        Rand(
+                            "rand1",
+                            "rand1rand21321",
+                            doubleList = listOf(SubObject(value = "rand1value1", uom = "rand1Ft")),
+                            listString = listOf("rand1test", "rand1test1"),
+                        ),
+                        Rand(
+                            "rand2",
+                            "rand2",
+                            doubleList = listOf(SubObject(value = "rand2value1", uom = "rand2Ft")),
+                            listString = listOf("rand2test", "rand2test1"),
+                        ),
+                    ),
+            )
         When("Only new nested list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populates - Nested list object") {
@@ -143,16 +149,17 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
     }
 
     Given("Test for Collection Lists") {
-        val oldItem = Item(
-            stringList = listOf("String"),
-            subList = listOf(SubObject(value = "auditor", uom = "cm"))
-        )
+        val oldItem =
+            Item(
+                stringList = listOf("String"),
+                subList = listOf(SubObject(value = "auditor", uom = "cm")),
+            )
 
-        val newItem = Item(
-            stringList = listOf("String123"),
-            subList = listOf(SubObject(value = "auditor", uom = "in"))
-
-        )
+        val newItem =
+            Item(
+                stringList = listOf("String123"),
+                subList = listOf(SubObject(value = "auditor", uom = "in")),
+            )
         When("Only new collection list object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populates - Collection list object") {
@@ -183,15 +190,17 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
     }
 
     Given("Test for Collection map") {
-        val oldItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
-            metadata = mapOf("id" to "123")
-        )
+        val oldItem =
+            Item(
+                subMap = mapOf("one" to SubObject("100", "ft")),
+                metadata = mapOf("id" to "123"),
+            )
 
-        val newItem = Item(
-            subMap = mapOf("one" to SubObject("100", "ft")),
-            metadata = mapOf("id" to "John")
-        )
+        val newItem =
+            Item(
+                subMap = mapOf("one" to SubObject("100", "ft")),
+                metadata = mapOf("id" to "John"),
+            )
         When("Only new collection map object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populates - Collection map object") {
@@ -222,21 +231,27 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
     }
 
     Given("Test for Collection mapInner") {
-        val oldItem = Item(
-            metadataRand = mapOf(
-                "new_item_id" to Rand(
-                    mapList = mapOf("list_007" to listOf(SubObject(value = "randMetamap007", uom = "randMetain007")))
-                )
+        val oldItem =
+            Item(
+                metadataRand =
+                    mapOf(
+                        "new_item_id" to
+                            Rand(
+                                mapList = mapOf("list_007" to listOf(SubObject(value = "randMetamap007", uom = "randMetain007"))),
+                            ),
+                    ),
             )
-        )
 
-        val newItem = Item(
-            metadataRand = mapOf(
-                "new_item_id" to Rand(
-                    mapList = mapOf("list" to listOf(SubObject(value = "randMetamap", uom = "randMetain")))
-                )
+        val newItem =
+            Item(
+                metadataRand =
+                    mapOf(
+                        "new_item_id" to
+                            Rand(
+                                mapList = mapOf("list" to listOf(SubObject(value = "randMetamap", uom = "randMetain"))),
+                            ),
+                    ),
             )
-        )
         When("Only new collection mapInner object is present - Create") {
             val diff = diffChecker.diff(null, oldItem).collectList().block()
             Then("Only updated values are populates - Collection mapInner object") {

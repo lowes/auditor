@@ -15,13 +15,14 @@ import reactor.kafka.receiver.ReceiverOptions
 object FunctionalTestModule {
     val auditor: Auditor by lazy {
         Auditor.getInstance(
-            producerConfig = AuditEventProducerConfig(
-                enabled = true,
-                bootstrapServers = KafkaListener.cluster.bootstrapServers,
-                topic = KafkaListener.TOPIC,
-                configs = mapOf("client.id" to "auditor-functional-test-client")
-            ),
-            auditorEventConfig = AuditorEventConfig.getDefaultInstance().copy(applicationName = "functional-test")
+            producerConfig =
+                AuditEventProducerConfig(
+                    enabled = true,
+                    bootstrapServers = KafkaListener.cluster.bootstrapServers,
+                    topic = KafkaListener.TOPIC,
+                    configs = mapOf("client.id" to "auditor-functional-test-client"),
+                ),
+            auditorEventConfig = AuditorEventConfig.getDefaultInstance().copy(applicationName = "functional-test"),
         )
     }
 
@@ -51,7 +52,7 @@ object FunctionalTestModule {
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "earliest",
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG to true,
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer"),
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer")
+            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer"),
         )
     }
 }

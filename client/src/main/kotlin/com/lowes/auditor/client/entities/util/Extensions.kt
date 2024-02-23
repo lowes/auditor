@@ -16,12 +16,19 @@ import kotlin.reflect.full.primaryConstructor
  * @param right instance of second object
  * @return object containing merged property
  */
-fun <T> mergeData(property: KProperty1<out T, Any?>, left: T, right: T): Any? {
+fun <T> mergeData(
+    property: KProperty1<out T, Any?>,
+    left: T,
+    right: T,
+): Any? {
     val leftValue = property.getter.call(left)
     val rightValue = property.getter.call(right)
     return rightValue?.let {
-        if ((property.returnType.classifier as KClass<*>).isSubclassOf(Map::class)) (leftValue as? Map<*, *>)?.plus(it as Map<*, *>)
-        else leftValue?.merge(it)
+        if ((property.returnType.classifier as KClass<*>).isSubclassOf(Map::class)) {
+            (leftValue as? Map<*, *>)?.plus(it as Map<*, *>)
+        } else {
+            leftValue?.merge(it)
+        }
     } ?: rightValue ?: leftValue
 }
 
@@ -35,8 +42,11 @@ fun <T> mergeData(property: KProperty1<out T, Any?>, left: T, right: T): Any? {
  * @param left instance of second object
  * @return non null value of eithe right object or left object. If both are null, then return null.
  */
-fun <T> lastNonNull(property: KProperty1<out T, Any?>, left: T, right: T) =
-    property.getter.call(right) ?: property.getter.call(left)
+fun <T> lastNonNull(
+    property: KProperty1<out T, Any?>,
+    left: T,
+    right: T,
+) = property.getter.call(right) ?: property.getter.call(left)
 
 /**
  * Merges all properties of the passed object with caller object.
@@ -49,14 +59,15 @@ fun <T> lastNonNull(property: KProperty1<out T, Any?>, left: T, right: T) =
 inline infix fun <reified T : Any> T.merge(other: T): T? {
     val nameToProperty = this::class.declaredMemberProperties.associateBy { it.name }
     val primaryConstructor = this::class.primaryConstructor
-    val args: Map<KParameter, Any?>? = primaryConstructor?.parameters?.associateWith { parameter ->
-        val property = nameToProperty[parameter.name]
-        val type = property?.returnType?.classifier as KClass<*>
-        when {
-            type.isData || type.isSubclassOf(Map::class) -> mergeData(property, this, other)
-            else -> lastNonNull(property, this, other)
+    val args: Map<KParameter, Any?>? =
+        primaryConstructor?.parameters?.associateWith { parameter ->
+            val property = nameToProperty[parameter.name]
+            val type = property?.returnType?.classifier as KClass<*>
+            when {
+                type.isData || type.isSubclassOf(Map::class) -> mergeData(property, this, other)
+                else -> lastNonNull(property, this, other)
+            }
         }
-    }
     return args?.let { primaryConstructor.callBy(it) }
 }
 

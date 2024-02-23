@@ -42,7 +42,11 @@ class AuditEventGeneratorService(
      * @param requestConfig instance of [AuditorEventConfig]
      * @return flux of generated [AuditEvent]
      */
-    fun audit(oldObject: Any?, newObject: Any?, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
+    fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        requestConfig: AuditorEventConfig?,
+    ): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = elementAggregatorUseCase.aggregate(oldObject, newObject, config)
         val decoratedEvents = auditEventDecoratorService.decorate(events, newObject)
@@ -60,7 +64,10 @@ class AuditEventGeneratorService(
      * @param requestConfig instance of [AuditorEventConfig]
      * @return flux of generated [AuditEvent]
      */
-    fun log(entity: Any, requestConfig: AuditorEventConfig?): Flux<AuditEvent> {
+    fun log(
+        entity: Any,
+        requestConfig: AuditorEventConfig?,
+    ): Flux<AuditEvent> {
         val config = requestConfig?.let { initialConfig merge it } ?: initialConfig
         val events = Flux.from(eventLogUseCase.logEvent(entity, config))
         val decoratedEvents = auditEventDecoratorService.decorate(events, entity)
@@ -76,18 +83,21 @@ class AuditEventGeneratorService(
      * Performs retry in case any of the chain fails. In most cases this is not required as kafka producer is expected to perform retries.
      * This is especially used during some edge use cases(when kafka/network is flaky and when kafka producer does not retry)
      */
-    private fun doRetry(config: AuditorEventConfig, message: String): Retry {
+    private fun doRetry(
+        config: AuditorEventConfig,
+        message: String,
+    ): Retry {
         return if (config.retry?.enabled == true) {
             RetrySpec.fixedDelay(
                 config.retry?.count.orDefault(TEN.toLong()),
-                config.retry?.delay.orDefault(Duration.ofSeconds(THIRTY.toLong()))
+                config.retry?.delay.orDefault(Duration.ofSeconds(THIRTY.toLong())),
             )
                 .doBeforeRetry {
                     logger.info(
                         "op:doRetry.FailureMessage:{}, exception:{}, retryCount:{}",
                         message,
                         it.failure(),
-                        it.totalRetries()
+                        it.totalRetries(),
                     )
                 }
         } else {

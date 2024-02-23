@@ -18,13 +18,15 @@ import reactor.util.context.ContextView
  * Auditor api interface for exposing library functions like audit and log
  */
 interface Auditor {
-
     /**
      * Performs an audit by comparing old and new objects
      * @param oldObject previous instance of the object to be compared against
      * @param newObject latest instance of the object that needs to be audited
      */
-    fun audit(oldObject: Any?, newObject: Any?)
+    fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+    )
 
     /**
      * Performs an audit by comparing old and new objects
@@ -32,7 +34,11 @@ interface Auditor {
      * @param newObject latest instance of the object that needs to be audited
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    fun audit(oldObject: Any?, newObject: Any?, context: ContextView?)
+    fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        context: ContextView?,
+    )
 
     /**
      * Performs an audit by comparing old and new objects
@@ -40,7 +46,11 @@ interface Auditor {
      * @param newObject latest instance of the object that needs to be audited
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      */
-    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?)
+    fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        auditorEventConfig: AuditorEventConfig?,
+    )
 
     /**
      * Performs an audit by comparing old and new objects
@@ -49,7 +59,12 @@ interface Auditor {
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    fun audit(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig?, context: ContextView?)
+    fun audit(
+        oldObject: Any?,
+        newObject: Any?,
+        auditorEventConfig: AuditorEventConfig?,
+        context: ContextView?,
+    )
 
     /**
      * Generates an audit log containing an entity
@@ -62,14 +77,20 @@ interface Auditor {
      * @param entity entity of type [Any] that needs to ve logged
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    fun log(entity: Any, context: ContextView?)
+    fun log(
+        entity: Any,
+        context: ContextView?,
+    )
 
     /**
      * Generates an audit log containing an entity
      * @param entity entity of type [Any] that needs to ve logged
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      */
-    fun log(entity: Any, auditorEventConfig: AuditorEventConfig?)
+    fun log(
+        entity: Any,
+        auditorEventConfig: AuditorEventConfig?,
+    )
 
     /**
      * Generates an audit log containing an entity
@@ -77,10 +98,13 @@ interface Auditor {
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      * @param context an instance of [ContextView] containing context relevant metadata
      */
-    fun log(entity: Any, auditorEventConfig: AuditorEventConfig?, context: ContextView?)
+    fun log(
+        entity: Any,
+        auditorEventConfig: AuditorEventConfig?,
+        context: ContextView?,
+    )
 
     companion object {
-
         /**
          * Creates an instance of [Auditor]
          * @param producerConfig instance of [AuditEventProducerConfig] containing producer configs
@@ -95,7 +119,7 @@ interface Auditor {
             return getDefaultInstance(
                 eventPublisher = getDefaultEventPublisher(producerConfig),
                 logProvider = getDefaultLogProvider(),
-                auditorEventConfig = auditorEventConfig
+                auditorEventConfig = auditorEventConfig,
             )
         }
 
@@ -116,7 +140,7 @@ interface Auditor {
                 eventPublisher = getDefaultEventPublisher(producerConfig),
                 logProvider = getDefaultLogProvider(),
                 auditorEventConfig = auditorEventConfig,
-                elementFilters = elementFilters
+                elementFilters = elementFilters,
             )
         }
 
@@ -140,7 +164,7 @@ interface Auditor {
                 logProvider = getDefaultLogProvider(),
                 auditorEventConfig = auditorEventConfig,
                 elementFilters = elementFilters,
-                auditorServiceScheduler = auditorServiceScheduler
+                auditorServiceScheduler = auditorServiceScheduler,
             )
         }
 
@@ -158,14 +182,14 @@ interface Auditor {
             auditorEventConfig: AuditorEventConfig,
             elementFilters: List<AuditEventElementFilter>,
             auditorServiceScheduler: Scheduler,
-            logProvider: LogProvider
+            logProvider: LogProvider,
         ): Auditor {
             return getDefaultInstance(
                 eventPublisher = eventPublisher,
                 logProvider = logProvider,
                 auditorEventConfig = auditorEventConfig,
                 elementFilters = elementFilters,
-                auditorServiceScheduler = auditorServiceScheduler
+                auditorServiceScheduler = auditorServiceScheduler,
             )
         }
 
@@ -178,12 +202,13 @@ interface Auditor {
             logProvider: LogProvider,
             auditorEventConfig: AuditorEventConfig = AuditorEventConfig.getDefaultInstance(),
             elementFilters: List<AuditEventElementFilter> = emptyList(),
-            auditorServiceScheduler: Scheduler = Schedulers.newParallel("auditorServiceScheduler")
+            auditorServiceScheduler: Scheduler = Schedulers.newParallel("auditorServiceScheduler"),
         ): Auditor {
-            val mergedElementFilters = setOf(
-                InclusionFilter(),
-                ExclusionFilter()
-            ).plus(elementFilters).toList()
+            val mergedElementFilters =
+                setOf(
+                    InclusionFilter(),
+                    ExclusionFilter(),
+                ).plus(elementFilters).toList()
             val auditorModule = AuditorModule(auditorEventConfig, mergedElementFilters, eventPublisher, logProvider)
             return auditor(auditorModule, auditorServiceScheduler)
         }
@@ -191,7 +216,10 @@ interface Auditor {
         /**
          * Returns an instance of [Auditor]
          */
-        private fun auditor(auditorModule: AuditorModule, scheduler: Scheduler): Auditor {
+        private fun auditor(
+            auditorModule: AuditorModule,
+            scheduler: Scheduler,
+        ): Auditor {
             return AuditorService(auditorModule.auditEventGeneratorService, scheduler)
         }
 

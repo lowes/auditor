@@ -12,7 +12,6 @@ import java.time.Duration
  * Kafka listener to initialise the Kafka test container
  */
 object KafkaListener : ProjectListener {
-
     const val TOPIC = "auditorFunctionalTestTopic"
 
     /**
@@ -22,7 +21,7 @@ object KafkaListener : ProjectListener {
         KafkaContainer(
             DockerImageName
                 .parse("confluentinc/cp-kafka:5.2.1")
-                .asCompatibleSubstituteFor("confluentinc/cp-kafka:5.2.1")
+                .asCompatibleSubstituteFor("confluentinc/cp-kafka:5.2.1"),
         )
             .withReuse(true)
             .withLabel("application", "auditor-client-functional-test")
@@ -45,14 +44,16 @@ object KafkaListener : ProjectListener {
      *
      */
     private fun createTopics(vararg topics: String) {
-        val topicsToCreate = arrayOf(*topics).map {
-            NewTopic(it, 1, 1)
-        }
-        val adminClient = AdminClient.create(
-            mapOf(
-                BOOTSTRAP_SERVERS_CONFIG to cluster.bootstrapServers
+        val topicsToCreate =
+            arrayOf(*topics).map {
+                NewTopic(it, 1, 1)
+            }
+        val adminClient =
+            AdminClient.create(
+                mapOf(
+                    BOOTSTRAP_SERVERS_CONFIG to cluster.bootstrapServers,
+                ),
             )
-        )
         adminClient.createTopics(topicsToCreate)
         adminClient.close()
     }

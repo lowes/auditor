@@ -10,9 +10,8 @@ import reactor.core.publisher.Mono
  * @see ObjectLogGenerator
  */
 class ObjectLogGeneratorService(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) : ObjectLogGenerator {
-
     /**
      * Generates audit logs for an object using underlying [ObjectMapper]
      * @param entity instance of [Any]

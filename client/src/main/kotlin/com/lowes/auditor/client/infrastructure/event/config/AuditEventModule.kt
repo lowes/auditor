@@ -12,9 +12,8 @@ import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
  * @property producerConfig instance of [AuditEventProducerConfig]
  */
 class AuditEventModule(
-    private val producerConfig: AuditEventProducerConfig
+    private val producerConfig: AuditEventProducerConfig,
 ) {
-
     /**
      * Provides singleton and lazily initialized instance of [KafkaSender] used for sending audit events.
      */

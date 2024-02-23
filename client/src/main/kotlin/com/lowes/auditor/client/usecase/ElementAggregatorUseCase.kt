@@ -17,7 +17,7 @@ import java.util.UUID
  * @property objectDiffChecker instance of [ObjectDiffChecker] that performs the actual diff between two objects
  */
 class ElementAggregatorUseCase(
-    private val objectDiffChecker: ObjectDiffChecker
+    private val objectDiffChecker: ObjectDiffChecker,
 ) {
     /**
      * Compares old and new objects to find delta changes called [Element] which is then aggregated to [AuditEvent]
@@ -26,7 +26,11 @@ class ElementAggregatorUseCase(
      * @param auditorEventConfig an instance of [AuditorEventConfig] containing audit related configurations
      * @return flux of generated [AuditEvent]
      */
-    fun aggregate(oldObject: Any?, newObject: Any?, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {
+    fun aggregate(
+        oldObject: Any?,
+        newObject: Any?,
+        auditorEventConfig: AuditorEventConfig,
+    ): Flux<AuditEvent> {
         return objectDiffChecker.diff(oldObject, newObject)
             .groupBy {
                 when (it.updatedValue) {
@@ -43,7 +47,7 @@ class ElementAggregatorUseCase(
                         source = auditorEventConfig.eventSource.orDefault(EventSourceConfig()).toEventSource(),
                         elements = it,
                         subType = auditorEventConfig.eventSubType,
-                        metadata = auditorEventConfig.metadata
+                        metadata = auditorEventConfig.metadata,
                     )
                 }
             }

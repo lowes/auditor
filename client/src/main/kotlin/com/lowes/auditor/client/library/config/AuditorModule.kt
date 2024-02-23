@@ -27,7 +27,7 @@ class AuditorModule(
     private val auditorEventConfig: AuditorEventConfig,
     private val elementFilters: List<AuditEventElementFilter>,
     private val eventPublisher: EventPublisher,
-    private val logProvider: LogProvider
+    private val logProvider: LogProvider,
 ) {
     /**
      * Provides singleton and lazily initialized instance of [AuditEventGeneratorService]
@@ -39,7 +39,7 @@ class AuditorModule(
             eventPublisher,
             auditEventFilterService,
             auditEventDecoratorService,
-            eventLogUseCase
+            eventLogUseCase,
         )
     }
 

@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono
  */
 @Service
 class AuditBaseConsumer(
-    private val repositoryService: RepositoryService
+    private val repositoryService: RepositoryService,
 ) {
     private val logger = LoggerFactory.getLogger(AuditBaseConsumer::class.java)
 

@@ -13,21 +13,22 @@ data class AuditEventProducerConfig(
     var bootstrapServers: String? = null,
     var topic: String? = null,
     var configs: Map<String, String>? = null,
-    val preConfiguredProducerConfig: Map<String, String> = mapOf(
-        "retries" to "2147483647",
-        "request.timeout.ms" to "300000",
-        "delivery.timeout.ms" to "600000",
-        "enable.idempotence" to "true",
-        "acks" to "all",
-        "linger.ms" to "100",
-        "batch.size" to "102400",
-        "compression.type" to "lz4",
-        "buffer.memory" to "67108864",
-        "key.serializer" to "org.apache.kafka.common.serialization.StringSerializer",
-        "value.serializer" to "org.apache.kafka.common.serialization.StringSerializer",
-        "max.block.ms" to "60000",
-        "max.in.flight.requests.per.connection" to "5"
-    )
+    val preConfiguredProducerConfig: Map<String, String> =
+        mapOf(
+            "retries" to "2147483647",
+            "request.timeout.ms" to "300000",
+            "delivery.timeout.ms" to "600000",
+            "enable.idempotence" to "true",
+            "acks" to "all",
+            "linger.ms" to "100",
+            "batch.size" to "102400",
+            "compression.type" to "lz4",
+            "buffer.memory" to "67108864",
+            "key.serializer" to "org.apache.kafka.common.serialization.StringSerializer",
+            "value.serializer" to "org.apache.kafka.common.serialization.StringSerializer",
+            "max.block.ms" to "60000",
+            "max.in.flight.requests.per.connection" to "5",
+        ),
 ) {
     /**
      * Provides merged view of [preConfiguredProducerConfig] and [configs].

@@ -15,9 +15,8 @@ import reactor.core.scheduler.Schedulers
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(AuditorAutoConfig::class)
 class AuditorAutoConfigureModule(
-    private val auditorAutoConfig: AuditorAutoConfig
+    private val auditorAutoConfig: AuditorAutoConfig,
 ) {
-
     /**
      * Creates a [Scheduler] instance exclusively for managing audits
      * @return a reactor scheduler instance
@@ -35,12 +34,15 @@ class AuditorAutoConfigureModule(
      * @return an [Auditor] instance
      */
     @Bean
-    fun auditor(elementFilters: List<AuditEventElementFilter>, auditorServiceScheduler: Scheduler): Auditor {
+    fun auditor(
+        elementFilters: List<AuditEventElementFilter>,
+        auditorServiceScheduler: Scheduler,
+    ): Auditor {
         return Auditor.getInstance(
             producerConfig = auditorAutoConfig.producer,
             auditorEventConfig = auditorAutoConfig.config,
             elementFilters = elementFilters,
-            auditorServiceScheduler = auditorServiceScheduler
+            auditorServiceScheduler = auditorServiceScheduler,
         )
     }
 }

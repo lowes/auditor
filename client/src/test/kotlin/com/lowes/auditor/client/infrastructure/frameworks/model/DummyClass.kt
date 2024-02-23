@@ -4,7 +4,6 @@ import java.math.BigDecimal
 
 data class DummyClass(
     val initValue: String,
-
     val val2: String = initValue,
     val val3: String = initValue,
     val val4: String = initValue,
@@ -13,7 +12,6 @@ data class DummyClass(
     val val7: String = initValue,
     val val8: String = initValue,
     val val9: String = initValue,
-
     val val11: Int? = initValue.toIntOrNull(),
     val val12: Int? = initValue.toIntOrNull(),
     val val13: Int? = initValue.toIntOrNull(),
@@ -23,7 +21,6 @@ data class DummyClass(
     val val17: Int? = initValue.toIntOrNull(),
     val val18: Int? = initValue.toIntOrNull(),
     val val19: Int? = initValue.toIntOrNull(),
-
     val val21: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val22: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val23: BigDecimal? = initValue.toBigDecimalOrNull(),
@@ -33,7 +30,6 @@ data class DummyClass(
     val val27: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val28: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val29: BigDecimal? = initValue.toBigDecimalOrNull(),
-
     val val31: Map<String, String> = mapOf(initValue to initValue),
     val val32: Map<String, String> = mapOf(initValue to initValue),
     val val33: Map<String, String> = mapOf(initValue to initValue),
@@ -43,7 +39,6 @@ data class DummyClass(
     val val37: Map<String, String> = mapOf(initValue to initValue),
     val val38: Map<String, String> = mapOf(initValue to initValue),
     val val39: Map<String, String> = mapOf(initValue to initValue),
-
     val val41: List<String> = listOf(initValue),
     val val42: List<String> = listOf(initValue),
     val val43: List<String> = listOf(initValue),
@@ -53,13 +48,11 @@ data class DummyClass(
     val val47: Set<String> = setOf(initValue),
     val val48: Set<String> = setOf(initValue),
     val val49: Set<String> = setOf(initValue),
-
-    val val50: FirstChildClass = FirstChildClass(initValue)
+    val val50: FirstChildClass = FirstChildClass(initValue),
 )
 
 data class FirstChildClass(
     val initValue: String,
-
     val val2: String = initValue,
     val val3: String = initValue,
     val val4: String = initValue,
@@ -68,7 +61,6 @@ data class FirstChildClass(
     val val7: String = initValue,
     val val8: String = initValue,
     val val9: String = initValue,
-
     val val11: Int? = initValue.toIntOrNull(),
     val val12: Int? = initValue.toIntOrNull(),
     val val13: Int? = initValue.toIntOrNull(),
@@ -78,7 +70,6 @@ data class FirstChildClass(
     val val17: Int? = initValue.toIntOrNull(),
     val val18: Int? = initValue.toIntOrNull(),
     val val19: Int? = initValue.toIntOrNull(),
-
     val val21: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val22: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val23: BigDecimal? = initValue.toBigDecimalOrNull(),
@@ -88,7 +79,6 @@ data class FirstChildClass(
     val val27: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val28: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val29: BigDecimal? = initValue.toBigDecimalOrNull(),
-
     val val31: Map<String, String> = mapOf(initValue to initValue),
     val val32: Map<String, String> = mapOf(initValue to initValue),
     val val33: Map<String, String> = mapOf(initValue to initValue),
@@ -98,7 +88,6 @@ data class FirstChildClass(
     val val37: Map<String, String> = mapOf(initValue to initValue),
     val val38: Map<String, String> = mapOf(initValue to initValue),
     val val39: Map<String, String> = mapOf(initValue to initValue),
-
     val val41: List<String> = listOf(initValue),
     val val42: List<String> = listOf(initValue),
     val val43: List<String> = listOf(initValue),
@@ -108,13 +97,11 @@ data class FirstChildClass(
     val val47: Set<String> = setOf(initValue),
     val val48: Set<String> = setOf(initValue),
     val val49: Set<String> = setOf(initValue),
-
-    val val50: SecondChildClass = SecondChildClass(initValue)
+    val val50: SecondChildClass = SecondChildClass(initValue),
 )
 
 data class SecondChildClass(
     val initValue: String,
-
     val val2: String = initValue,
     val val3: String = initValue,
     val val4: String = initValue,
@@ -123,7 +110,6 @@ data class SecondChildClass(
     val val7: String = initValue,
     val val8: String = initValue,
     val val9: String = initValue,
-
     val val11: Int? = initValue.toIntOrNull(),
     val val12: Int? = initValue.toIntOrNull(),
     val val13: Int? = initValue.toIntOrNull(),
@@ -133,7 +119,6 @@ data class SecondChildClass(
     val val17: Int? = initValue.toIntOrNull(),
     val val18: Int? = initValue.toIntOrNull(),
     val val19: Int? = initValue.toIntOrNull(),
-
     val val21: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val22: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val23: BigDecimal? = initValue.toBigDecimalOrNull(),
@@ -143,7 +128,6 @@ data class SecondChildClass(
     val val27: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val28: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val29: BigDecimal? = initValue.toBigDecimalOrNull(),
-
     val val31: Map<String, String> = mapOf(initValue to initValue),
     val val32: Map<String, String> = mapOf(initValue to initValue),
     val val33: Map<String, String> = mapOf(initValue to initValue),
@@ -153,7 +137,6 @@ data class SecondChildClass(
     val val37: Map<String, String> = mapOf(initValue to initValue),
     val val38: Map<String, String> = mapOf(initValue to initValue),
     val val39: Map<String, String> = mapOf(initValue to initValue),
-
     val val41: List<String> = listOf(initValue),
     val val42: List<String> = listOf(initValue),
     val val43: List<String> = listOf(initValue),
@@ -163,13 +146,11 @@ data class SecondChildClass(
     val val47: Set<String> = setOf(initValue),
     val val48: Set<String> = setOf(initValue),
     val val49: Set<String> = setOf(initValue),
-
-    val val50: ThirdChildClass = ThirdChildClass(initValue)
+    val val50: ThirdChildClass = ThirdChildClass(initValue),
 )
 
 data class ThirdChildClass(
     val initValue: String,
-
     val val1: String = initValue,
     val val2: String = initValue,
     val val3: String = initValue,
@@ -179,7 +160,6 @@ data class ThirdChildClass(
     val val7: String = initValue,
     val val8: String = initValue,
     val val9: String = initValue,
-
     val val11: Int? = initValue.toIntOrNull(),
     val val12: Int? = initValue.toIntOrNull(),
     val val13: Int? = initValue.toIntOrNull(),
@@ -189,7 +169,6 @@ data class ThirdChildClass(
     val val17: Int? = initValue.toIntOrNull(),
     val val18: Int? = initValue.toIntOrNull(),
     val val19: Int? = initValue.toIntOrNull(),
-
     val val21: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val22: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val23: BigDecimal? = initValue.toBigDecimalOrNull(),
@@ -199,7 +178,6 @@ data class ThirdChildClass(
     val val27: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val28: BigDecimal? = initValue.toBigDecimalOrNull(),
     val val29: BigDecimal? = initValue.toBigDecimalOrNull(),
-
     val val31: Map<String, String> = mapOf(initValue to initValue),
     val val32: Map<String, String> = mapOf(initValue to initValue),
     val val33: Map<String, String> = mapOf(initValue to initValue),
@@ -209,7 +187,6 @@ data class ThirdChildClass(
     val val37: Map<String, String> = mapOf(initValue to initValue),
     val val38: Map<String, String> = mapOf(initValue to initValue),
     val val39: Map<String, String> = mapOf(initValue to initValue),
-
     val val41: List<String> = listOf(initValue),
     val val42: List<String> = listOf(initValue),
     val val43: List<String> = listOf(initValue),
@@ -218,5 +195,5 @@ data class ThirdChildClass(
     val val46: Set<String> = setOf(initValue),
     val val47: Set<String> = setOf(initValue),
     val val48: Set<String> = setOf(initValue),
-    val val49: Set<String> = setOf(initValue)
+    val val49: Set<String> = setOf(initValue),
 )
