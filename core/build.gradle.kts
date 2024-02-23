@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
@@ -62,6 +63,16 @@ sourceSets {
 }
 
 tasks.withType<KotlinCompile> {
+    dependsOn("openApiGenerateEntities")
+    dependsOn("openApiGenerateEventDTO")
+}
+
+tasks.withType<Jar> {
+    dependsOn("openApiGenerateEntities")
+    dependsOn("openApiGenerateEventDTO")
+}
+
+tasks.withType<KtLintCheckTask> {
     dependsOn("openApiGenerateEntities")
     dependsOn("openApiGenerateEventDTO")
 }

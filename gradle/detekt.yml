@@ -12,3 +12,5 @@ complexity:
     thresholdInClasses: 20
     thresholdInFiles: 30
     thresholdInInterfaces: 20
+  LongMethod:
+    threshold: 80
