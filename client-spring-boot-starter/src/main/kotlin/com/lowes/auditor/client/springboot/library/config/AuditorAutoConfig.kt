@@ -4,7 +4,6 @@ import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.infrastructure.event.config.AuditEventProducerConfig
 import com.lowes.auditor.core.entities.constants.AUDITOR
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Configuration
 
 /**
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration
  * @property producer instance of [AuditEventProducerConfig]
  * @constructor creates an instance of AuditorAutoConfig
  */
-@ConstructorBinding
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = AUDITOR)
 data class AuditorAutoConfig(
