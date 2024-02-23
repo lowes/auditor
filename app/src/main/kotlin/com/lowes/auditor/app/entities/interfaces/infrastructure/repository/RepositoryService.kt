@@ -7,7 +7,6 @@ import reactor.core.publisher.Mono
  * Repository service exposing api(s) to interact with underlying database.
  */
 interface RepositoryService {
-
     /**
      * Saves the data to underlying database
      * @param event instance of [AuditEvent] that needs to be saved to repository.

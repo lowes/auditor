@@ -39,11 +39,12 @@ data class AuditorEventConfig(
                 applicationName = NOT_CONFIGURED,
                 eventSource = EventSourceConfig(type = EventSourceType.SYSTEM),
                 maxElements = FIVE_HUNDRED,
-                retry = RetryPublisherConfig(
-                    enabled = true,
-                    count = TEN.toLong(),
-                    delay = Duration.ofSeconds(THIRTY.toLong())
-                )
+                retry =
+                    RetryPublisherConfig(
+                        enabled = true,
+                        count = TEN.toLong(),
+                        delay = Duration.ofSeconds(THIRTY.toLong()),
+                    ),
             )
         }
     }
@@ -103,7 +104,7 @@ data class LoggingFilter(
 data class ElementFilterOptions(
     var includes: List<String>? = null,
     var excludes: List<String>? = null,
-    var metaData: Map<String, String>? = null
+    var metaData: Map<String, String>? = null,
 )
 
 /**
@@ -118,7 +119,7 @@ data class EventSourceConfig(
     fun toEventSource(): EventSource {
         return EventSource(
             type = this.type ?: EventSourceType.SYSTEM,
-            metadata = this.metadata?.toEventSourceMetadata()
+            metadata = this.metadata?.toEventSourceMetadata(),
         )
     }
 }
@@ -152,5 +153,5 @@ data class EventSourceMetadataConfig(
 data class RetryPublisherConfig(
     var enabled: Boolean? = null,
     var count: Long? = null,
-    var delay: Duration? = null
+    var delay: Duration? = null,
 )

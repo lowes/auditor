@@ -25,33 +25,38 @@ class EventProducerServiceTest : IntegrationTestSpec() {
         Given("Test Producer Event") {
             val consumer = KafkaReceiver.create(EventModule.testConsumer.subscription(Collections.singleton(KafkaListener.TOPIC)))
             val randomId = UUID.randomUUID()
-            val auditEvent = AuditEvent(
-                id = randomId,
-                applicationName = "clientApp",
-                timestamp = OffsetDateTime.MAX,
-                type = EventType.CREATED,
-                source = EventSource(
-                    type = EventSourceType.USER,
-                    metadata = EventSourceMetadata(
-                        id = "1",
-                        name = "name",
-                        email = "name@email.com"
-                    )
-                ),
-                subType = "subType",
-                metadata = mapOf("key" to "value"),
-                elements = listOf(
-                    Element(
-                        name = "elementName",
-                        updatedValue = "updatedValue",
-                        previousValue = "prevValue",
-                        metadata = ElementMetadata(
-                            fqdn = "fqdn",
-                            identifiers = mapOf("key" to "value")
-                        )
-                    )
+            val auditEvent =
+                AuditEvent(
+                    id = randomId,
+                    applicationName = "clientApp",
+                    timestamp = OffsetDateTime.MAX,
+                    type = EventType.CREATED,
+                    source =
+                        EventSource(
+                            type = EventSourceType.USER,
+                            metadata =
+                                EventSourceMetadata(
+                                    id = "1",
+                                    name = "name",
+                                    email = "name@email.com",
+                                ),
+                        ),
+                    subType = "subType",
+                    metadata = mapOf("key" to "value"),
+                    elements =
+                        listOf(
+                            Element(
+                                name = "elementName",
+                                updatedValue = "updatedValue",
+                                previousValue = "prevValue",
+                                metadata =
+                                    ElementMetadata(
+                                        fqdn = "fqdn",
+                                        identifiers = mapOf("key" to "value"),
+                                    ),
+                            ),
+                        ),
                 )
-            )
             When("Auditor produces an Event") {
                 val producedAuditEvent = EventModule.auditEventProducerService.publishEvents(Flux.just(auditEvent))
                 Then("Assert that Audit Even is successfully produced") {
@@ -63,11 +68,12 @@ class EventProducerServiceTest : IntegrationTestSpec() {
             }
             And("verify consumer") {
                 When("Consumer consumes the data") {
-                    val consumedData = consumer.receive()
-                        .map {
-                            it.receiverOffset().acknowledge()
-                            EventModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
-                        }
+                    val consumedData =
+                        consumer.receive()
+                            .map {
+                                it.receiverOffset().acknowledge()
+                                EventModule.objectMapper.readValue(it.value(), AuditEvent::class.java)
+                            }
                     Then("Assert that Audit Event is consumed Successfully") {
                         StepVerifier
                             .create(consumedData)

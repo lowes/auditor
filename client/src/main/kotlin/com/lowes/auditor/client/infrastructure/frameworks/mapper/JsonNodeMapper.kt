@@ -12,7 +12,6 @@ import reactor.core.publisher.Flux
  * Provides functionality to parse a [JsonNode] and map it to equivalent flux of [Element]
  */
 object JsonNodeMapper {
-
     /**
      * Converts [JsonNode] to flux of [Element]. It recursively iterates through all object properties
      * and used [EventType] to determine the type of [Element] to generate
@@ -21,7 +20,11 @@ object JsonNodeMapper {
      * @param fqcn fully qualified class name
      * @return flux of [Element]
      */
-    fun toElement(node: JsonNode, eventType: EventType, fqcn: String): Flux<Element> {
+    fun toElement(
+        node: JsonNode,
+        eventType: EventType,
+        fqcn: String,
+    ): Flux<Element> {
         val hasFields = node.fields().hasNext()
         return Flux.fromIterable(getIterables(hasFields, node))
             .index()
@@ -36,21 +39,28 @@ object JsonNodeMapper {
                                 .flatMap { t ->
                                     val fqcnValue = getFqcnValue(hasFields, t.t1, fqcn, entry).plus(".").plus(t.t1)
                                     if (t.t2.isValueNode) {
-                                        val updatedValue = if (eventType == EventType.CREATED) {
-                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
-                                        } else null
-                                        val previousValue = if (eventType == EventType.DELETED) {
-                                            findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
-                                        } else null
+                                        val updatedValue =
+                                            if (eventType == EventType.CREATED) {
+                                                findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                            } else {
+                                                null
+                                            }
+                                        val previousValue =
+                                            if (eventType == EventType.DELETED) {
+                                                findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                            } else {
+                                                null
+                                            }
                                         Flux.just(
                                             Element(
                                                 name = entry.key,
                                                 updatedValue = updatedValue,
                                                 previousValue = previousValue,
-                                                metadata = ElementMetadata(
-                                                    fqdn = fqcnValue
-                                                )
-                                            )
+                                                metadata =
+                                                    ElementMetadata(
+                                                        fqdn = fqcnValue,
+                                                    ),
+                                            ),
                                         )
                                     } else {
                                         toElement(t.t2, eventType, fqcnValue)
@@ -59,21 +69,28 @@ object JsonNodeMapper {
                         } else if (it == NodeType.OBJECT) {
                             toElement(entry.value, eventType, getFqcnValue(hasFields, index, fqcn, entry))
                         } else {
-                            val updatedValue = if (eventType == EventType.CREATED) {
-                                getValue(it, entry.value)
-                            } else null
-                            val previousValue = if (eventType == EventType.DELETED) {
-                                getValue(it, entry.value)
-                            } else null
+                            val updatedValue =
+                                if (eventType == EventType.CREATED) {
+                                    getValue(it, entry.value)
+                                } else {
+                                    null
+                                }
+                            val previousValue =
+                                if (eventType == EventType.DELETED) {
+                                    getValue(it, entry.value)
+                                } else {
+                                    null
+                                }
                             Flux.just(
                                 Element(
                                     name = entry.key,
                                     updatedValue = updatedValue,
                                     previousValue = previousValue,
-                                    metadata = ElementMetadata(
-                                        fqdn = getFqcnValue(hasFields, index, fqcn, entry)
-                                    )
-                                )
+                                    metadata =
+                                        ElementMetadata(
+                                            fqdn = getFqcnValue(hasFields, index, fqcn, entry),
+                                        ),
+                                ),
                             )
                         }
                     } ?: Flux.empty()
@@ -87,7 +104,7 @@ object JsonNodeMapper {
         hasFields: Boolean,
         index: Long,
         fqcn: String,
-        entry: Map.Entry<String, JsonNode>
+        entry: Map.Entry<String, JsonNode>,
     ): String {
         return if (hasFields) {
             fqcn.plus(".").plus(entry.key)
@@ -99,7 +116,10 @@ object JsonNodeMapper {
     /**
      * Converts a node to iterables if it's type was collection.
      */
-    private fun getIterables(hasFields: Boolean, node: JsonNode): List<MutableMap.MutableEntry<String, JsonNode>> {
+    private fun getIterables(
+        hasFields: Boolean,
+        node: JsonNode,
+    ): List<MutableMap.MutableEntry<String, JsonNode>> {
         return if (hasFields) {
             node.fields().asSequence().toList()
         } else {
@@ -110,7 +130,10 @@ object JsonNodeMapper {
     /**
      * Gets the value of the leaf node
      */
-    private fun getValue(nodeType: NodeType, node: JsonNode): String? {
+    private fun getValue(
+        nodeType: NodeType,
+        node: JsonNode,
+    ): String? {
         return when (nodeType) {
             NodeType.TEXT -> node.asText()
             else -> null

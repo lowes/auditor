@@ -13,7 +13,6 @@ import kotlin.time.ExperimentalTime
  * Sets up kotest configuration for Integration Test Module
  */
 object IntegrationTestSpecConfig : AbstractProjectConfig() {
-
     override val parallelism = Runtime.getRuntime().availableProcessors() * 2
 
     override val isolationMode: IsolationMode = IsolationMode.SingleInstance

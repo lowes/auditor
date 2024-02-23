@@ -16,7 +16,6 @@ import com.lowes.auditor.core.infrastructure.event.model.EventSourceMetadataDTO
  * Mapper class responsible for converting to [AuditEvent] entity
  */
 object AuditEventMapper {
-
     /**
      * converts [AuditEventDTO] to [AuditEvent]
      * @param auditEventDTO An [AuditEventDTO] entity
@@ -28,14 +27,15 @@ object AuditEventMapper {
             applicationName = auditEventDTO.applicationName.lowercase(),
             timestamp = auditEventDTO.timestamp,
             type = EventType.valueOf(auditEventDTO.type.value),
-            source = EventSource(
-                type = auditEventDTO.source.type.value.let { EventSourceType.valueOf(it) },
-                metadata = toSourceMetadata(auditEventDTO.source.metadata)
-            ),
+            source =
+                EventSource(
+                    type = auditEventDTO.source.type.value.let { EventSourceType.valueOf(it) },
+                    metadata = toSourceMetadata(auditEventDTO.source.metadata),
+                ),
             elements = toElement(auditEventDTO.elements),
             subType = auditEventDTO.subType,
             metadata = auditEventDTO.metadata,
-            log = auditEventDTO.log
+            log = auditEventDTO.log,
         )
     }
 
@@ -48,7 +48,7 @@ object AuditEventMapper {
                 name = it.name,
                 previousValue = it.previousValue,
                 updatedValue = it.updatedValue,
-                metadata = toElementMetadata(it.metadata)
+                metadata = toElementMetadata(it.metadata),
             )
         }
     }
@@ -59,7 +59,7 @@ object AuditEventMapper {
     private fun toElementMetadata(elementMetadataDTO: ElementMetadataDTO?): ElementMetadata {
         return ElementMetadata(
             fqdn = elementMetadataDTO?.fqdn,
-            identifiers = elementMetadataDTO?.identifiers
+            identifiers = elementMetadataDTO?.identifiers,
         )
     }
 
@@ -70,7 +70,7 @@ object AuditEventMapper {
         return EventSourceMetadata(
             id = sourceMetadataDTO?.id,
             email = sourceMetadataDTO?.email,
-            name = sourceMetadataDTO?.name
+            name = sourceMetadataDTO?.name,
         )
     }
 }

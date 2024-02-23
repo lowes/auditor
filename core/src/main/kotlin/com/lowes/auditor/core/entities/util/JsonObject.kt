@@ -13,7 +13,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
  * Provides a default instance of JsonObject and its properties to be used across modules
  */
 object JsonObject {
-
     /**
      * Provides singleton and lazily initialized instance of [ObjectMapper]
      */

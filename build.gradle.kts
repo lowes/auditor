@@ -63,8 +63,8 @@ subprojects {
         testImplementation(Testing.kotest.assertions.core)
         testImplementation(Testing.kotest.runner.junit5)
         testImplementation(Testing.kotest.property)
-        testImplementation(Testing.kotestExtensions.spring)
-        testImplementation(Testing.kotestExtensions.testContainers)
+        testImplementation(Testing.kotest.extensions.spring)
+        testImplementation(Testing.kotest.extensions.testContainers)
         testImplementation("org.testcontainers:kafka:_")
     }
 
@@ -107,10 +107,14 @@ subprojects {
         withType<Detekt> {
             this.jvmTarget = "14"
             reports {
-                html.required.set(true) // observe findings in your browser with structure and code snippets
-                xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
-                txt.required.set(true) // similar to the console output, contains issue signature to manually edit baseline files
-                sarif.required.set(true) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with Github Code Scanning
+                // observe findings in your browser with structure and code snippets
+                html.required.set(true)
+                // checkstyle like format mainly for integrations like Jenkins
+                xml.required.set(true)
+                // similar to the console output, contains issue signature to manually edit baseline files
+                txt.required.set(true)
+                // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with Github Code Scanning
+                sarif.required.set(true)
             }
         }
     }
@@ -160,15 +164,9 @@ subprojects {
                             }
                         }
                         scm {
-                            url.set(
-                                "https://github.com/lowes/auditor.git"
-                            )
-                            connection.set(
-                                "scm:git:git://github.com/lowes/auditor.git"
-                            )
-                            developerConnection.set(
-                                "scm:git:git://github.com/lowes/auditor.git"
-                            )
+                            url.set("https://github.com/lowes/auditor.git")
+                            connection.set("scm:git:git://github.com/lowes/auditor.git")
+                            developerConnection.set("scm:git:git://github.com/lowes/auditor.git")
                         }
                         issueManagement {
                             url.set("https://github.com/lowes/auditor/issues")
@@ -211,9 +209,10 @@ subprojects {
     val tasksNames: MutableList<String> = gradle.startParameter.taskNames
     if (tasksNames.contains("integrationTest") && !tasksNames.contains("functionalTest") && !tasksNames.contains("test")) {
         gradle.startParameter.excludedTaskNames += setOf("functionalTest", "test")
-    } else if (tasksNames.contains("functionalTest") && !tasksNames.contains("integrationTest") && !tasksNames.contains(
-            "test"
-        )
+    } else if (
+        tasksNames.contains("functionalTest") &&
+        !tasksNames.contains("integrationTest") &&
+        !tasksNames.contains("test")
     ) {
         gradle.startParameter.excludedTaskNames += setOf("integrationTest", "test")
     } else if (tasksNames.contains("test") && !tasksNames.contains("integrationTest") && !tasksNames.contains("functionalTest")) {

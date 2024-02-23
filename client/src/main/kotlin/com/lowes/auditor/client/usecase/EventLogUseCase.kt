@@ -16,7 +16,7 @@ import java.util.UUID
  * @property objectLogGenerator instance of [ObjectLogGenerator]
  */
 class EventLogUseCase(
-    private val objectLogGenerator: ObjectLogGenerator
+    private val objectLogGenerator: ObjectLogGenerator,
 ) {
     /**
      * Generates [AuditEvent] from the entity that needs to logged. Also, applies metadata and other relevant information from [auditorEventConfig]
@@ -24,7 +24,10 @@ class EventLogUseCase(
      * @param auditorEventConfig instance of [AuditorEventConfig]
      * @return mono of [AuditEvent]
      */
-    fun logEvent(entity: Any, auditorEventConfig: AuditorEventConfig): Mono<AuditEvent> {
+    fun logEvent(
+        entity: Any,
+        auditorEventConfig: AuditorEventConfig,
+    ): Mono<AuditEvent> {
         return objectLogGenerator.generate(entity)
             .map {
                 AuditEvent(
@@ -36,7 +39,7 @@ class EventLogUseCase(
                     elements = null,
                     subType = auditorEventConfig.eventSubType,
                     metadata = auditorEventConfig.metadata,
-                    log = it
+                    log = it,
                 )
             }
     }

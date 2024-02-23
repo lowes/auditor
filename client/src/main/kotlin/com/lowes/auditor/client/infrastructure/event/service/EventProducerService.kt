@@ -21,7 +21,7 @@ import reactor.kafka.sender.SenderRecord
 abstract class EventProducerService(
     private val producerConfig: AuditEventProducerConfig?,
     private val kafkaSender: KafkaSender<String, String>,
-    private val auditorObjectWriter: ObjectWriter
+    private val auditorObjectWriter: ObjectWriter,
 ) : EventPublisher {
     private val logger = LoggerFactory.getLogger(EventProducerService::class.java)
 
@@ -38,18 +38,18 @@ abstract class EventProducerService(
                             ProducerRecord(
                                 producerConfig.topic,
                                 it.id.toString(),
-                                auditorObjectWriter.writeValueAsString(AuditEventDTOMapper.toAuditEventDTO(it))
+                                auditorObjectWriter.writeValueAsString(AuditEventDTOMapper.toAuditEventDTO(it)),
                             ),
-                            it.id.toString()
+                            it.id.toString(),
                         )
-                    }
+                    },
             )
                 .doOnError { logger.error(it.localizedMessage) }
                 .doOnNext { r ->
                     logger.info(
                         "Success, correlationMetadata:{}, serializedValueSize:{}",
                         r.correlationMetadata(),
-                        r.recordMetadata().serializedValueSize()
+                        r.recordMetadata().serializedValueSize(),
                     )
                 }
                 .map { it.correlationMetadata() }

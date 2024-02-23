@@ -9,7 +9,6 @@ import kotlin.time.ExperimentalTime
  * Sets up kotest configuration for unit test module.
  */
 object UnitTestSpecConfig : AbstractProjectConfig() {
-
     override val parallelism = Runtime.getRuntime().availableProcessors() * 2
 
     override val isolationMode: IsolationMode = IsolationMode.InstancePerTest

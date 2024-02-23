@@ -11,7 +11,6 @@ import reactor.kafka.receiver.ReceiverOptions
  * Sets up configuration for Auditor Event Module
  */
 object EventModule {
-
     /**
      * lazily initialized instance of Instance of [ObjectMapper] which is commonly used across modules
      */
@@ -27,8 +26,8 @@ object EventModule {
             AuditEventProducerConfig(
                 enabled = true,
                 bootstrapServers = KafkaListener.cluster.bootstrapServers,
-                topic = KafkaListener.TOPIC
-            )
+                topic = KafkaListener.TOPIC,
+            ),
         ).auditEventProducerService
     }
 
@@ -51,7 +50,7 @@ object EventModule {
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "earliest",
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG to false,
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer"),
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer")
+            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to Class.forName("org.apache.kafka.common.serialization.StringDeserializer"),
         )
     }
 }

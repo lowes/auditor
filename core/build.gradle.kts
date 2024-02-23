@@ -13,23 +13,26 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
 }
 
-val openApiConfigMap = mapOf(
-    "dateLibrary" to "java8",
-    "enumPropertyNaming" to "original",
-    "serializationLibrary" to "jackson"
-)
+val openApiConfigMap =
+    mapOf(
+        "dateLibrary" to "java8",
+        "enumPropertyNaming" to "original",
+        "serializationLibrary" to "jackson",
+    )
 
-val openApiSystemProperties = mapOf(
-    "apis" to "false",
-    "models" to "",
-    "apiTests" to "false",
-    "modelDocs" to "false",
-    "modelTests" to "false"
-)
+val openApiSystemProperties =
+    mapOf(
+        "apis" to "false",
+        "models" to "",
+        "apiTests" to "false",
+        "modelDocs" to "false",
+        "modelTests" to "false",
+    )
 
-val openApiTypeMappings = mapOf(
-    "array" to "kotlin.collections.List"
-)
+val openApiTypeMappings =
+    mapOf(
+        "array" to "kotlin.collections.List",
+    )
 
 tasks.create("openApiGenerateEventDTO", GenerateTask::class) {
     generatorName.set("kotlin")

@@ -28,7 +28,7 @@ data class ElasticsearchConfig(
     var connectionsPerRoute: Int = EIGHT,
     var totalConnections: Int = THIRTY,
     var username: String? = null,
-    var password: String? = null
+    var password: String? = null,
 )
 
 /**

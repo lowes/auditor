@@ -22,14 +22,16 @@ import reactor.core.publisher.Flux
  */
 class ObjectDiffCheckerService(
     private val objectMapper: ObjectMapper,
-    private val auditorEventConfig: AuditorEventConfig
+    private val auditorEventConfig: AuditorEventConfig,
 ) : ObjectDiffChecker {
-
     /**
      * provides diff between two objects
      * @see ObjectDiffChecker.diff
      */
-    override fun diff(objectOne: Any?, objectTwo: Any?): Flux<Element> {
+    override fun diff(
+        objectOne: Any?,
+        objectTwo: Any?,
+    ): Flux<Element> {
         return when {
             objectOne == null && objectTwo != null -> getElementsWhenSingleObjectExists(objectTwo, CREATED)
             objectOne != null && objectTwo == null -> getElementsWhenSingleObjectExists(objectOne, DELETED)
@@ -41,7 +43,10 @@ class ObjectDiffCheckerService(
     /**
      * Converts the difference between two object's properties into flux of [Element]
      */
-    private fun getElementsWhenBothObjectExists(objectOne: Any, objectTwo: Any): Flux<Element> {
+    private fun getElementsWhenBothObjectExists(
+        objectOne: Any,
+        objectTwo: Any,
+    ): Flux<Element> {
         val objectOneElements = getElementsWhenSingleObjectExists(objectOne, DELETED)
         val objectTwoElements = getElementsWhenSingleObjectExists(objectTwo, CREATED)
         return Flux.merge(objectOneElements, objectTwoElements)
@@ -62,7 +67,11 @@ class ObjectDiffCheckerService(
     /**
      * Converts a single object properties into flux of [Element]
      */
-    private fun getElementsWhenSingleObjectExists(singleObject: Any, eventType: EventType, fqcn: String? = null): Flux<Element> {
+    private fun getElementsWhenSingleObjectExists(
+        singleObject: Any,
+        eventType: EventType,
+        fqcn: String? = null,
+    ): Flux<Element> {
         val node = objectMapper.valueToTree<JsonNode>(singleObject)
         return JsonNodeMapper.toElement(node, eventType, fqcn ?: singleObject.javaClass.canonicalName)
     }

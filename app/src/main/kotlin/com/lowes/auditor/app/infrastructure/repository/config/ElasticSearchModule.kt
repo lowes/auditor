@@ -21,9 +21,8 @@ import java.time.format.DateTimeFormatter
  */
 @Configuration(proxyBeanMethods = false)
 class ElasticSearchModule(
-    private val elasticSearchConfig: ElasticsearchConfig
+    private val elasticSearchConfig: ElasticsearchConfig,
 ) : AbstractElasticsearchConfiguration() {
-
     /**
      * custom method to convert OffsetDateTime to string
      *
@@ -43,7 +42,7 @@ class ElasticSearchModule(
     @Bean
     override fun elasticsearchCustomConversions(): ElasticsearchCustomConversions {
         return ElasticsearchCustomConversions(
-            listOf(TimeConverts())
+            listOf(TimeConverts()),
         )
     }
 
@@ -54,11 +53,12 @@ class ElasticSearchModule(
      */
     @Bean
     override fun elasticsearchClient(): RestHighLevelClient {
-        val clientConfiguration = ClientConfiguration.builder()
-            .connectedTo(elasticSearchConfig.clusterUrl.orEmpty())
-            .withConnectTimeout(elasticSearchConfig.timeouts.connect)
-            .withSocketTimeout(elasticSearchConfig.timeouts.socket)
-            .build()
+        val clientConfiguration =
+            ClientConfiguration.builder()
+                .connectedTo(elasticSearchConfig.clusterUrl.orEmpty())
+                .withConnectTimeout(elasticSearchConfig.timeouts.connect)
+                .withSocketTimeout(elasticSearchConfig.timeouts.socket)
+                .build()
         return RestClients.create(clientConfiguration).rest()
     }
 }

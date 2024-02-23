@@ -22,7 +22,7 @@ import java.util.Collections
 abstract class EventConsumerService(
     private val consumerConfig: AuditEventConsumerConfig?,
     private val auditEventReceiver: ReceiverOptions<String, String>,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) : EventSubscriber {
     private val logger = LoggerFactory.getLogger(this::class.java)
 

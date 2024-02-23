@@ -14,9 +14,8 @@ import org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
  */
 @Configuration(proxyBeanMethods = false)
 class AuditEventConsumerModule(
-    private val eventConfig: AuditEventConfig
+    private val eventConfig: AuditEventConfig,
 ) {
-
     /**
      * Gets the object mapper instance. primarily used for index generation
      */

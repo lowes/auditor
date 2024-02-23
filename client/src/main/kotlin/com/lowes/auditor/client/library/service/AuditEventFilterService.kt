@@ -17,14 +17,16 @@ class AuditEventFilterService(
     private val elementFilterUseCase: AuditEventElementFilter,
     private val loggingFilterUseCase: AuditEventFilter,
 ) {
-
     /**
      * Filters flux of [AuditEvent] based all existing filters and configurations present in [auditorEventConfig]
      * @param events flux of [AuditEvent]
      * @param auditorEventConfig instance of [AuditorEventConfig]
      * @return filtered flux of [AuditEvent]
      */
-    fun filter(events: Flux<AuditEvent>, auditorEventConfig: AuditorEventConfig): Flux<AuditEvent> {
+    fun filter(
+        events: Flux<AuditEvent>,
+        auditorEventConfig: AuditorEventConfig,
+    ): Flux<AuditEvent> {
         return Flux.deferContextual { context -> events.map { context to it } }
             .filter { eventFilterUseCase.filter(it.first, it.second, auditorEventConfig.filters) }
             .map {

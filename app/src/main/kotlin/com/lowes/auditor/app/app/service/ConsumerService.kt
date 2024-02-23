@@ -12,9 +12,8 @@ import org.springframework.stereotype.Service
  */
 @Service
 class ConsumerService(
-    private val eventSubscriber: EventSubscriber
+    private val eventSubscriber: EventSubscriber,
 ) : ApplicationListener<ApplicationReadyEvent> {
-
     /**
      * On application event
      * @param event

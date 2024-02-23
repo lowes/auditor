@@ -12,7 +12,6 @@ import com.lowes.auditor.core.entities.util.JsonObject
  * Initializes and configures underlying frameworks used during audit even generation and proecessing
  */
 object FrameworkModule {
-
     /**
      * Creates an instance of [ObjectDiffChecker] to enable the comparision between objects
      * @param auditorEventConfig instance of [AuditorEventConfig]

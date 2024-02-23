@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = AUDITOR.plus(DOT).plus(EVENT))
 data class AuditEventConfig(
-    val kafkaConsumer: AuditEventConsumerConfig = AuditEventConsumerConfig()
+    val kafkaConsumer: AuditEventConsumerConfig = AuditEventConsumerConfig(),
 )
 
 /**
@@ -31,15 +31,16 @@ data class AuditEventConsumerConfig(
     var bootstrapServers: String? = null,
     var topic: String? = null,
     var configs: Map<String, String>? = null,
-    val preConfiguredConsumerConfig: Map<String, String> = mapOf(
-        "enable.auto.commit" to "false",
-        "fetch.min.bytes" to "102400",
-        "session.timeout.ms" to "60000",
-        "heartbeat.interval.ms" to "10000",
-        "auto.offset.reset" to "earliest",
-        "key.deserializer" to "org.apache.kafka.common.serialization.StringDeserializer",
-        "value.deserializer" to "org.apache.kafka.common.serialization.StringDeserializer",
-    )
+    val preConfiguredConsumerConfig: Map<String, String> =
+        mapOf(
+            "enable.auto.commit" to "false",
+            "fetch.min.bytes" to "102400",
+            "session.timeout.ms" to "60000",
+            "heartbeat.interval.ms" to "10000",
+            "auto.offset.reset" to "earliest",
+            "key.deserializer" to "org.apache.kafka.common.serialization.StringDeserializer",
+            "value.deserializer" to "org.apache.kafka.common.serialization.StringDeserializer",
+        ),
 ) {
     /**
      * Provides merged view of [preConfiguredConsumerConfig] and [configs].

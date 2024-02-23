@@ -14,5 +14,5 @@ import reactor.kafka.sender.KafkaSender
 class AuditEventProducerService(
     private val producerConfig: AuditEventProducerConfig,
     private val auditEventSender: KafkaSender<String, String>,
-    private val auditorObjectWriter: ObjectWriter
+    private val auditorObjectWriter: ObjectWriter,
 ) : EventProducerService(producerConfig, auditEventSender, auditorObjectWriter)
