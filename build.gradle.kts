@@ -44,12 +44,12 @@ subprojects {
     }
 
     // compile
-    java.sourceCompatibility = JavaVersion.VERSION_11
+    java.sourceCompatibility = JavaVersion.VERSION_17
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "11"
-            languageVersion = "1.5"
+            jvmTarget = "17"
+            languageVersion = "1.9"
             freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         }
     }
