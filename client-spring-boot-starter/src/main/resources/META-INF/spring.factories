@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.lowes.auditor.client.springboot.library.config.AuditorAutoConfigureModule
