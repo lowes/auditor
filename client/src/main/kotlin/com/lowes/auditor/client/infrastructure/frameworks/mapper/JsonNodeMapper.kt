@@ -26,7 +26,42 @@ object JsonNodeMapper {
         fqcn: String,
     ): Flux<Element> {
         val hasFields = node.fields().hasNext()
-        return Flux.fromIterable(getIterables(hasFields, node))
+
+        // Special handling for top-level arrays
+        if (!hasFields && node.isArray) {
+            return Flux.fromIterable(node)
+                .index()
+                .flatMap { tuple ->
+                    val index = tuple.t1
+                    val arrayItem = tuple.t2
+                    val elementFqcn = "$fqcn.$index"
+
+                    if (arrayItem.isValueNode) {
+                        val updatedValue = if (eventType == EventType.CREATED) getValue(NodeType.TEXT, arrayItem) else null
+                        val previousValue = if (eventType == EventType.DELETED) getValue(NodeType.TEXT, arrayItem) else null
+
+                        Flux.just(
+                            Element(
+                                name = index.toString(),
+                                updatedValue = updatedValue,
+                                previousValue = previousValue,
+                                metadata = ElementMetadata(fqdn = elementFqcn),
+                            ),
+                        )
+                    } else {
+                        toElement(arrayItem, eventType, elementFqcn)
+                    }
+                }
+        }
+
+        val iterables =
+            if (hasFields) {
+                node.fields().asSequence().toList()
+            } else {
+                node.toList().flatMap { it.fields().asSequence().toList() }
+            }
+
+        return Flux.fromIterable(iterables)
             .index()
             .flatMap { indexEntryPair ->
                 val index = indexEntryPair.t1
@@ -34,20 +69,24 @@ object JsonNodeMapper {
                 findType(entry.value)
                     ?.let {
                         if (it == NodeType.ARRAY) {
+                            val parentFqcn = getFqcnValue(hasFields, index, fqcn, entry)
                             Flux.fromIterable(entry.value)
                                 .index()
                                 .flatMap { t ->
-                                    val fqcnValue = getFqcnValue(hasFields, t.t1, fqcn, entry).plus(".").plus(t.t1)
-                                    if (t.t2.isValueNode) {
+                                    val arrayIdx = t.t1
+                                    val arrayItem = t.t2
+                                    val elementFqcn = "$parentFqcn.$arrayIdx"
+
+                                    if (arrayItem.isValueNode) {
                                         val updatedValue =
                                             if (eventType == EventType.CREATED) {
-                                                findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                                findType(arrayItem)?.let { it1 -> getValue(it1, arrayItem) }
                                             } else {
                                                 null
                                             }
                                         val previousValue =
                                             if (eventType == EventType.DELETED) {
-                                                findType(t.t2)?.let { it1 -> getValue(it1, t.t2) }
+                                                findType(arrayItem)?.let { it1 -> getValue(it1, arrayItem) }
                                             } else {
                                                 null
                                             }
@@ -56,14 +95,11 @@ object JsonNodeMapper {
                                                 name = entry.key,
                                                 updatedValue = updatedValue,
                                                 previousValue = previousValue,
-                                                metadata =
-                                                    ElementMetadata(
-                                                        fqdn = fqcnValue,
-                                                    ),
+                                                metadata = ElementMetadata(fqdn = elementFqcn),
                                             ),
                                         )
                                     } else {
-                                        toElement(t.t2, eventType, fqcnValue)
+                                        toElement(arrayItem, eventType, elementFqcn)
                                     }
                                 }
                         } else if (it == NodeType.OBJECT) {
