@@ -35,102 +35,54 @@ object JsonNodeMapper {
                     val index = tuple.t1
                     val arrayItem = tuple.t2
                     val elementFqcn = "$fqcn.$index"
-
-                    if (arrayItem.isValueNode) {
-                        val updatedValue = if (eventType == EventType.CREATED) getValue(NodeType.TEXT, arrayItem) else null
-                        val previousValue = if (eventType == EventType.DELETED) getValue(NodeType.TEXT, arrayItem) else null
-
-                        Flux.just(
-                            Element(
-                                name = index.toString(),
-                                updatedValue = updatedValue,
-                                previousValue = previousValue,
-                                metadata = ElementMetadata(fqdn = elementFqcn),
-                            ),
-                        )
-                    } else {
-                        toElement(arrayItem, eventType, elementFqcn)
-                    }
+                    createElementForNode(arrayItem, index.toString(), eventType, elementFqcn)
                 }
         }
 
-        val iterables =
-            if (hasFields) {
-                node.fields().asSequence().toList()
-            } else {
-                node.toList().flatMap { it.fields().asSequence().toList() }
-            }
-
-        return Flux.fromIterable(iterables)
+        return Flux.fromIterable(getIterables(hasFields, node))
             .index()
-            .flatMap { indexEntryPair ->
-                val index = indexEntryPair.t1
-                val entry = indexEntryPair.t2
-                findType(entry.value)
-                    ?.let {
-                        if (it == NodeType.ARRAY) {
-                            val parentFqcn = getFqcnValue(hasFields, index, fqcn, entry)
-                            Flux.fromIterable(entry.value)
-                                .index()
-                                .flatMap { t ->
-                                    val arrayIdx = t.t1
-                                    val arrayItem = t.t2
-                                    val elementFqcn = "$parentFqcn.$arrayIdx"
+            .flatMap { tuple ->
+                val index = tuple.t1
+                val entry = tuple.t2
+                val elementFqcn = getFqcnValue(hasFields, index, fqcn, entry)
+                val nodeType = findType(entry.value) ?: return@flatMap Flux.empty<Element>()
 
-                                    if (arrayItem.isValueNode) {
-                                        val updatedValue =
-                                            if (eventType == EventType.CREATED) {
-                                                findType(arrayItem)?.let { it1 -> getValue(it1, arrayItem) }
-                                            } else {
-                                                null
-                                            }
-                                        val previousValue =
-                                            if (eventType == EventType.DELETED) {
-                                                findType(arrayItem)?.let { it1 -> getValue(it1, arrayItem) }
-                                            } else {
-                                                null
-                                            }
-                                        Flux.just(
-                                            Element(
-                                                name = entry.key,
-                                                updatedValue = updatedValue,
-                                                previousValue = previousValue,
-                                                metadata = ElementMetadata(fqdn = elementFqcn),
-                                            ),
-                                        )
-                                    } else {
-                                        toElement(arrayItem, eventType, elementFqcn)
-                                    }
-                                }
-                        } else if (it == NodeType.OBJECT) {
-                            toElement(entry.value, eventType, getFqcnValue(hasFields, index, fqcn, entry))
-                        } else {
-                            val updatedValue =
-                                if (eventType == EventType.CREATED) {
-                                    getValue(it, entry.value)
-                                } else {
-                                    null
-                                }
-                            val previousValue =
-                                if (eventType == EventType.DELETED) {
-                                    getValue(it, entry.value)
-                                } else {
-                                    null
-                                }
-                            Flux.just(
-                                Element(
-                                    name = entry.key,
-                                    updatedValue = updatedValue,
-                                    previousValue = previousValue,
-                                    metadata =
-                                        ElementMetadata(
-                                            fqdn = getFqcnValue(hasFields, index, fqcn, entry),
-                                        ),
-                                ),
-                            )
-                        }
-                    } ?: Flux.empty()
+                when (nodeType) {
+                    NodeType.ARRAY -> {
+                        Flux.fromIterable(entry.value)
+                            .index()
+                            .flatMap { arrayTuple ->
+                                val arrayIdx = arrayTuple.t1
+                                val arrayItem = arrayTuple.t2
+                                val arrayElementFqcn = "$elementFqcn.$arrayIdx"
+                                createElementForNode(arrayItem, entry.key, eventType, arrayElementFqcn)
+                            }
+                    }
+                    NodeType.OBJECT -> toElement(entry.value, eventType, elementFqcn)
+                    else -> createElementForNode(entry.value, entry.key, eventType, elementFqcn, nodeType)
+                }
             }
+    }
+
+    /**
+     * Creates an Element for a node with the given parameters.
+     */
+    private fun createElementForNode(
+        node: JsonNode,
+        name: String,
+        eventType: EventType,
+        fqdn: String,
+        nodeType: NodeType? = findType(node),
+    ): Flux<Element> {
+        if (nodeType == null) return Flux.empty()
+        val updatedValue = if (eventType == EventType.CREATED) getValue(nodeType, node) else null
+        val previousValue = if (eventType == EventType.DELETED) getValue(nodeType, node) else null
+
+        return if (nodeType == NodeType.ARRAY || nodeType == NodeType.OBJECT) {
+            toElement(node, eventType, fqdn)
+        } else {
+            Flux.just(Element(name, updatedValue, previousValue, ElementMetadata(fqdn = fqdn)))
+        }
     }
 
     /**
