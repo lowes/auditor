@@ -1,0 +1,26 @@
+[
+    {
+        "name": "id",
+        "updatedValue": null,
+        "previousValue": "1",
+        "metadata": {
+            "fqdn": "com.example.Test.id"
+        }
+    },
+    {
+        "name": "name",
+        "updatedValue": null,
+        "previousValue": "Test",
+        "metadata": {
+            "fqdn": "com.example.Test.name"
+        }
+    },
+    {
+        "name": "active",
+        "updatedValue": null,
+        "previousValue": "true",
+        "metadata": {
+            "fqdn": "com.example.Test.active"
+        }
+    }
+]

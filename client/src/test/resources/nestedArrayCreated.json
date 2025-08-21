@@ -1,0 +1,178 @@
+[
+    {
+        "name": "0",
+        "updatedValue": "1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.0.0"
+        }
+    },
+    {
+        "name": "1",
+        "updatedValue": "2",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.0.1"
+        }
+    },
+    {
+        "name": "2",
+        "updatedValue": "3",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.0.2"
+        }
+    },
+    {
+        "name": "0",
+        "updatedValue": "4",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.1.0"
+        }
+    },
+    {
+        "name": "1",
+        "updatedValue": "5",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.1.1"
+        }
+    },
+    {
+        "name": "2",
+        "updatedValue": "6",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.1.2"
+        }
+    },
+    {
+        "name": "0",
+        "updatedValue": "7",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.2.0"
+        }
+    },
+    {
+        "name": "1",
+        "updatedValue": "8",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.2.1"
+        }
+    },
+    {
+        "name": "2",
+        "updatedValue": "9",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.matrix.2.2"
+        }
+    },
+    {
+        "name": "id",
+        "updatedValue": "1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.0.id"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "a",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.0.values.0"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "b",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.0.values.1"
+        }
+    },
+    {
+        "name": "id",
+        "updatedValue": "2",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.1.id"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "c",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.1.values.0"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "d",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.0.1.values.1"
+        }
+    },
+    {
+        "name": "id",
+        "updatedValue": "3",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.1.0.id"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "e",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.1.0.values.0"
+        }
+    },
+    {
+        "name": "values",
+        "updatedValue": "f",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nested.deepArray.1.0.values.1"
+        }
+    },
+    {
+        "name": "id",
+        "updatedValue": "1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.simpleArray.0.id"
+        }
+    },
+    {
+        "name": "name",
+        "updatedValue": "Item 1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.simpleArray.0.name"
+        }
+    },
+    {
+        "name": "id",
+        "updatedValue": "2",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.simpleArray.1.id"
+        }
+    },
+    {
+        "name": "name",
+        "updatedValue": "Item 2",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.simpleArray.1.name"
+        }
+    }
+]

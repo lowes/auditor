@@ -45,22 +45,24 @@ object JsonNodeMapper {
                 val index = tuple.t1
                 val entry = tuple.t2
                 val elementFqcn = getFqcnValue(hasFields, index, fqcn, entry)
-                val nodeType = findType(entry.value) ?: return@flatMap Flux.empty<Element>()
 
-                when (nodeType) {
-                    NodeType.ARRAY -> {
-                        Flux.fromIterable(entry.value)
-                            .index()
-                            .flatMap { arrayTuple ->
-                                val arrayIdx = arrayTuple.t1
-                                val arrayItem = arrayTuple.t2
-                                val arrayElementFqcn = "$elementFqcn.$arrayIdx"
-                                createElementForNode(arrayItem, entry.key, eventType, arrayElementFqcn)
-                            }
+                // Process only entries with valid node types
+                findType(entry.value)?.let { nodeType ->
+                    when (nodeType) {
+                        NodeType.ARRAY -> {
+                            Flux.fromIterable(entry.value)
+                                .index()
+                                .flatMap { arrayTuple ->
+                                    val arrayIdx = arrayTuple.t1
+                                    val arrayItem = arrayTuple.t2
+                                    val arrayElementFqcn = "$elementFqcn.$arrayIdx"
+                                    createElementForNode(arrayItem, entry.key, eventType, arrayElementFqcn)
+                                }
+                        }
+                        NodeType.OBJECT -> toElement(entry.value, eventType, elementFqcn)
+                        else -> createElementForNode(entry.value, entry.key, eventType, elementFqcn, nodeType)
                     }
-                    NodeType.OBJECT -> toElement(entry.value, eventType, elementFqcn)
-                    else -> createElementForNode(entry.value, entry.key, eventType, elementFqcn, nodeType)
-                }
+                } ?: Flux.empty<Element>()
             }
     }
 
