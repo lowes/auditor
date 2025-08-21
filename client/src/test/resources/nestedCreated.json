@@ -1,0 +1,42 @@
+[
+    {
+        "name": "id",
+        "updatedValue": "1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.id"
+        }
+    },
+    {
+        "name": "name",
+        "updatedValue": "Test",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.name"
+        }
+    },
+    {
+        "name": "street",
+        "updatedValue": "123 Main St",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.address.street"
+        }
+    },
+    {
+        "name": "city",
+        "updatedValue": "Anytown",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.address.city"
+        }
+    },
+    {
+        "name": "zip",
+        "updatedValue": "12345",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.address.zip"
+        }
+    }
+]
