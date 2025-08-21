@@ -1,0 +1,38 @@
+[
+  {
+    "name": "value",
+    "updatedValue": null,
+    "previousValue": "randMetamap007",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.value",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": "randMetain",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.uom",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "updatedValue": null,
+    "previousValue": "randMetain007",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list_007.0.uom",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "updatedValue": "randMetamap",
+    "previousValue": null,
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.metadataRand.new_item_id.mapList.list.0.value",
+      "identifiers": null
+    }
+  }
+]
