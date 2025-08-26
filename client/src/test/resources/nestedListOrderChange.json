@@ -1,0 +1,38 @@
+[
+  {
+    "name": "uom",
+    "previousValue": "uom2",
+    "updatedValue": "uom1",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.rand.doubleList.1.uom",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "uom",
+    "previousValue": "uom1",
+    "updatedValue": "uom2",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.rand.doubleList.0.uom",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "previousValue": "b",
+    "updatedValue": "a",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.rand.doubleList.1.value",
+      "identifiers": null
+    }
+  },
+  {
+    "name": "value",
+    "previousValue": "a",
+    "updatedValue": "b",
+    "metadata": {
+      "fqdn": "com.lowes.auditor.client.infrastructure.frameworks.model.Item.rand.doubleList.0.value",
+      "identifiers": null
+    }
+  }
+]
