@@ -1,0 +1,34 @@
+[
+    {
+        "name": "nullValue",
+        "updatedValue": "null",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.nullValue"
+        }
+    },
+    {
+        "name": "emptyString",
+        "updatedValue": "",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.emptyString"
+        }
+    },
+    {
+        "name": "zero",
+        "updatedValue": "0",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.zero"
+        }
+    },
+    {
+        "name": "falseValue",
+        "updatedValue": "false",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.falseValue"
+        }
+    }
+]

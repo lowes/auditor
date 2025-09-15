@@ -1,0 +1,106 @@
+[
+    {
+        "name": "id",
+        "updatedValue": "1",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.id"
+        }
+    },
+    {
+        "name": "name",
+        "updatedValue": "Test User",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.name"
+        }
+    },
+    {
+        "name": "type",
+        "updatedValue": "home",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.0.type"
+        }
+    },
+    {
+        "name": "street",
+        "updatedValue": "123 Main St",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.0.street"
+        }
+    },
+    {
+        "name": "city",
+        "updatedValue": "Anytown",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.0.city"
+        }
+    },
+    {
+        "name": "type",
+        "updatedValue": "work",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.1.type"
+        }
+    },
+    {
+        "name": "street",
+        "updatedValue": "456 Business Ave",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.1.street"
+        }
+    },
+    {
+        "name": "city",
+        "updatedValue": "Businesstown",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.addresses.1.city"
+        }
+    },
+    {
+        "name": "notifications",
+        "updatedValue": "true",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.preferences.notifications"
+        }
+    },
+    {
+        "name": "theme",
+        "updatedValue": "dark",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.preferences.theme"
+        }
+    },
+    {
+        "name": "favoriteCategories",
+        "updatedValue": "tech",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.preferences.favoriteCategories.0"
+        }
+    },
+    {
+        "name": "favoriteCategories",
+        "updatedValue": "books",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.preferences.favoriteCategories.1"
+        }
+    },
+    {
+        "name": "favoriteCategories",
+        "updatedValue": "music",
+        "previousValue": null,
+        "metadata": {
+            "fqdn": "com.example.Test.preferences.favoriteCategories.2"
+        }
+    }
+]

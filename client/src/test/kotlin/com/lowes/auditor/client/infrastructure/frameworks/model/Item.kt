@@ -15,6 +15,7 @@ data class Item(
     val price: BigDecimal? = null,
     val subList: List<SubObject>? = null,
     val subMap: Map<String, SubObject>? = null,
+    val nestedList: List<NestedItem>? = null,
 )
 
 data class Rand(
@@ -23,6 +24,11 @@ data class Rand(
     val doubleList: List<SubObject>? = null,
     val listString: List<String>? = null,
     val mapList: Map<String, List<SubObject>>? = null,
+)
+
+data class NestedItem(
+    val id: String,
+    val items: List<SubObject>,
 )
 
 data class SubObject(

@@ -5,6 +5,7 @@ import com.lowes.auditor.client.entities.domain.AuditorEventConfig
 import com.lowes.auditor.client.infrastructure.frameworks.config.FrameworkModule
 import com.lowes.auditor.client.infrastructure.frameworks.model.DummyClass
 import com.lowes.auditor.client.infrastructure.frameworks.model.Item
+import com.lowes.auditor.client.infrastructure.frameworks.model.NestedItem
 import com.lowes.auditor.client.infrastructure.frameworks.model.Rand
 import com.lowes.auditor.client.infrastructure.frameworks.model.SubObject
 import com.lowes.auditor.core.entities.domain.Element
@@ -277,6 +278,136 @@ class ObjectDiffCheckerServiceTest : BehaviorSpec({
             val diff = diffChecker.diff(newItem, newItem).collectList().block()
             Then("Empty List - Collection mapInner object") {
                 diff shouldBe emptyList()
+            }
+        }
+    }
+
+    Given("List with different order") {
+        val item1 =
+            Item(
+                itemNumber = "123",
+                stringList = listOf("a", "b", "c"),
+            )
+
+        val item2 =
+            Item(
+                itemNumber = "123",
+                stringList = listOf("c", "b", "a"),
+            )
+
+        When("comparing items with lists in different orders") {
+            val diff = diffChecker.diff(item1, item2).collectList().block()
+
+            Then("should detect the order change as a difference") {
+                diff shouldBe
+                    obj.readValue(
+                        javaClass.getResource("/listOrderChange.json").readBytes(),
+                        Array<Element>::class.java,
+                    ).toList()
+            }
+        }
+    }
+
+    Given("Nested list with different order") {
+        val item1 =
+            Item(
+                itemNumber = "123",
+                rand =
+                    Rand(
+                        id = "1",
+                        doubleList =
+                            listOf(
+                                SubObject("a", "uom1"),
+                                SubObject("b", "uom2"),
+                            ),
+                    ),
+            )
+
+        val item2 =
+            Item(
+                itemNumber = "123",
+                rand =
+                    Rand(
+                        id = "1",
+                        doubleList =
+                            listOf(
+                                SubObject("b", "uom2"),
+                                SubObject("a", "uom1"),
+                            ),
+                    ),
+            )
+
+        When("comparing items with nested lists in different orders") {
+            val diff = diffChecker.diff(item1, item2).collectList().block()
+
+            Then("should detect the order change in nested list as a difference") {
+                diff shouldBe
+                    obj.readValue(
+                        javaClass.getResource("/nestedListOrderChange.json").readBytes(),
+                        Array<Element>::class.java,
+                    ).toList()
+            }
+        }
+    }
+
+    Given("Deeply nested list with different order") {
+        val item1 =
+            Item(
+                itemNumber = "123",
+                nestedList =
+                    listOf(
+                        NestedItem(
+                            "n1",
+                            listOf(
+                                SubObject("a", "uom1"),
+                                SubObject("b", "uom2"),
+                            ),
+                        ),
+                        NestedItem(
+                            "n2",
+                            listOf(
+                                SubObject("x", "uom3"),
+                                SubObject("y", "uom4"),
+                                SubObject("z", "uom5"),
+                            ),
+                        ),
+                    ),
+            )
+
+        val item2 =
+            Item(
+                itemNumber = "123",
+                nestedList =
+                    listOf(
+                        NestedItem(
+                            "n2",
+                            listOf(
+                                SubObject("z", "uom5"),
+                                SubObject("y", "uom4"),
+                                SubObject("x", "uom3"),
+                            ),
+                        ),
+                        NestedItem(
+                            "n1",
+                            listOf(
+                                SubObject("b", "uom2"),
+                                SubObject("a", "uom1"),
+                            ),
+                        ),
+                    ),
+            )
+
+        When("comparing items with deeply nested lists in different orders") {
+            val diff = diffChecker.diff(item1, item2).collectList().block()
+
+            Then("should detect the order changes in deeply nested lists with correct FQDNs") {
+                val expected =
+                    obj.readValue(
+                        javaClass.getResource("/deeplyNestedListOrderChange.json").readBytes(),
+                        Array<Element>::class.java,
+                    ).toList()
+
+                diff shouldBe expected
             }
         }
     }
