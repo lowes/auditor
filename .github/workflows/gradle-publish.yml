@@ -34,15 +34,6 @@ jobs:
       with:
         arguments: clean build
 
-    - name: Test & publish code coverage
-      if: ${{ github.event.pull_request.merged == 'true' || github.ref == 'refs/heads/main' }}
-      uses: paambaati/codeclimate-action@v9.0.0
-      env:
-        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        JACOCO_SOURCE_PATH: ${{github.workspace}}/client/src/main/kotlin
-      with:
-        coverageLocations: ${{github.workspace}}/client/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-
     - name: Assemble binaries on tags
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
